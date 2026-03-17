@@ -4,14 +4,12 @@ import java.util.Iterator;
 /*
 
 Need to implement:
-- possible Wallet class for Users to be an endpoint to manage money from
-- refund -> cancel?
-- remove methodType? 
-
-
+- remove methodType? (overcomplicates)
+- isntead of returning booleans, return exceptions so you know what went wrong
+- further security with payment manager
 */
 
-public class Payment<T, V> {
+public class Payment {
     private class PaymentIterator implements Iterator<Integer>{
         private int count = 0;
 
@@ -27,14 +25,14 @@ public class Payment<T, V> {
     }
 
     private int paymentId;
-    private T from;
-    private V to;
+    private Wallet from;
+    private Wallet to;
     private double amount;
     private String methodType;
     private boolean isSuccessful;
     private final PaymentIterator iter = new PaymentIterator();
 
-    public Payment(T from, V to, double amount){
+    public Payment(Wallet from, Wallet to, double amount){
         this.from = from;
         this.to = to;
         this.amount = amount;
@@ -50,16 +48,12 @@ public class Payment<T, V> {
         if (!status) return status;
 
         // send the change over back to T
-        // this.to.sendMoneyTo(from, amount)
-        // this.from.takeMoneyFrom(to, amount);
-
-        return status;
+        return this.to.sendMoneyTo(from, amount);
 
     }
 
-    public void refund(){
-        // this.from.sendMoneyTo(to, this.amount);
-        // this.to.takeMoneyFrom(from, this.amount);
+    public boolean refund(){
+        return this.from.sendMoneyTo(to, amount);
 
     }
 
