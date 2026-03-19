@@ -4,6 +4,7 @@ package main;
 import restaurant.Restaurant;
 import java.util.Scanner;
 import java.util.ArrayList;
+import users.*;
 public class Main {
     
     private static Scanner scanner = new Scanner(System.in);
@@ -23,14 +24,14 @@ public class Main {
             selection = scanner.nextLine();
             System.out.println();
             if (selection.equals("1")){
-                makeNewResturant();
+                makeNewRestaurant();
             } else if(selection.equals("2")){
                 manage();
             }
         }
         
     }
-    public static Restaurant listRestuants(){
+    public static Restaurant listResturants(){
         for (int i=0; i<restaurantList.size(); i++){
             System.out.println(i+1 + ": " + restaurantList.get(i));
         }
@@ -43,18 +44,18 @@ public class Main {
             System.out.println("There are no restaurants to manage");
             return;
         }
-        System.out.println("Which resturant do you want to manage:");
-        Restaurant manage = listRestuants();
-        manageResturant(manage);
+        System.out.println("Which restaurant do you want to manage:");
+        Restaurant manage = listResturants();
+        manageRestaurant(manage);
     }
-    public static void makeNewResturant(){
-        System.out.println("What is the Resturant's Name");
-        String resturantName = scanner.nextLine();
-        Restaurant restaurant = new Restaurant(resturantName);
+    public static void makeNewRestaurant(){
+        System.out.println("What is the Resaturant's Name");
+        String restaurantName = scanner.nextLine();
+        Restaurant restaurant = new Restaurant(restaurantName);
         restaurantList.add(restaurant);
-        manageResturant(restaurant);
+        manageRestaurant(restaurant);
     }
-    public static void manageResturant(Restaurant restaurant){
+    public static void manageRestaurant(Restaurant restaurant){
         String input = "";
         while (!input.equalsIgnoreCase("exit")) {
             System.out.println("\nChoose an option:");
@@ -94,6 +95,22 @@ public class Main {
         }
     }
 
+    public static void createCustomer(){
+        if (restaurantList.size() == 0){
+            System.out.println("There are no restaurants to eat at");
+            return;
+        }
+        System.out.println("What is your name: ");
+        String name = scanner.nextLine();
+        Customer customer = new Customer(name);
+        System.out.println("Which restaurant do you want to eat at:");
+        Restaurant eat = listResturants();
+        eatAtRestaurant(eat, customer);
+    }
+
+    public static void eatAtRestaurant(Restaurant restaurant, Customer customer){
+
+    }
 
 
 
