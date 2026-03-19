@@ -75,4 +75,6 @@ public class Restaurant {
     public String toString(){
         return this.name + " located at: " + this.address;
     }
+
+    
 }

@@ -18,7 +18,8 @@ public class Main {
             System.out.println("Choose an option:");
             System.out.println("1: Open a new restaurant");
             System.out.println("2: Manage an existing restaurant");
-            System.out.println("3: Eat at an existing restaurant");
+            System.out.println("3: Create an order at an existing restaurant");
+            System.out.println("4: Check on an existing customers order");
             System.out.println("Type 'Exit' to quit");
             System.out.print("Selection: ");
             selection = scanner.nextLine();
@@ -105,11 +106,30 @@ public class Main {
         Customer customer = new Customer(name);
         System.out.println("Which restaurant do you want to eat at:");
         Restaurant eat = listResturants();
-        eatAtRestaurant(eat, customer);
+        // customer.setRestaurant(eat);
+        eatAtRestaurant(customer);
     }
 
-    public static void eatAtRestaurant(Restaurant restaurant, Customer customer){
+    public static void eatAtRestaurant(Customer customer){
+        
 
+        /* Check if customers order is null
+        if order is null then 
+        Customer creates a new order... customer.createOrder()
+        print restaurant menu 
+        while loop where while order is not complete
+        customer.getOrder().getStatus() == "not complete"
+        ask what they want to add to their order
+        have an option for when they think order is complete
+        if order is complete then add to restaurant order list
+        do payment??
+        print the order
+        move into new while loop where while order is not complete have options to check order status or cancel??
+        after order is complete, print its complete and awaiting pickup
+        if customer.getRating() == null then 
+        they can leave a rating???
+        create a new order?? else exit
+        */
     }
 
 
