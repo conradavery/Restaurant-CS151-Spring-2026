@@ -20,4 +20,7 @@ public class FoodItem {
     public double getPrice(){
         return this.price;
     }
+    public void changePrice(double price){
+        this.price = price;
+    }
 }
