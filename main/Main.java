@@ -3,7 +3,7 @@ package main;
 
 import restaurant.Restaurant;
 import java.util.Scanner;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import users.*;
 import menuAndFoodItems.*;
 public class Main {
@@ -13,26 +13,26 @@ public class Main {
 
     public static void main(String [] args){
         createInitial();
-        System.out.println("Hello! What would you like to do?");
+        System.out.println();
+        System.out.println("-------" + restaurant.getName().toUpperCase()+ "-------");
         String selection = "";
         while (!selection.equals("exit")){
-            System.out.println();
             System.out.println("Choose an option:");
             System.out.println("1: Customer");
             System.out.println("2: Employee Login");
             System.out.println("3: View Menu");
-            System.out.println("Type 'Exit' to quit");
+            System.out.println("Type 'exit' to quit");
             System.out.print("Selection: ");
             selection = scanner.nextLine();
             System.out.println();
             
             switch(selection.toLowerCase()){
-                // case "1": 
-                    // customerPortal();
-                    // break;
-                // case "2": 
-                    // employeePortal();
-                    // break;
+                case "1": 
+                    customerPortal();
+                    break;
+                case "2": 
+                    employeePortal();
+                    break;
                 case "3": 
                     restaurant.showMenu();
                     break;
@@ -65,6 +65,12 @@ public class Main {
         outAndIn.addItemToMenu(soda);
         outAndIn.addItemToMenu(milkeShake);
 
+        String staffName = "Steve";
+        String role = "Cook";
+        Double salary = 5.00;
+        String staffID = "111";
+        Staff cook = new KitchenStaff(name, role, salary, outAndIn, staffID);
+        restaurant.hireEmployee(cook);
 
     }
 
@@ -73,23 +79,33 @@ public class Main {
         String phoneNumber = scanner.nextLine();
         Customer customer = restaurant.findCustomer(phoneNumber);
         if (customer == null){
-            System.out.println("Phone number not found. Enter your phone number");
-            String newPhoneNumber = scanner.nextLine();
-            System.out.println("Enter name: ");
+            System.out.println("Phone number not found. Creating a new account");
+            System.out.print("Enter name: ");
             String name = scanner.nextLine();
-            customer = new Customer(name, newPhoneNumber, restaurant);
+            customer = new Customer(name, phoneNumber, restaurant);
             restaurant.addCustomer(customer);
         }
+        if (customer.getCurrentOrder() != null){
+            if(customer.getCurrentOrder().getStatus().equals("COMPLETE")){
+            System.out.println("Your order is ready to pickup");
+            customer.recieveOrder();
+            }
+        }
+        System.out.println();
+        System.out.println("Hi " + customer.getName() + " welcome to "+ restaurant.getName()+ "! What would you like to do?");
+        System.out.println();
         String selection = "";
         while (!selection.equals("3")){
             System.out.println("1: Create new order");
             System.out.println("2: View previous orders");
             System.out.println("3: Go back to main menu");
+            System.out.println();
+            System.out.print("Choice: ");
             selection = scanner.nextLine();
 
             switch (selection){
                 case "1":
-                    customer.createOrder();
+                    customer.createNewOrder();
                     break;
                 case "2":
                     customer.viewOrders();
@@ -102,6 +118,17 @@ public class Main {
             }
         }
 
+    }
+
+    private static void employeePortal(){
+        System.out.print("Enter your staff ID: ");
+        String staffID = scanner.nextLine();
+        Staff staff = restaurant.findStaff(staffID);
+        if (staff == null){
+            System.out.println("Invalid ID");
+            return;
+        }
+        staff.performDuties();
     }
 
 
