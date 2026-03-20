@@ -42,6 +42,9 @@ public class Restaurant {
         Menu menu = new Menu();
         this.menu = menu;
     }
+    public String getName(){
+        return this.name;
+    }
     public void addItemToMenu(FoodItem foodItem){
         menu.addItem(foodItem);
     }
@@ -55,6 +58,14 @@ public class Restaurant {
     public void hireEmployee(Staff staff){
         staffList.add(staff);
     }
+    public Staff findStaff(String staffID){
+        for (Staff s: staffList){
+            if (s.getStaffID().equals(staffID)){
+                return s;
+            }
+        }
+        return null;
+    }
     public Customer findCustomer(String phoneNumber){
         for (Customer c: customerList){
             if (c.getPhoneNumber().equals(phoneNumber)){
@@ -65,6 +76,19 @@ public class Restaurant {
     }
     public void addOrder(Order order){
         orders.add(order);
+    }
+    public void viewOrders(){
+        for (Order o: orders){
+            o.printOrder();
+        }
+    }
+    public Order findOrder(int orderID){
+        for (Order o: orders){
+            if(o.getOrderNumber() == orderID){
+                return o;
+            }
+        }
+        return null;
     }
 
     // public Staff findSaff(String staffID){

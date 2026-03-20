@@ -32,28 +32,40 @@ public class Customer {
         return this.currentOrder;
     }
     public void createNewOrder() {
+        System.out.println();
         System.out.println("USER: " + name + " started a new order.");
         currentOrder = new Order();
         currentOrder.setStatus("IN PROGRESS");
         buildOrder();
     }
+    public void recieveOrder(){
+        this.currentOrder = null;
+    }
     public void buildOrder(){
-        currentOrder.printOrder();
+        System.out.println();
         restaurant.showMenu();
         System.out.println();
         int choice = -1;
         while (choice != 0){
             System.out.println("Type the index of the order item you want to add to your order or type 0 to finish your order");
+            System.out.print("Choice: ");
             choice = scanner.nextInt();
             if (choice!=0){
                 FoodItem item = restaurant.getMenu().getItem(choice);
+                System.out.println();
                 System.out.println("Adding " + item.getName()+ " to order.");
                 currentOrder.addItemToOrder(item);
             }
+            System.out.println();
+            System.out.println("-----CURRENT ORDER-----");
+            currentOrder.printOrder();
+            System.out.println();
         }
-        System.out.println("YOUR ORDER:");
-        currentOrder.printOrder();
+        System.out.println();
+        System.out.println("-----CURRENT ORDER-----");
         currentOrder.setStatus("PENDING PAYMENT");
+        currentOrder.printOrder();
+        System.out.println();
         restaurant.addOrder(currentOrder);
         orders.add(currentOrder);
         

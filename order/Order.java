@@ -9,15 +9,25 @@ public class Order{
     // private Customer customer;
     private ArrayList<FoodItem> items;
     private String status;
+    private static int orderCount = 0;
+    private int orderNumber;
 
     public Order(){
         items = new ArrayList<>();
+        orderCount ++;
+        this.orderNumber = orderCount;
     }
     public void addItemToOrder(FoodItem item){
         items.add(item);
     }
+    public int getOrderNumber(){
+        return this.orderNumber;
+    }
     public void setStatus(String status){
         this.status = status;
+    }
+    public String getStatus(){
+        return this.status;
     }
     public double calculateTotal(){
         double total = 0.00;
@@ -27,6 +37,7 @@ public class Order{
         return total;
     }
     public void printOrder(){
+        System.out.println("ORDER NUMBER: " + getOrderNumber());
         for(FoodItem f: items){
             System.out.println(f.getName() + "\t" + "$"+ f.getPrice());
         }
