@@ -10,70 +10,44 @@ public class Restaurant {
     private String name;
     private String address;
     private Menu menu;
+    private String phoneNumber;
     private ArrayList<Staff> staffList; 
     // private ArrayList<Order> orders; 
     private double revenue;
     // private ArrayList<Rating> ratings; Implement later
+    private static int restaurantCount = 0;
 
     Scanner scanner = new Scanner(System.in);
 
-    public Restaurant(String name){ //Only need a name to create a resturant
+    public Restaurant(String name, String address, String phoneNumber){ 
         this.name = name;
-        this.address = null;
-        this.menu = null;
-    }
-
-    public void setAddress(String address){
         this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.menu = null;
+        staffList = new ArrayList<>();
+        restaurantCount ++;
     }
-    public String getAddress(){
-        if (this.address == null){
 
-            return "No Address Set";
-        }
-        return this.address;
+    @Override
+    public String toString(){
+        return this.name + " Address: " + this.address + " Phone Number: " + this.phoneNumber;
     }
     public void createMenu(){
         Menu menu = new Menu();
         this.menu = menu;
     }
-    public void addItemToMenu(){
-        if (this.menu == null){
-            System.out.println("Menu not created yet, please create a menu first.");
-            return;
-        }
-        menu.addItem();
+    public void addItemToMenu(FoodItem foodItem){
+        menu.addItem(foodItem);
     }
-    public void removeItem(){
-        if (this.menu == null){
-            System.out.println("Menu not created yet, please create a menu first.");
-            return;
-        }
-        System.out.println("What is the name of the item to remove from the menu: ");
-        String name = scanner.nextLine();
+    public void removeItem(String name){
         menu.removeItem(name);
     }
     public void showMenu(){
-        if (this.menu == null){
-            System.out.println("Menu not created yet, please create a menu first.");
-            return;
-        }
         System.out.println(this.name + " Menu:");
         menu.printMenu();
     }
-    public void hireNewStaff(){
-        System.out.println("What is the Staff name");
-        String name = scanner.nextLine();
-        System.out.println("What is the staff's role");
-        String role = scanner.nextLine();
-        System.out.println("What is the staffs salary");
-        Double salary = scanner.nextDouble();
-        Staff staff = new Staff(name, role, salary);
+    public void hireEmployee(Staff staff){
         staffList.add(staff);
-    }
-    @Override
-    public String toString(){
-        return this.name + " located at: " + this.address;
     }
 
     

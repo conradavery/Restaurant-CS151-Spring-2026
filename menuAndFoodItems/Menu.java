@@ -11,23 +11,21 @@ public class Menu {
         this.items = new ArrayList<>();
     }
 
-    public void addItem(){
-        System.out.println("What is the food item's name: ");
-        String name = scanner.nextLine();
-        System.out.println("How many calories is the food item: ");
-        int calories = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("What is the food item's price: ");
-        double price = scanner.nextDouble();
-        scanner.nextLine();
-        FoodItem item = new FoodItem(name, calories, price);
-        items.add(item);
+    public void addItem(FoodItem foodItem){
+        items.add(foodItem);
     }
     public void removeItem(String name){
         for (FoodItem f: items){
             if (f.getName().equals(name)){
                 items.remove(f);
                 break;
+            }
+        }
+    }
+    public void changeItemPrice(String name, Double price){
+        for (FoodItem f: items){
+            if (f.getName().equals(name)){
+                f.changePrice(price);
             }
         }
     }
