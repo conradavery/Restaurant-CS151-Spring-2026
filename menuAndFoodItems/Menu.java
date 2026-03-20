@@ -30,8 +30,8 @@ public class Menu {
         }
     }
     public void printMenu(){
-        for (FoodItem f: items){
-            System.out.println(f.getName() + " price: " + f.getPrice() + " calories: " + f.getCalories());
+        for (int i=0; i<items.size();i++){
+            System.out.println((i+1) + ": " + items.get(i).getName() + " $" + items.get(i).getPrice() + ", calories: " + items.get(i).getCalories());
         }
     }
     

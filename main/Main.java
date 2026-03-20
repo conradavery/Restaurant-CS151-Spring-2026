@@ -68,6 +68,42 @@ public class Main {
 
     }
 
+    private static void customerPortal(){
+        System.out.print("Enter your phone number: ");
+        String phoneNumber = scanner.nextLine();
+        Customer customer = restaurant.findCustomer(phoneNumber);
+        if (customer == null){
+            System.out.println("Phone number not found. Enter your phone number");
+            String newPhoneNumber = scanner.nextLine();
+            System.out.println("Enter name: ");
+            String name = scanner.nextLine();
+            customer = new Customer(name, newPhoneNumber, restaurant);
+            restaurant.addCustomer(customer);
+        }
+        String selection = "";
+        while (!selection.equals("3")){
+            System.out.println("1: Create new order");
+            System.out.println("2: View previous orders");
+            System.out.println("3: Go back to main menu");
+            selection = scanner.nextLine();
+
+            switch (selection){
+                case "1":
+                    customer.createOrder();
+                    break;
+                case "2":
+                    customer.viewOrders();
+                    break;
+                case "3":
+                    break;
+                default:
+                    System.out.println("Invalid Option");
+                    break;
+            }
+        }
+
+    }
+
 
 
 }

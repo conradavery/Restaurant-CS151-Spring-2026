@@ -11,7 +11,8 @@ public class Restaurant {
     private String address;
     private Menu menu;
     private String phoneNumber;
-    private ArrayList<Staff> staffList; 
+    private ArrayList<Staff> staffList;
+    private ArrayList<Customer> customerList;
     // private ArrayList<Order> orders; 
     private double revenue;
     // private ArrayList<Rating> ratings; Implement later
@@ -25,6 +26,7 @@ public class Restaurant {
         this.phoneNumber = phoneNumber;
         this.menu = null;
         staffList = new ArrayList<>();
+        customerList = new ArrayList<>();
         restaurantCount ++;
     }
 
@@ -48,6 +50,20 @@ public class Restaurant {
     }
     public void hireEmployee(Staff staff){
         staffList.add(staff);
+    }
+    public Customer findCustomer(String phoneNumber){
+        for (Customer c: customerList){
+            if (c.getPhoneNumber().equals(phoneNumber)){
+                return c;
+            }
+        }
+        return null;
+    }
+    public void addCustomer(Customer customer){
+        customerList.add(customer);
+    }
+    public void takeOrder(){
+        
     }
 
     
