@@ -14,6 +14,9 @@ public class Menu {
     public void addItem(FoodItem foodItem){
         items.add(foodItem);
     }
+    public FoodItem getItem(int index){
+        return items.get(index -1);
+    }
     public void removeItem(String name){
         for (FoodItem f: items){
             if (f.getName().equals(name)){

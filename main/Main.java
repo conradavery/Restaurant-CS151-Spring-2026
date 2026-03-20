@@ -3,7 +3,7 @@ package main;
 
 import restaurant.Restaurant;
 import java.util.Scanner;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import users.*;
 import menuAndFoodItems.*;
 public class Main {
@@ -27,9 +27,9 @@ public class Main {
             System.out.println();
             
             switch(selection.toLowerCase()){
-                // case "1": 
-                    // customerPortal();
-                    // break;
+                case "1": 
+                    customerPortal();
+                    break;
                 // case "2": 
                     // employeePortal();
                     // break;
@@ -73,11 +73,10 @@ public class Main {
         String phoneNumber = scanner.nextLine();
         Customer customer = restaurant.findCustomer(phoneNumber);
         if (customer == null){
-            System.out.println("Phone number not found. Enter your phone number");
-            String newPhoneNumber = scanner.nextLine();
+            System.out.println("Phone number not found. Creating a new account");
             System.out.println("Enter name: ");
             String name = scanner.nextLine();
-            customer = new Customer(name, newPhoneNumber, restaurant);
+            customer = new Customer(name, phoneNumber, restaurant);
             restaurant.addCustomer(customer);
         }
         String selection = "";
@@ -89,7 +88,7 @@ public class Main {
 
             switch (selection){
                 case "1":
-                    customer.createOrder();
+                    customer.createNewOrder();
                     break;
                 case "2":
                     customer.viewOrders();
@@ -103,6 +102,17 @@ public class Main {
         }
 
     }
+
+    // private static void employeePortal(){
+    //     System.out.println("Enter your staff ID");
+    //     String staffID = scanner.nextLine();
+    //     staff = restaurant.findStaff(staffID);
+    //     if (staff == null){
+    //         System.out.println("Invalid ID");
+    //         return;
+    //     }
+    //     staff.performDuties();
+    // }
 
 
 
