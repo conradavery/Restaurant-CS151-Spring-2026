@@ -9,8 +9,7 @@ package users;
       protected Restaurant restaurant;
       protected String staffID;
 
-      public Staff(String name, String role, double salary, Restaurant restaurant, St
-  ring staffID) {
+      public Staff(String name, String role, double salary, Restaurant restaurant, String staffID) {
           this.name = name;
           this.role = role;
           this.salary = salary;

@@ -4,6 +4,8 @@ import restaurant.*;
 
 import java.util.Scanner;
 
+import java.util.Iterator;
+
 import menuAndFoodItems.FoodItem;
 import order.Order;
 import java.util.ArrayList;
@@ -11,8 +13,9 @@ import java.util.ArrayList;
 public class Customer {
 
     // private Object order ;
-    private ArrayList<Order> orders;
+    private ArrayList<Order> pastOrders;
     private String name;
+    private ArrayList<Order> currentOrders;
     private Order currentOrder;
     // private Object payment;
     private String phoneNumber;
@@ -25,9 +28,56 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.restaurant = restaurant;
         this.currentOrder = null;
-        orders = new ArrayList<>();
+        pastOrders = new ArrayList<>();
+        currentOrders = new ArrayList<>();
     }
+    public void customerDuties(){
+        System.out.println();
+        System.out.println("Hi " + this.name + " welcome to "+ restaurant.getName()+ "! What would you like to do?");
+        if (currentOrders.size() != 0){
+            checkCurrentOrders();
+        }
+        
+        System.out.println();
+        String selection = "";
+        while (!selection.equals("3")){
+            System.out.println("1: Create new order");
+            System.out.println("2: View previous orders");
+            System.out.println("3: Go back to main menu");
+            System.out.println();
+            System.out.print("Choice: ");
+            selection = scanner.nextLine();
 
+            switch (selection){
+                case "1":
+                    createNewOrder();
+                    break;
+                case "2":
+                    viewPastOrders();
+                    break;
+                case "3":
+                    break;
+                default:
+                    System.out.println("Invalid Option");
+                    break;
+            }
+        }
+    }
+    private void checkCurrentOrders() {
+        Iterator<Order> iterator = currentOrders.iterator();
+
+        while (iterator.hasNext()) {
+            Order o = iterator.next();
+
+            if (o.getStatus().equals("COMPLETE")) {
+                System.out.println("Order number: " + o.getOrderNumber() + " is complete!");
+                pastOrders.add(o);
+                iterator.remove(); // safe removal
+            } else {
+                System.out.println("Order number: " + o.getOrderNumber() + " is: " + o.getStatus());
+            }
+        }
+    }
     public Order getCurrentOrder(){
         return this.currentOrder;
     }
@@ -50,6 +100,7 @@ public class Customer {
             System.out.println("Type the index of the order item you want to add to your order or type 0 to finish your order");
             System.out.print("Choice: ");
             choice = scanner.nextInt();
+            scanner.nextLine();
             if (choice!=0){
                 FoodItem item = restaurant.getMenu().getItem(choice);
                 System.out.println();
@@ -61,15 +112,85 @@ public class Customer {
             currentOrder.printOrder();
             System.out.println();
         }
+        payForOrder();
+        
+    }
+    private void payForOrder(){
         System.out.println();
-        System.out.println("-----CURRENT ORDER-----");
-        currentOrder.setStatus("PENDING PAYMENT");
+        System.out.println("Your order total is: " + currentOrder.calculateTotal());
+        System.out.println("How would you like to pay?");
+        String choice = "";
+        System.out.println("1: Card" );
+        System.out.println("2: Cash");
+        System.out.println("3: Cancel Order");
+        System.out.print("Choice: ");
+        choice = scanner.nextLine();
+        switch (choice){
+            case "1":
+                payWithCard();
+                break;
+            case "2":
+                payWithCash();
+                break;
+            case "3":
+                cancelOrder();
+                break;
+        }
+        
+    }
+    private void payWithCard() { //eventually make this call the payment package
+
+        System.out.println();
+        System.out.print("Enter card number: ");
+        String cardNumber = scanner.nextLine();
+
+        System.out.print("Enter card holder name: ");
+        String cardHolder = scanner.nextLine();
+
+        System.out.print("Enter expiry date (MM/YY): ");
+        String expiryDate = scanner.nextLine();
+
+        System.out.print("Enter CVV: ");
+        String cvv = scanner.nextLine();
+
+        System.out.println();
+        System.out.println("Processing card payment...");
+        System.out.println("Payment successful!");
+        currentOrder.setStatus("PAID");
+        finishCurrentOrder();
+    }
+    private void payWithCash() {
+        System.out.println();
+        double total = currentOrder.calculateTotal();
+        System.out.println("Total amount due: " + total);
+
+        double cashPaid = 0;
+
+        while (cashPaid < total) {
+            System.out.print("Enter cash amount: ");
+            cashPaid = scanner.nextDouble();
+
+            if (cashPaid < total) {
+                System.out.println("Not enough cash. Please pay at least " + total);
+            }
+        }
+
+        double change = cashPaid - total;
+        System.out.println("Payment successful!");
+        System.out.println("Change: " + change);
+        currentOrder.setStatus("PAID");
+
+        scanner.nextLine();
+        finishCurrentOrder();
+    }
+    private void finishCurrentOrder(){
+        System.out.println();
+        System.out.println("-----RECEIPT-----");
         currentOrder.printOrder();
         System.out.println();
         restaurant.addOrder(currentOrder);
-        orders.add(currentOrder);
-        
-        
+        currentOrders.add(currentOrder);
+        this.currentOrder = null;
     }
     public String getPhoneNumber(){
         return this.phoneNumber;
@@ -77,30 +198,19 @@ public class Customer {
     public Restaurant getRestaurant(){
         return this.restaurant;
     }
-    public void viewOrders(){
-        for(Order o: orders){
-            o.printOrder();
+    public void viewPastOrders(){
+        if (pastOrders.size()== 0){
+            System.out.println("No past orders found.");
         }
+        else{
+            for(Order o: pastOrders){
+                o.printOrder();
+            }
+        }   
     }
     public void cancelOrder() {
-        // this.order = null;
+        this.currentOrder = null;
         System.out.println("USER: " + name + " cancelled their order.");
-    }
-
-    public void makePayment() {
-        System.out.println("SYSTEM: " + name + " is processing payment.");
-    }
-
-    public void printOrder() {
-        System.out.println("DISPLAY: Printing receipt for " + name);
-    }
-
-    public void trackOrderStatus() {
-        System.out.println("CHECK: Tracking order for " + name);
-    }
-
-    public void createRating() {
-        System.out.println("USER: " + name + " is submitting a review.");
     }
 
     public String getName(){ 
@@ -110,30 +220,5 @@ public class Customer {
     public void setName(String name){ 
         this.name = name; 
     }
-
-     public String getPhoneNumber() {
-          return phoneNumber;
-      }
-
-      public void setPhoneNumber(String phoneNumber) {
-          this.phoneNumber = phoneNumber;
-      }
-
-      public ArrayList<Order> getOrders() {
-          return orders;
-      }
-
-      public void setOrders(ArrayList<Order> orders) {
-          this.orders = orders;
-      }
-
-      public void setRestaurant(Restaurant restaurant) {
-          this.restaurant = restaurant;
-      }
-
-      @Override
-      public String toString() {
-          return "Customer{name='" + name + "', phoneNumber='" + phoneNumber + "', orders=" + orders.size() + "}";
-      }
 
 }
