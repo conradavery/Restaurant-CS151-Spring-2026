@@ -2,6 +2,7 @@ package users;
 
   import java.util.Scanner;
   import restaurant.Restaurant;
+  import menuAndFoodItems.FoodItem;
 
   public class Manager extends Staff {
 
@@ -110,22 +111,76 @@ package users;
           }
       }
 
-      // Placeholder methods to implement for next few commits
+      // ========== MENU MANAGEMENT METHODS (NOW IMPLEMENTED) ==========
+
       private void addItemToMenu() {
-          System.out.println("Add item - implementation coming next");
+          System.out.print("Enter item name: ");
+          String name = scanner.nextLine();
+
+          System.out.print("Enter calories: ");
+          int calories;
+          try {
+              calories = Integer.parseInt(scanner.nextLine());
+              if (calories < 0) {
+                  System.out.println("Calories cannot be negative.");
+                  return;
+              }
+          } catch (NumberFormatException e) {
+              System.out.println("Invalid number format.");
+              return;
+          }
+
+          System.out.print("Enter price: ");
+          double price;
+          try {
+              price = Double.parseDouble(scanner.nextLine());
+              if (price <= 0) {
+                  System.out.println("Price must be greater than 0.");
+                  return;
+              }
+          } catch (NumberFormatException e) {
+              System.out.println("Invalid price format.");
+              return;
+          }
+
+          FoodItem newItem = new FoodItem(name, calories, price);
+          restaurant.addItemToMenu(newItem);
+          System.out.println(name + " added to menu successfully!");
       }
 
       private void removeItemFromMenu() {
-          System.out.println("Remove item - implementation coming next");
+          System.out.print("Enter item name to remove: ");
+          String name = scanner.nextLine();
+          restaurant.removeItem(name);
+          System.out.println(name + " removed from menu (if it existed).");
       }
 
       private void changeItemPrice() {
-          System.out.println("Change price - implementation coming next");
+          System.out.print("Enter item name: ");
+          String name = scanner.nextLine();
+
+          System.out.print("Enter new price: ");
+          double newPrice;
+          try {
+              newPrice = Double.parseDouble(scanner.nextLine());
+              if (newPrice <= 0) {
+                  System.out.println("Price must be greater than 0.");
+                  return;
+              }
+          } catch (NumberFormatException e) {
+              System.out.println("Invalid price format.");
+              return;
+          }
+
+          restaurant.getMenu().changeItemPrice(name, newPrice);
+          System.out.println("Price updated successfully!");
       }
 
       private void viewMenu() {
           restaurant.showMenu();
       }
+
+      // ========== STAFF MANAGEMENT METHODS (PLACEHOLDERS) ==========
 
       private void hireEmployee() {
           System.out.println("Hire employee - implementation coming next");
