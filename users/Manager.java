@@ -3,6 +3,7 @@ package users;
   import java.util.Scanner;
   import restaurant.Restaurant;
   import menuAndFoodItems.FoodItem;
+  import java.util.ArrayList;
 
   public class Manager extends Staff {
 
@@ -183,10 +184,60 @@ package users;
       // ========== STAFF MANAGEMENT METHODS (PLACEHOLDERS) ==========
 
       private void hireEmployee() {
-          System.out.println("Hire employee - implementation coming next");
+      System.out.print("Enter employee name: ");
+      String empName = scanner.nextLine();
+
+      System.out.print("Enter role (KitchenStaff/Manager): ");
+      String empRole = scanner.nextLine();
+
+      System.out.print("Enter salary: ");
+      double empSalary;
+      try {
+          empSalary = Double.parseDouble(scanner.nextLine());
+          if (empSalary <= 0) {
+              System.out.println("Salary must be greater than 0.");
+              return;
+          }
+      } catch (NumberFormatException e) {
+          System.out.println("Invalid salary format.");
+          return;
       }
 
-      private void viewAllStaff() {
-          System.out.println("View staff - implementation coming next");
+      System.out.print("Enter staff ID: ");
+      String empID = scanner.nextLine();
+
+      // Check if ID already exists
+      if (restaurant.findStaff(empID) != null) {
+          System.out.println("Staff ID already exists!");
+          return;
       }
+
+      Staff newEmployee;
+      if (empRole.equalsIgnoreCase("Manager")) {
+          newEmployee = new Manager(empName, empRole, empSalary, restaurant, empID);
+      } else {
+          newEmployee = new KitchenStaff(empName, empRole, empSalary, restaurant, empID);
+      }
+
+      restaurant.hireEmployee(newEmployee);
+      System.out.println(empName + " hired successfully as " + empRole + "!");
+  }
+
+       private void viewAllStaff() {
+      System.out.println("==== ALL STAFF ====");
+
+      ArrayList<Staff> staffList = restaurant.getStaffList();
+
+      if (staffList == null || staffList.isEmpty()) {
+          System.out.println("No staff members found.");
+          return;
+      }
+
+      System.out.println("ID\tName\t\tRole");
+      System.out.println("--------------------------------");
+      for (Staff s : staffList) {
+          System.out.println(s.getStaffID() + "\t" + s.getName() + "\t\t" + s.getRole());
+      }
+      System.out.println();
+  }
   }
