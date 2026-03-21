@@ -55,7 +55,7 @@ public class KitchenStaff extends Staff{
         scanner.nextLine();
         Order order = restaurant.findOrder(orderID);
         if (order != null){
-            System.out.println("Chaning order to preparing");
+            System.out.println("Changing order to preparing");
             order.setStatus("PREPARING");
         }
         else{
@@ -69,7 +69,7 @@ public class KitchenStaff extends Staff{
         scanner.nextLine();
         Order order = restaurant.findOrder(orderID);
         if (order != null){
-            System.out.println("Chaning order to complete");
+            System.out.println("Changing order to complete");
             order.setStatus("COMPLETE");
         }
         else{

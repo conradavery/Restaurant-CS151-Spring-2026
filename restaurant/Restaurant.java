@@ -66,6 +66,9 @@ public class Restaurant {
         }
         return null;
     }
+     public ArrayList<Staff> getStaffList() {
+      return staffList;
+  }
     public Customer findCustomer(String phoneNumber){
         for (Customer c: customerList){
             if (c.getPhoneNumber().equals(phoneNumber)){

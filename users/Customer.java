@@ -111,4 +111,29 @@ public class Customer {
         this.name = name; 
     }
 
+     public String getPhoneNumber() {
+          return phoneNumber;
+      }
+
+      public void setPhoneNumber(String phoneNumber) {
+          this.phoneNumber = phoneNumber;
+      }
+
+      public ArrayList<Order> getOrders() {
+          return orders;
+      }
+
+      public void setOrders(ArrayList<Order> orders) {
+          this.orders = orders;
+      }
+
+      public void setRestaurant(Restaurant restaurant) {
+          this.restaurant = restaurant;
+      }
+
+      @Override
+      public String toString() {
+          return "Customer{name='" + name + "', phoneNumber='" + phoneNumber + "', orders=" + orders.size() + "}";
+      }
+
 }
