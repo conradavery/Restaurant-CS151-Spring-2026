@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import payment.Payment;
+import utilities.SystemLimits;
 
 public class Order {
+
+    private static int instanceCounter = 0;
 
     private String orderId;
     private Customer customer;
@@ -39,6 +42,15 @@ public class Order {
         this.payment = payment;
         this.orderNumber = orderNumber;
         this.totalPrice = calculateTotal();
+    }
+
+    public static Order createOrder(String orderId, Customer customer, List<MenuItem> items, String orderType, 
+        String status, Payment payment, int orderNumber) {
+        if (instanceCounter >= SystemLimits.MAXIMUM_INSTANCES) {
+            throw new IllegalStateException("Maximum number of Order instances reached.");
+        }
+        instanceCounter++;
+        return new Order(orderId, customer, items, orderType, status, payment, orderNumber);
     }
 
     public void addItem(MenuItem item) {

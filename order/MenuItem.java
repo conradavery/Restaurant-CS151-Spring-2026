@@ -1,6 +1,10 @@
 package order;
 
+import utilities.SystemLimits;
+
 public class MenuItem {
+
+    private static int instanceCounter = 0;
     
     private String name;
     private int calories;
@@ -14,6 +18,14 @@ public class MenuItem {
         this.price = price;
         this.menuItemId = menuItemId;
         this.quantity = quantity;
+    }
+
+    public static MenuItem createMenuItem(String name, int calories, double price, String menuItemId, int quantity) {
+        if (instanceCounter >= SystemLimits.MAXIMUM_INSTANCES) {
+            throw new IllegalStateException("Maximum number of MenuItem instances reached.");
+        }
+        instanceCounter++;
+        return new MenuItem(name, calories, price, menuItemId, quantity);
     }
 
     public void updatePrice(double newPrice) {
