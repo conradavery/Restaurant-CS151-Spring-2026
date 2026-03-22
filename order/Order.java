@@ -99,7 +99,7 @@ public class Order {
         receipt.append("Order Type: ").append(orderType).append("\n");
         receipt.append("Items:\n");
         for (MenuItem item : items) {
-            receipt.append("- ").append(item.getFoodItem()).append(" x").append(item.getQuantity()).append(" @ $").append(item.getPrice()).append("\n");
+            receipt.append("- ").append(item.getName()).append(" x").append(item.getQuantity()).append(" @ $").append(item.getPrice()).append("\n");
         }
         receipt.append("Total Price: $").append(totalPrice).append("\n");
         receipt.append("Payment Method: ").append(payment != null ? payment.getPaymentMethod() : "N/A").append("\n");
