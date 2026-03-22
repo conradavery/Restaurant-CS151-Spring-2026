@@ -4,7 +4,7 @@ import order.Order;
 
 public interface Payable {
 
-    void processPayment(double amount);
+    void processPayment();
 
     void refund();
 
@@ -13,4 +13,6 @@ public interface Payable {
     void markPaid();
 
     String generateReceipt(Order order);
+
+    String getPaymentMethod();
 }

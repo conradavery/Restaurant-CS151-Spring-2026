@@ -18,12 +18,21 @@ public class CardPayment implements Payable {
 
     @Override
     public void processPayment() {
+        if (!validatePayment()){
+            System.out.println("Payment validation failed. Cannot process payment.");
+            return;
+        }
+        
         System.out.println("Processing card payment...");
         isPaid = true;
     }
 
     @Override
     public void refund() {
+        if (!isPaid){
+            System.out.println("Payment has not been made. Cannot process refund.");
+            return;
+        }
         System.out.println("Refunding card payment...");
         isPaid = false;
     }
@@ -59,5 +68,4 @@ public class CardPayment implements Payable {
     public double getAmount() {
         return amount;
     }
-
 }
