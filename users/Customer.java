@@ -185,6 +185,7 @@ public class Customer {
         UI.printHeader("RECEIPT");
         currentOrder.printOrder();
         System.out.println();
+        restaurant.addToRevenue(currentOrder.calculateTotal());
         restaurant.addOrder(currentOrder);
         currentOrders.add(currentOrder);
         this.currentOrder = null;

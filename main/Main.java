@@ -17,10 +17,11 @@ public class Main {
         String selection = "";
         while (!selection.equals("4")){
             UI.printHeader(restaurant.getName().toUpperCase());
+            restaurant.printInfo();
             UI.printSection("MAIN MENU");
             System.out.println("1) Customer");
             System.out.println("2) Employee Login");
-            System.out.println("3) View Menu");
+            System.out.println("3) View Menu");//change this to view ratings eventually, by eventually i mean like tonight
             System.out.println("4) Quit");
             System.out.print("Selection: ");
             selection = scanner.nextLine();
@@ -36,10 +37,10 @@ public class Main {
                 case "3": 
                     restaurant.showMenu();
                     break;
-                case "exit":
+                case "4":
                     break;
                 default: 
-                    System.out.println("Invalid Choice");
+                    UI.error("Invalid Choice");
                     break;
             }
         }
