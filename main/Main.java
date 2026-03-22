@@ -69,12 +69,19 @@ public class Main {
         String role = "Cook";
         Double salary = 5.00;
         String staffID = "111";
-        Staff cook = new KitchenStaff(name, role, salary, outAndIn, staffID);
+        Staff cook = new KitchenStaff(staffName, role, salary, outAndIn, staffID);
         restaurant.hireEmployee(cook);
+
+        String managerName = "Bob";
+        String bobrole = "Manager";
+        Double bobSalar = 10.00;
+        String bobStaffID = "333";
+        Staff manager = new Manager(managerName, bobrole, bobSalar, outAndIn, bobStaffID);
+        restaurant.hireEmployee(manager);
 
     }
 
-    private static void customerPortal(){
+    private static void customerPortal(){ 
         System.out.print("Enter your phone number: ");
         String phoneNumber = scanner.nextLine();
         Customer customer = restaurant.findCustomer(phoneNumber);
@@ -85,38 +92,7 @@ public class Main {
             customer = new Customer(name, phoneNumber, restaurant);
             restaurant.addCustomer(customer);
         }
-        if (customer.getCurrentOrder() != null){
-            if(customer.getCurrentOrder().getStatus().equals("COMPLETE")){
-            System.out.println("Your order is ready to pickup");
-            customer.recieveOrder();
-            }
-        }
-        System.out.println();
-        System.out.println("Hi " + customer.getName() + " welcome to "+ restaurant.getName()+ "! What would you like to do?");
-        System.out.println();
-        String selection = "";
-        while (!selection.equals("3")){
-            System.out.println("1: Create new order");
-            System.out.println("2: View previous orders");
-            System.out.println("3: Go back to main menu");
-            System.out.println();
-            System.out.print("Choice: ");
-            selection = scanner.nextLine();
-
-            switch (selection){
-                case "1":
-                    customer.createNewOrder();
-                    break;
-                case "2":
-                    customer.viewOrders();
-                    break;
-                case "3":
-                    break;
-                default:
-                    System.out.println("Invalid Option");
-                    break;
-            }
-        }
+        customer.customerDuties();
 
     }
 

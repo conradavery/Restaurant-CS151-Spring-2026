@@ -1,6 +1,5 @@
 package order;
 
-import users.*;
 import java.util.ArrayList;
 import menuAndFoodItems.FoodItem;
 public class Order{
