@@ -5,6 +5,7 @@ import menuAndFoodItems.*;
 import java.util.Scanner;
 import users.*;
 import order.Order;
+import utilities.UI;
 // import order.*;
 
 public class Restaurant {
@@ -52,7 +53,7 @@ public class Restaurant {
         menu.removeItem(name);
     }
     public void showMenu(){
-        System.out.println(this.name + " Menu:");
+        UI.printHeader(getName() + " Menu");
         menu.printMenu();
     }
     public void hireEmployee(Staff staff){
@@ -68,7 +69,7 @@ public class Restaurant {
     }
      public ArrayList<Staff> getStaffList() {
       return staffList;
-  }
+    } 
     public Customer findCustomer(String phoneNumber){
         for (Customer c: customerList){
             if (c.getPhoneNumber().equals(phoneNumber)){
@@ -93,21 +94,8 @@ public class Restaurant {
         }
         return null;
     }
-
-    // public Staff findSaff(String staffID){
-    //     // for (Staff s: staffList){
-    //     //     if(s.getStaffID.equals(staffID)){
-    //     //         return s;
-    //     //     }
-    //     // }
-    //     // return null;
-    // }
     public void addCustomer(Customer customer){
         customerList.add(customer);
     }
-    public void takeOrder(){
-
-    }
-
     
 }

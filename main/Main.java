@@ -3,6 +3,7 @@ package main;
 
 import restaurant.Restaurant;
 import java.util.Scanner;
+import utilities.UI;
 // import java.util.ArrayList;
 import users.*;
 import menuAndFoodItems.*;
@@ -13,15 +14,14 @@ public class Main {
 
     public static void main(String [] args){
         createInitial();
-        System.out.println();
-        System.out.println("-------" + restaurant.getName().toUpperCase()+ "-------");
         String selection = "";
-        while (!selection.equals("exit")){
-            System.out.println("Choose an option:");
-            System.out.println("1: Customer");
-            System.out.println("2: Employee Login");
-            System.out.println("3: View Menu");
-            System.out.println("Type 'exit' to quit");
+        while (!selection.equals("4")){
+            UI.printHeader(restaurant.getName().toUpperCase());
+            UI.printSection("MAIN MENU");
+            System.out.println("1) Customer");
+            System.out.println("2) Employee Login");
+            System.out.println("3) View Menu");
+            System.out.println("4) Quit");
             System.out.print("Selection: ");
             selection = scanner.nextLine();
             System.out.println();
@@ -66,7 +66,7 @@ public class Main {
         outAndIn.addItemToMenu(milkeShake);
 
         String staffName = "Steve";
-        String role = "Cook";
+        String role = "KitchenStaff";
         Double salary = 5.00;
         String staffID = "111";
         Staff cook = new KitchenStaff(staffName, role, salary, outAndIn, staffID);
@@ -82,28 +82,34 @@ public class Main {
     }
 
     private static void customerPortal(){ 
+        UI.printSection("CUSTOMER LOGIN");
         System.out.print("Enter your phone number: ");
-        String phoneNumber = scanner.nextLine();
+        String phoneNumber = scanner.nextLine().trim();
         Customer customer = restaurant.findCustomer(phoneNumber);
-        if (customer == null){
-            System.out.println("Phone number not found. Creating a new account");
+        if (customer == null) {
+            UI.info("Phone number not found. Creating a new account.");
             System.out.print("Enter name: ");
-            String name = scanner.nextLine();
+            String name = scanner.nextLine().trim();
             customer = new Customer(name, phoneNumber, restaurant);
             restaurant.addCustomer(customer);
+            UI.success("Account created successfully.");
+        } else {
+            UI.success("Welcome back, " + customer.getName() + ".");
         }
         customer.customerDuties();
 
     }
 
     private static void employeePortal(){
+        UI.printSection("EMPLOYEE LOGIN");
         System.out.print("Enter your staff ID: ");
-        String staffID = scanner.nextLine();
+        String staffID = scanner.nextLine().trim();
         Staff staff = restaurant.findStaff(staffID);
-        if (staff == null){
-            System.out.println("Invalid ID");
+        if (staff == null) {
+            UI.error("Invalid staff ID.");
             return;
         }
+        UI.success("Login successful. Welcome, " + staff.getName() + ".");
         staff.performDuties();
     }
 

@@ -2,6 +2,7 @@ package menuAndFoodItems;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import utilities.UI;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
@@ -32,10 +33,12 @@ public class Menu {
             }
         }
     }
-    public void printMenu(){
-        for (int i=0; i<items.size();i++){
-            System.out.println((i+1) + ": " + items.get(i).getName() + " $" + items.get(i).getPrice() + ", calories: " + items.get(i).getCalories());
+    public void printMenu() {
+        for (int i = 0; i < items.size(); i++) {
+            FoodItem item = items.get(i);
+            System.out.printf("%-3s %-20s %10s   %s%n",(i + 1) + ")",item.getName(),UI.money(item.getPrice()),"(" + item.getCalories() + " cal)");
         }
+        System.out.println("----------------------------------------");
     }
     
 }
