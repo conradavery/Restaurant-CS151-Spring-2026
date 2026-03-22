@@ -2,6 +2,7 @@ package order;
 
 import java.util.ArrayList;
 import menuAndFoodItems.FoodItem;
+import utilities.UI;
 public class Order{
 
     // private String orderID;
@@ -35,12 +36,13 @@ public class Order{
         }
         return total;
     }
-    public void printOrder(){
+    public void printOrder() {
         System.out.println("ORDER NUMBER: " + getOrderNumber());
-        for(FoodItem f: items){
-            System.out.println(f.getName() + "\t" + "$"+ f.getPrice());
+        for (FoodItem f : items) {
+            System.out.printf("%-25s %10s%n", f.getName(), UI.money(f.getPrice()));
         }
-        System.out.println("Total cost: $" + calculateTotal());
+        System.out.println("----------------------------------------");
+        System.out.printf("%-25s %10s%n", "Total cost:", UI.money(calculateTotal()));
         System.out.println("STATUS: " + this.status);
     }
 

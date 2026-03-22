@@ -9,6 +9,7 @@ import java.util.Iterator;
 import menuAndFoodItems.FoodItem;
 import order.Order;
 import java.util.ArrayList;
+import utilities.UI;
 
 public class Customer {
 
@@ -33,18 +34,19 @@ public class Customer {
     }
     public void customerDuties(){
         System.out.println();
-        System.out.println("Hi " + this.name + " welcome to "+ restaurant.getName()+ "! What would you like to do?");
-        if (currentOrders.size() != 0){
-            checkCurrentOrders();
-        }
-        
+        System.out.println();
         System.out.println();
         String selection = "";
         while (!selection.equals("3")){
-            System.out.println("1: Create new order");
-            System.out.println("2: View previous orders");
-            System.out.println("3: Go back to main menu");
+            UI.printHeader("CUSTOMER MENU");
+            if (currentOrders.size() != 0){
+            checkCurrentOrders();
+            }
+            System.out.println("Hi " + this.name +  "! What would you like to do?");
             System.out.println();
+            System.out.println("1) Create new order");
+            System.out.println("2) View previous orders");
+            System.out.println("3) Go back to main menu");
             System.out.print("Choice: ");
             selection = scanner.nextLine();
 
@@ -58,23 +60,24 @@ public class Customer {
                 case "3":
                     break;
                 default:
-                    System.out.println("Invalid Option");
+                    UI.error("Invalid option.");
                     break;
             }
         }
     }
     private void checkCurrentOrders() {
         Iterator<Order> iterator = currentOrders.iterator();
-
+        UI.printSection("CURRENT PENDING ORDERS");
         while (iterator.hasNext()) {
             Order o = iterator.next();
 
             if (o.getStatus().equals("COMPLETE")) {
-                System.out.println("Order number: " + o.getOrderNumber() + " is complete!");
+                UI.success("Order number " + o.getOrderNumber() + " is ready for pickup!");
                 pastOrders.add(o);
                 iterator.remove(); // safe removal
             } else {
-                System.out.println("Order number: " + o.getOrderNumber() + " is: " + o.getStatus());
+                UI.info("Order number " + o.getOrderNumber() + " is " + o.getStatus());
+                System.out.println();
             }
         }
     }
@@ -83,7 +86,6 @@ public class Customer {
     }
     public void createNewOrder() {
         System.out.println();
-        System.out.println("USER: " + name + " started a new order.");
         currentOrder = new Order();
         currentOrder.setStatus("IN PROGRESS");
         buildOrder();
@@ -92,39 +94,35 @@ public class Customer {
         this.currentOrder = null;
     }
     public void buildOrder(){
-        System.out.println();
         restaurant.showMenu();
-        System.out.println();
         int choice = -1;
         while (choice != 0){
-            System.out.println("Type the index of the order item you want to add to your order or type 0 to finish your order");
+            UI.printSection("BUILD YOUR ORDER");
+            System.out.println("Enter an item number to add it");
+            System.out.println("Enter 0 to finish your order");
             System.out.print("Choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
             if (choice!=0){
                 FoodItem item = restaurant.getMenu().getItem(choice);
                 System.out.println();
-                System.out.println("Adding " + item.getName()+ " to order.");
+                UI.success(item.getName() + " added to your order.");
                 currentOrder.addItemToOrder(item);
             }
-            System.out.println();
-            System.out.println("-----CURRENT ORDER-----");
+            UI.printHeader("CURRENT ORDER");
             currentOrder.printOrder();
-            System.out.println();
         }
         payForOrder();
         
     }
     private void payForOrder(){
-        System.out.println();
-        System.out.println("Your order total is: " + currentOrder.calculateTotal());
-        System.out.println("How would you like to pay?");
-        String choice = "";
-        System.out.println("1: Card" );
-        System.out.println("2: Cash");
-        System.out.println("3: Cancel Order");
+        UI.printSection("PAYMENT");
+        UI.info("Your order total is: " + UI.money(currentOrder.calculateTotal()));
+        System.out.println("1) Card");
+        System.out.println("2) Cash");
+        System.out.println("3) Cancel Order");
         System.out.print("Choice: ");
-        choice = scanner.nextLine();
+        String choice = scanner.nextLine();
         switch (choice){
             case "1":
                 payWithCard();
@@ -183,9 +181,8 @@ public class Customer {
         scanner.nextLine();
         finishCurrentOrder();
     }
-    private void finishCurrentOrder(){
-        System.out.println();
-        System.out.println("-----RECEIPT-----");
+    private void finishCurrentOrder(){ //add a gerenetate receipt as part of a payable class??
+        UI.printHeader("RECEIPT");
         currentOrder.printOrder();
         System.out.println();
         restaurant.addOrder(currentOrder);
@@ -199,18 +196,20 @@ public class Customer {
         return this.restaurant;
     }
     public void viewPastOrders(){
+        UI.printSection("PAST ORDERS");
         if (pastOrders.size()== 0){
-            System.out.println("No past orders found.");
+            UI.info("No past orders found.");
         }
         else{
             for(Order o: pastOrders){
                 o.printOrder();
+                System.out.println();
             }
         }   
     }
     public void cancelOrder() {
         this.currentOrder = null;
-        System.out.println("USER: " + name + " cancelled their order.");
+        UI.success("Order cancelled");
     }
 
     public String getName(){ 
