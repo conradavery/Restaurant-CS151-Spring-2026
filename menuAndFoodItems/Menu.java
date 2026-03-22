@@ -2,6 +2,7 @@ package menuAndFoodItems;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import utilities.UI;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
@@ -11,17 +12,11 @@ public class Menu {
         this.items = new ArrayList<>();
     }
 
-    public void addItem(){
-        System.out.println("What is the food item's name: ");
-        String name = scanner.nextLine();
-        System.out.println("How many calories is the food item: ");
-        int calories = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("What is the food item's price: ");
-        double price = scanner.nextDouble();
-        scanner.nextLine();
-        FoodItem item = new FoodItem(name, calories, price);
-        items.add(item);
+    public void addItem(FoodItem foodItem){
+        items.add(foodItem);
+    }
+    public FoodItem getItem(int index){
+        return items.get(index -1);
     }
     public void removeItem(String name){
         for (FoodItem f: items){
@@ -31,10 +26,19 @@ public class Menu {
             }
         }
     }
-    public void printMenu(){
+    public void changeItemPrice(String name, Double price){
         for (FoodItem f: items){
-            System.out.println(f.getName() + " price: " + f.getPrice() + " calories: " + f.getCalories());
+            if (f.getName().equals(name)){
+                f.changePrice(price);
+            }
         }
+    }
+    public void printMenu() {
+        for (int i = 0; i < items.size(); i++) {
+            FoodItem item = items.get(i);
+            System.out.printf("%-3s %-20s %10s   %s%n",(i + 1) + ")",item.getName(),UI.money(item.getPrice()),"(" + item.getCalories() + " cal)");
+        }
+        System.out.println("----------------------------------------");
     }
     
 }
