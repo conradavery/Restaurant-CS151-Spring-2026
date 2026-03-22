@@ -10,6 +10,7 @@ import menuAndFoodItems.FoodItem;
 import order.Order;
 import java.util.ArrayList;
 import utilities.UI;
+import ratings.Rating;
 
 public class Customer {
 
@@ -22,6 +23,7 @@ public class Customer {
     private String phoneNumber;
     private Restaurant restaurant;
     private static Scanner scanner = new Scanner(System.in);
+    private Rating rating;
 
 
     public Customer(String name, String phoneNumber, Restaurant restaurant){
@@ -31,13 +33,14 @@ public class Customer {
         this.currentOrder = null;
         pastOrders = new ArrayList<>();
         currentOrders = new ArrayList<>();
+        this.rating = null;
     }
     public void customerDuties(){
         System.out.println();
         System.out.println();
         System.out.println();
         String selection = "";
-        while (!selection.equals("3")){
+        while (!selection.equals("4")){
             UI.printHeader("CUSTOMER MENU");
             if (currentOrders.size() != 0){
             checkCurrentOrders();
@@ -46,7 +49,8 @@ public class Customer {
             System.out.println();
             System.out.println("1) Create new order");
             System.out.println("2) View previous orders");
-            System.out.println("3) Go back to main menu");
+            System.out.println("3) Leave rating");
+            System.out.println("4) Go back to main menu");
             System.out.print("Choice: ");
             selection = scanner.nextLine();
 
@@ -58,11 +62,54 @@ public class Customer {
                     viewPastOrders();
                     break;
                 case "3":
+                    checkRating();
+                    break;
+                case "4":
                     break;
                 default:
                     UI.error("Invalid option.");
                     break;
             }
+        }
+    }
+    private void checkRating(){
+        if (this.rating == null){
+            leaveNewRating();
+        } else{
+            changeRating();
+        }
+    }
+    private void leaveNewRating(){
+        UI.printSection("WRITING RATING");
+        System.out.print("What is your rating out of 5: ");
+        int stars = scanner.nextInt();
+        scanner.nextLine();
+        if (stars > 5 || stars < 0){
+            UI.error("Rating must be between 0 and 5");
+            return;
+        }
+        System.out.print("Message (Optional): ");
+        String message = scanner.nextLine();
+        this.rating = new Rating(this.name, stars, message);
+        restaurant.addRating(rating);
+        UI.success("Left rating!");
+    }
+    private void changeRating(){
+        UI.printSection("CHANGING RATING");
+        System.out.println("You have already left a rating.");
+        System.out.println("1) Change rating.");
+        System.out.println("2) Return");
+        System.out.print("Choice: ");
+        String choice = scanner.nextLine();
+        switch (choice){
+            case "1":
+                restaurant.removeRating(rating);
+                leaveNewRating();
+                break;
+            case "2":
+                break;
+            default:
+                break;
         }
     }
     private void checkCurrentOrders() {

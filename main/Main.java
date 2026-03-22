@@ -7,6 +7,7 @@ import utilities.UI;
 // import java.util.ArrayList;
 import users.*;
 import menuAndFoodItems.*;
+import ratings.Rating;
 public class Main {
     
     private static Scanner scanner = new Scanner(System.in);
@@ -21,7 +22,7 @@ public class Main {
             UI.printSection("MAIN MENU");
             System.out.println("1) Customer");
             System.out.println("2) Employee Login");
-            System.out.println("3) View Menu");//change this to view ratings eventually, by eventually i mean like tonight
+            System.out.println("3) View Ratings");//change this to view ratings eventually, by eventually i mean like tonight
             System.out.println("4) Quit");
             System.out.print("Selection: ");
             selection = scanner.nextLine();
@@ -35,7 +36,7 @@ public class Main {
                     employeePortal();
                     break;
                 case "3": 
-                    restaurant.showMenu();
+                    restaurant.printRatings();
                     break;
                 case "4":
                     break;
@@ -79,6 +80,12 @@ public class Main {
         String bobStaffID = "333";
         Staff manager = new Manager(managerName, bobrole, bobSalar, outAndIn, bobStaffID);
         restaurant.hireEmployee(manager);
+
+        String customerName = "Conrad";
+        int stars = 5;
+        String message = "This restaurant is so good if someone made this into an assignment I would give them 100%!!!!!";
+        Rating rating = new Rating(customerName, stars, message);
+        restaurant.addRating(rating);
 
     }
 

@@ -6,7 +6,7 @@ import java.util.Scanner;
 import users.*;
 import order.Order;
 import utilities.UI;
-// import order.*;
+import ratings.Rating;
 
 public class Restaurant {
     private String name;
@@ -17,7 +17,7 @@ public class Restaurant {
     private ArrayList<Customer> customerList;
     private ArrayList<Order> orders; 
     private double revenue;
-    // private ArrayList<Rating> ratings; Implement later
+    private ArrayList<Rating> ratings;
     // private static int restaurantCount = 0;
 
     Scanner scanner = new Scanner(System.in);
@@ -31,6 +31,7 @@ public class Restaurant {
         orders = new ArrayList<>();
         customerList = new ArrayList<>();
         this.revenue = 0.00;
+        this.ratings = new ArrayList<>();
         // restaurantCount ++;
     }
     public Menu getMenu(){
@@ -38,6 +39,24 @@ public class Restaurant {
     }
     public void printInfo(){
         System.out.println("Address: " + address + "\nPhone number: " + phoneNumber);
+    }
+    public void addRating(Rating rating){
+        ratings.add(rating);
+    }
+    public void removeRating(Rating rating){
+        ratings.remove(rating);
+    }
+    public void printRatings(){
+        UI.printHeader("RATINGS");
+        if (ratings.size() == 0){
+            UI.info("No ratings have been left yet.");
+        }
+        else{
+            for (Rating r: ratings){
+                r.printRating();
+                System.out.println();
+            }
+        }
     }
     @Override
     public String toString(){

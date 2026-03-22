@@ -1,19 +1,24 @@
 package ratings;
 
-import users.Customer;
 public class Rating {
     
     private int stars;
     private String message;
-    private Customer customer;
+    private String name;
 
-    public Rating(Customer customer, int stars, String message){
-        this.customer = customer;
+    public Rating(String name, int stars, String message){
+        this.name = name;
         this.stars = stars;
         this.message = message;
     }
     public void printRating(){
-        System.out.println(customer.getName() + " - " + this.stars);
+        System.out.println(this.name + " - " + this.stars + "/5");
         System.out.println(message);
+    }
+    public void changeRating(int stars){
+        this.stars = stars;
+    }
+    public void changeMessage(String message){
+        this.message = message;
     }
 }
