@@ -18,12 +18,14 @@ import menuAndFoodItems.FoodItem;
 
       @Override
       public void performDuties() {
+        // Need to add fire employees, manage restaurant
           String choice = "";
-          while (!choice.equals("3")) {
+          while (!choice.equals("4")) {
             UI.printHeader("MANAGER MENU");
             System.out.println("1: Manage Menu");
             System.out.println("2: Manage Staff");
-            System.out.println("3: Go back");
+            System.out.println("3: Manage Restaurant");
+            System.out.println("4: Go back");
             System.out.println();
               System.out.print("Choice: ");
               choice = scanner.nextLine();
@@ -36,7 +38,9 @@ import menuAndFoodItems.FoodItem;
                   case "2":
                       manageStaff();
                       break;
-                  case "3":
+                case "3":
+                    manageRestaurant();
+                  case "4":
                       break;
                   default:
                       UI.error("Invalid choice");
@@ -86,11 +90,13 @@ import menuAndFoodItems.FoodItem;
       private void manageStaff() {
           
           String choice = "";
-          while (!choice.equals("3")) {
+          while (!choice.equals("5")) {
             UI.printHeader("STAFF MANAGEMENT");
-            System.out.println("1: Hire new employee");
-            System.out.println("2: View all staff");
-            System.out.println("3: Go back");
+            System.out.println("1: View all staff");
+            System.out.println("2: Hire new staff");
+            System.out.println("3: Fire staff");
+            System.out.println("4: Increase staff salary");
+            System.out.println("5: Go back");
             System.out.println();
               System.out.print("Choice: ");
               choice = scanner.nextLine();
@@ -98,13 +104,19 @@ import menuAndFoodItems.FoodItem;
 
               switch (choice) {
                   case "1":
-                      hireEmployee();
-                      break;
-                  case "2":
                       viewAllStaff();
                       break;
-                  case "3":
+                  case "2":
+                      hireEmployee();
                       break;
+                  case "3":
+                        fireStaff();
+                      break;
+                case "4":
+                    increaseSalary();
+                    break;
+                case "5":
+                    break;
                   default:
                       UI.error("Invalid choice");
                       break;
@@ -112,6 +124,53 @@ import menuAndFoodItems.FoodItem;
           }
       }
 
+      private void manageRestaurant(){ 
+            String choice = "";
+          while (!choice.equals("4")) {
+            UI.printHeader("RESTAURANT MANAGEMENT");
+            System.out.println("1: Change phone number");
+            System.out.println("2: Change address");
+            System.out.println("3: View revenue"); 
+            System.out.println("4: Go back");
+            System.out.println();
+              System.out.print("Choice: ");
+              choice = scanner.nextLine();
+              System.out.println();
+
+              switch (choice) {
+                  case "1":
+                      changePhoneNumber();
+                      break;
+                  case "2":
+                      changeAddress();
+                      break;
+                  case "3":
+                        viewRevenue();
+                      break;
+                case "4":
+                    break;
+                  default:
+                      UI.error("Invalid choice");
+                      break;
+              }
+          }
+      }
+      private void viewRevenue(){
+        UI.printSection("REVENUE");
+        restaurant.printRevenue();
+      }
+      private void changePhoneNumber(){
+        System.out.print("Enter the new phone number: ");
+        String number = scanner.nextLine();
+        restaurant.setPhoneNumber(number);
+        UI.success("Phone number changed");
+      }
+      private void changeAddress(){
+        System.out.print("Enter the new address: ");
+        String address = scanner.nextLine();
+        restaurant.setAddress(address);
+        UI.success("Address changed");
+      }
       // ========== MENU MANAGEMENT METHODS (NOW IMPLEMENTED) ==========
 
       private void addItemToMenu() {
@@ -183,7 +242,7 @@ import menuAndFoodItems.FoodItem;
 
       // ========== STAFF MANAGEMENT METHODS (PLACEHOLDERS) ==========
 
-      private void hireEmployee() {
+      private void hireEmployee() { 
       System.out.print("Enter employee name: ");
       String empName = scanner.nextLine();
 
@@ -222,7 +281,33 @@ import menuAndFoodItems.FoodItem;
       restaurant.hireEmployee(newEmployee);
       UI.success(empName + " hired successfully as " + empRole + "!");
   }
-
+        private void fireStaff(){
+            System.out.print("What is the Staff ID: ");
+            String ID = scanner.nextLine();
+            Staff fired = restaurant.findStaff(ID);
+            if (fired.getRole().equals("Manager")){
+                UI.error("You can not fire another manager");
+            }
+            else{
+            restaurant.fireStaff(fired);
+            UI.success("Fired " + fired.getName());
+            }
+        }
+        private void increaseSalary(){
+            System.out.print("What is the Staff ID: ");
+            String ID = scanner.nextLine();
+            Staff raise = restaurant.findStaff(ID);
+            if (raise.getRole().equals("Manager")){
+                UI.error("You can not raise another manager's salary");
+            }
+            else{
+                System.out.print("What is the new salary for the staff: ");
+                double newSalary = scanner.nextDouble();
+                scanner.nextLine();
+            raise.setSalary(newSalary);
+            UI.success("Gave raised to " + raise.getName());
+            }
+        }
        private void viewAllStaff() {
       UI.printHeader("ALL STAFF");
 
@@ -233,11 +318,13 @@ import menuAndFoodItems.FoodItem;
           return;
       }
 
-      System.out.println("ID\tName\t\tRole");
+      System.out.println("ID\tName\tSalary\tRole");
       System.out.println("--------------------------------");
       for (Staff s : staffList) {
-          System.out.println(s.getStaffID() + "\t" + s.getName() + "\t\t" + s.getRole());
+          System.out.println(s.getStaffID() + "\t" + s.getName() + "\t" + UI.money(s.getSalary())+ "\t" + s.getRole());
       }
       System.out.println();
   }
   }
+
+  

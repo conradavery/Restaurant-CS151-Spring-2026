@@ -6,7 +6,7 @@ import java.util.Scanner;
 import users.*;
 import order.Order;
 import utilities.UI;
-// import order.*;
+import ratings.Rating;
 
 public class Restaurant {
     private String name;
@@ -16,8 +16,8 @@ public class Restaurant {
     private ArrayList<Staff> staffList;
     private ArrayList<Customer> customerList;
     private ArrayList<Order> orders; 
-    // private double revenue;
-    // private ArrayList<Rating> ratings; Implement later
+    private double revenue;
+    private ArrayList<Rating> ratings;
     // private static int restaurantCount = 0;
 
     Scanner scanner = new Scanner(System.in);
@@ -30,14 +30,43 @@ public class Restaurant {
         staffList = new ArrayList<>();
         orders = new ArrayList<>();
         customerList = new ArrayList<>();
+        this.revenue = 0.00;
+        this.ratings = new ArrayList<>();
         // restaurantCount ++;
     }
     public Menu getMenu(){
         return this.menu; //maybe not safe? return a copy?
     }
+    public void printInfo(){
+        System.out.println("Address: " + address + "\nPhone number: " + phoneNumber);
+    }
+    public void addRating(Rating rating){
+        ratings.add(rating);
+    }
+    public void removeRating(Rating rating){
+        ratings.remove(rating);
+    }
+    public void printRatings(){
+        UI.printHeader("RATINGS");
+        if (ratings.size() == 0){
+            UI.info("No ratings have been left yet.");
+        }
+        else{
+            for (Rating r: ratings){
+                r.printRating();
+                System.out.println();
+            }
+        }
+    }
     @Override
     public String toString(){
         return this.name + " Address: " + this.address + " Phone Number: " + this.phoneNumber;
+    }
+    public void addToRevenue(Double amount){
+        this.revenue += amount;
+    }
+    public void printRevenue(){
+        System.out.println(getName() + " revenue: " + UI.money(revenue));
     }
     public void createMenu(){
         Menu menu = new Menu();
@@ -69,6 +98,9 @@ public class Restaurant {
     }
      public ArrayList<Staff> getStaffList() {
       return staffList;
+    }
+    public void fireStaff(Staff staff){
+        staffList.remove(staff);
     } 
     public Customer findCustomer(String phoneNumber){
         for (Customer c: customerList){
@@ -84,6 +116,7 @@ public class Restaurant {
     public void viewOrders(){
         for (Order o: orders){
             o.printOrder();
+            System.out.println();
         }
     }
     public Order findOrder(int orderID){
@@ -98,4 +131,10 @@ public class Restaurant {
         customerList.add(customer);
     }
     
+    public void setAddress(String address){
+        this.address = address;
+    }
+    public void setPhoneNumber(String number){
+        this.phoneNumber = number;
+    }
 }
