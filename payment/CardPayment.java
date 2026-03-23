@@ -13,6 +13,19 @@ public class CardPayment implements Payable {
     private String cvv;
     private static Scanner scanner = new Scanner(System.in);
 
+    public String getCardNumber(){
+        return cardNumber;
+    }
+    public String getCardHolder(){
+        return cardHolder;
+    }
+    public String getExpiryDate(){
+        return expiryDate;
+    }
+    public String getCVV(){
+        return cvv;
+    }
+
     @Override
     public void processPayment(Order order) {
         UI.printHeader("CARD PAYMENT");
