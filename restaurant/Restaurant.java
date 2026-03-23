@@ -45,8 +45,11 @@ public class Restaurant {
         this.menu = menu;
     }
 
-    public Menu getMenu() {
-        return this.menu; // maybe not safe? return a copy?
+    // public Menu getMenu() {
+    //     return this.menu; // maybe not safe? return a copy?
+    // }
+    public FoodItem getMenuItem(int choice){
+        return menu.getItem(choice);
     }
 
     public void addItemToMenu(FoodItem foodItem) {
@@ -98,6 +101,10 @@ public class Restaurant {
         }
         return null;
     }
+    public void processOrder(Order order){
+        addToRevenue(order.calculateTotal());
+        addOrder(order);
+    }
     // Rating section
     public void addRating(Rating rating) {
         ratings.add(rating);
@@ -141,7 +148,7 @@ public class Restaurant {
     }
 
     public ArrayList<Staff> getStaffList() {
-        return staffList;
+        return new ArrayList<>(staffList);
     }
 
     public void fireStaff(Staff staff) {

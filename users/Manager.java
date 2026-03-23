@@ -40,6 +40,7 @@ public class Manager extends Staff {
                     break;
                 case "3":
                     manageRestaurant();
+                    break;
                 case "4":
                     break;
                 default:
@@ -285,7 +286,7 @@ public class Manager extends Staff {
     private void fireStaff() {
         System.out.print("What is the Staff ID: ");
         String ID = scanner.nextLine();
-        Staff fired = restaurant.findStaff(ID);
+        Staff fired = restaurant.findStaff(ID); //add exception here if staff doesnt exist
         if (fired.getRole().equals("Manager")) {
             UI.error("You can not fire another manager");
         } else {
@@ -297,7 +298,7 @@ public class Manager extends Staff {
     private void increaseSalary() {
         System.out.print("What is the Staff ID: ");
         String ID = scanner.nextLine();
-        Staff raise = restaurant.findStaff(ID);
+        Staff raise = restaurant.findStaff(ID); //add exception here if staff no exist
         if (raise.getRole().equals("Manager")) {
             UI.error("You can not raise another manager's salary");
         } else {

@@ -59,7 +59,7 @@ public class KitchenStaff extends Staff{
         Order order = restaurant.findOrder(orderID);
         if (order != null){
             UI.success("Changing order to preparing");
-            order.setStatus("PREPARING");
+            order.setStatusPreparing();
         }
         else{
             UI.error("No Order Found");
@@ -74,7 +74,7 @@ public class KitchenStaff extends Staff{
         Order order = restaurant.findOrder(orderID);
         if (order != null){
             UI.success("Changing order to complete");
-            order.setStatus("COMPLETE");
+            order.setStatusComplete();
         }
         else{
             UI.error("No Order Found");

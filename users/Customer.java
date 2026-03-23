@@ -139,7 +139,7 @@ public class Customer {
     private void createNewOrder() {
         System.out.println();
         currentOrder = new Order();
-        currentOrder.setStatus("IN PROGRESS");
+        currentOrder.setStatusInProgress();
         buildOrder();
     }
 
@@ -187,7 +187,7 @@ public class Customer {
         System.out.print("Enter menu item to add: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
-        FoodItem item = restaurant.getMenu().getItem(choice);
+        FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
         System.out.println();
         currentOrder.addItemToOrder(item);
     }
@@ -238,9 +238,8 @@ public class Customer {
         finishCurrentOrder();
     }
 
-    private void finishCurrentOrder() { // add a gerenetate receipt as part of a payable class??
-        restaurant.addToRevenue(currentOrder.calculateTotal());
-        restaurant.addOrder(currentOrder);
+    private void finishCurrentOrder() { 
+        restaurant.processOrder(currentOrder);
         currentOrders.add(currentOrder);
         this.currentOrder = null;
     }
@@ -266,7 +265,7 @@ public class Customer {
     }
 
     private void cancelOrder() {
-        currentOrder.cancelOrder();
+        currentOrder.setStatusCancelled();
         this.currentOrder = null;
         UI.success("Order cancelled");
     }

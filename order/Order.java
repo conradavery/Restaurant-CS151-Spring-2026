@@ -28,6 +28,7 @@ public class Order {
     public void addItemToOrder(FoodItem item) {
         items.add(item);
         UI.success("Added "+ item.getName() + " to order.");
+        calculateTotal();
     }
 
     public void removeItemByName(String name) {
@@ -43,9 +44,11 @@ public class Order {
 
         if (removed) {
             UI.success("Item removed from order.");
+            calculateTotal();
         } else {
             UI.error("Item not found in order.");
         }
+        
     }
 
     public void payWithCash() {
@@ -66,25 +69,37 @@ public class Order {
         this.totalPrice = totalPrice;
         return this.totalPrice;
     }
-
-    public void submitOrder() {
-        this.status = "Submitted";
+    public double getTotalPrice(){
+        return this.totalPrice;
     }
-
     public int getOrderNumber() {
         return this.orderNumber;
     }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOrderNumber(int orderNumber){
+        this.orderNumber = orderNumber;
+    }
+    public void setStatusPreparing(){
+        this.status = "PREPARING";
+    }
+    public void setStatusComplete(){
+        this.status = "COMPLETE";
+    }
+    public void setStatusPaid(){
+        this.status = "PAID";
+    }
+    public void setStatusPaymentDenied(){
+        this.status = "PAYMENT DENIED";
+    }
+    public void setStatusInProgress(){
+        this.status = "IN PROGRESS";
     }
 
     public String getStatus() {
         return this.status;
     }
 
-    public void cancelOrder() {
-        this.status = "Cancelled";
+    public void setStatusCancelled() {
+        this.status = "CANCELLED";
     }
     public int getOrderLength(){
         return items.size();
@@ -96,7 +111,7 @@ public class Order {
             System.out.printf("%-25s %10s%n", f.getName(), UI.money(f.getPrice()));
         }
         System.out.println("----------------------------------------");
-        System.out.printf("%-25s %10s%n", "Total cost:", UI.money(calculateTotal()));
+        System.out.printf("%-25s %10s%n", "Total cost:", UI.money(getTotalPrice()));
         System.out.println("STATUS: " + this.status);
     }
 

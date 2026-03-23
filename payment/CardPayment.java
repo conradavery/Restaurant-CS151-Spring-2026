@@ -42,11 +42,11 @@ public class CardPayment implements Payable {
         UI.info("Processing card payment...");
         if(processCreditInfo()){
             UI.success("Payment successful!");
-            order.setStatus("PAID");
+            order.setStatusPaid();
             return true;
         } else{
             UI.error("Payment unsuccessful");
-            order.setStatus("PAYMENT DENIED");
+            order.setStatusPaymentDenied();
             return false;
         }
         
