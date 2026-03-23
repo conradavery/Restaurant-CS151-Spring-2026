@@ -195,55 +195,16 @@ public class Customer {
 
     private void payWithCard() { // eventually make this call the payment package
 
-        System.out.println();
-        System.out.print("Enter card number: ");
-        String cardNumber = scanner.nextLine();
-
-        System.out.print("Enter card holder name: ");
-        String cardHolder = scanner.nextLine();
-
-        System.out.print("Enter expiry date (MM/YY): ");
-        String expiryDate = scanner.nextLine();
-
-        System.out.print("Enter CVV: ");
-        String cvv = scanner.nextLine();
-
-        System.out.println();
-        System.out.println("Processing card payment...");
-        System.out.println("Payment successful!");
-        currentOrder.setStatus("PAID");
+        currentOrder.payWithCard();
         finishCurrentOrder();
     }
 
     private void payWithCash() {
-        System.out.println();
-        double total = currentOrder.calculateTotal();
-        System.out.println("Total amount due: " + total);
-
-        double cashPaid = 0;
-
-        while (cashPaid < total) {
-            System.out.print("Enter cash amount: ");
-            cashPaid = scanner.nextDouble();
-
-            if (cashPaid < total) {
-                System.out.println("Not enough cash. Please pay at least " + total);
-            }
-        }
-
-        double change = cashPaid - total;
-        System.out.println("Payment successful!");
-        System.out.println("Change: " + change);
-        currentOrder.setStatus("PAID");
-
-        scanner.nextLine();
+        currentOrder.payWithCash();
         finishCurrentOrder();
     }
 
     private void finishCurrentOrder() { // add a gerenetate receipt as part of a payable class??
-        UI.printHeader("RECEIPT");
-        currentOrder.printOrder();
-        System.out.println();
         restaurant.addToRevenue(currentOrder.calculateTotal());
         restaurant.addOrder(currentOrder);
         currentOrders.add(currentOrder);
