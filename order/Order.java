@@ -2,8 +2,10 @@ package order;
 
 import java.util.ArrayList;
 import menuAndFoodItems.FoodItem;
-import utilities.UI;
-import utilities.SystemLimits;
+import payment.CardPayment;
+import payment.CashPayment;
+import payment.Payable;
+import utilities.*;
 
 public class Order {
 
@@ -13,6 +15,7 @@ public class Order {
     private double totalPrice;
     private String status;
     private int orderNumber;
+    private Payable paymentMethod;
     // private Staff staffMember;
 
 
@@ -20,6 +23,7 @@ public class Order {
         items = new ArrayList<>();
         instanceCounter++;
         this.orderNumber = instanceCounter;
+        this.paymentMethod = null;
     }
 
     public void addItemToOrder(FoodItem item) {
@@ -35,7 +39,14 @@ public class Order {
     //     }
     //     calculateTotal();
     // }
-
+    public void payWithCash(){
+        this.paymentMethod = new CashPayment();
+        paymentMethod.processPayment(this);
+    }
+    public void payWithCard(){
+        this.paymentMethod = new CardPayment();
+        paymentMethod.processPayment(this);
+    }
     public double calculateTotal() {
         double totalPrice = 0.0;
         for (FoodItem item : items) {
