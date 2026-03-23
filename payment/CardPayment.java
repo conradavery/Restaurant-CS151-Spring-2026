@@ -87,8 +87,8 @@ public class CardPayment implements Payable {
         UI.printHeader("RECEIPT");
         order.printOrder();
         System.out.println("Payment method: CARD");
-        System.out.println("Card Holder: "+ cardHolder);
-        System.out.println("First 4 digits: " + cardNumber.substring(0, 4));
+        System.out.println("Card Holder: "+ getCardHolder());
+        System.out.println("First 4 digits: " + getCardNumber().substring(0, 4));
     }
     
 
