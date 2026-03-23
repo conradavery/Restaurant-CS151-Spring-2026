@@ -3,7 +3,8 @@ package order;
 import java.util.ArrayList;
 import menuAndFoodItems.FoodItem;
 import utilities.UI;
-public class Order{
+
+public class Order {
 
     // private String orderID;
     // private Customer customer;
@@ -12,30 +13,36 @@ public class Order{
     private static int orderCount = 0;
     private int orderNumber;
 
-    public Order(){
+    public Order() {
         items = new ArrayList<>();
-        orderCount ++;
+        orderCount++;
         this.orderNumber = orderCount;
     }
-    public void addItemToOrder(FoodItem item){
+
+    public void addItemToOrder(FoodItem item) {
         items.add(item);
     }
-    public int getOrderNumber(){
+
+    public int getOrderNumber() {
         return this.orderNumber;
     }
-    public void setStatus(String status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
-    public String getStatus(){
+
+    public String getStatus() {
         return this.status;
     }
-    public double calculateTotal(){
+
+    public double calculateTotal() {
         double total = 0.00;
-        for(FoodItem f: items){
-             total += f.getPrice();
+        for (FoodItem f : items) {
+            total += f.getPrice();
         }
         return total;
     }
+
     public void printOrder() {
         System.out.println("ORDER NUMBER: " + getOrderNumber());
         for (FoodItem f : items) {

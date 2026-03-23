@@ -1,6 +1,5 @@
 package main;
 
-
 import restaurant.Restaurant;
 import java.util.Scanner;
 import utilities.UI;
@@ -8,48 +7,49 @@ import utilities.UI;
 import users.*;
 import menuAndFoodItems.*;
 import ratings.Rating;
+
 public class Main {
-    
+
     private static Scanner scanner = new Scanner(System.in);
     private static Restaurant restaurant;
 
-    public static void main(String [] args){
+    public static void main(String[] args) {
         createInitial();
         String selection = "";
-        while (!selection.equals("4")){
+        while (!selection.equals("4")) {
             UI.printHeader(restaurant.getName().toUpperCase());
             restaurant.printInfo();
             UI.printSection("MAIN MENU");
             System.out.println("1) Customer");
             System.out.println("2) Employee Login");
-            System.out.println("3) View Ratings");//change this to view ratings eventually, by eventually i mean like tonight
+            System.out.println("3) View Ratings");// change this to view ratings eventually, by eventually i mean like
+                                                  // tonight
             System.out.println("4) Quit");
             System.out.print("Selection: ");
             selection = scanner.nextLine();
             System.out.println();
-            
-            switch(selection.toLowerCase()){
-                case "1": 
+
+            switch (selection.toLowerCase()) {
+                case "1":
                     customerPortal();
                     break;
-                case "2": 
+                case "2":
                     employeePortal();
                     break;
-                case "3": 
+                case "3":
                     restaurant.printRatings();
                     break;
                 case "4":
                     break;
-                default: 
+                default:
                     UI.error("Invalid Choice");
                     break;
             }
         }
-        
-    }
-    
 
-    private static void createInitial(){
+    }
+
+    private static void createInitial() {
         String name = "Out and In";
         String address = "1357 Newhall Drive";
         String phoneNumber = "(123) - 456 - 789";
@@ -89,7 +89,7 @@ public class Main {
 
     }
 
-    private static void customerPortal(){ 
+    private static void customerPortal() {
         UI.printSection("CUSTOMER LOGIN");
         System.out.print("Enter your phone number: ");
         String phoneNumber = scanner.nextLine().trim();
@@ -108,7 +108,7 @@ public class Main {
 
     }
 
-    private static void employeePortal(){
+    private static void employeePortal() {
         UI.printSection("EMPLOYEE LOGIN");
         System.out.print("Enter your staff ID: ");
         String staffID = scanner.nextLine().trim();
@@ -120,7 +120,5 @@ public class Main {
         UI.success("Login successful. Welcome, " + staff.getName() + ".");
         staff.performDuties();
     }
-
-
 
 }
