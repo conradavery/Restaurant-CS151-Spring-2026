@@ -22,6 +22,7 @@ public class Input {
     }
     private static void checkExit(String input){
         if (input.equals("EXIT")){
+            System.out.println("EXITING THE SYSTEM");
             System.exit(0);
             
         }

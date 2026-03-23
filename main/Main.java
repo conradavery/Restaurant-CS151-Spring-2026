@@ -1,7 +1,8 @@
 package main;
 
 import restaurant.Restaurant;
-import java.util.Scanner;
+
+import utilities.Input;
 import utilities.UI;
 import users.*;
 import menuAndFoodItems.*;
@@ -9,7 +10,6 @@ import ratings.Rating;
 
 public class Main {
 
-    private static Scanner scanner = new Scanner(System.in);
     private static Restaurant restaurant;
 
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class Main {
             System.out.println("3) View Ratings");
             System.out.println("4) Quit");
             System.out.print("Selection: ");
-            selection = scanner.nextLine();
+            selection = Input.getString();
             System.out.println();
 
             switch (selection.toLowerCase()) {
@@ -90,12 +90,12 @@ public class Main {
     private static void customerPortal() {
         UI.printSection("CUSTOMER LOGIN");
         System.out.print("Enter your phone number: ");
-        String phoneNumber = scanner.nextLine().trim();
+        String phoneNumber = Input.getString().trim();
         Customer customer = restaurant.findCustomer(phoneNumber);
         if (customer == null) {
             UI.info("Phone number not found. Creating a new account.");
             System.out.print("Enter name: ");
-            String name = scanner.nextLine().trim();
+            String name = Input.getString().trim();
             customer = new Customer(name, phoneNumber, restaurant);
             restaurant.addCustomer(customer);
             UI.success("Account created successfully.");
@@ -109,7 +109,7 @@ public class Main {
     private static void employeePortal() {
         UI.printSection("EMPLOYEE LOGIN");
         System.out.print("Enter your staff ID: ");
-        String staffID = scanner.nextLine().trim();
+        String staffID = Input.getString().trim();
         Staff staff = restaurant.findStaff(staffID);
         if (staff == null) {
             UI.error("Invalid staff ID.");

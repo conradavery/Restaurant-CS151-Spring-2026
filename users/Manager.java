@@ -1,19 +1,17 @@
 package users;
 
-import java.util.Scanner;
 import restaurant.Restaurant;
 import utilities.UI;
 import menuAndFoodItems.FoodItem;
 import java.util.ArrayList;
 
-public class Manager extends Staff {
+import utilities.Input;
 
-    private Scanner scanner;
+public class Manager extends Staff {
 
     public Manager(String name, String role, double salary, Restaurant restaurant,
             String staffID) {
         super(name, role, salary, restaurant, staffID);
-        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -28,7 +26,7 @@ public class Manager extends Staff {
             System.out.println("4: Go back");
             System.out.println();
             System.out.print("Choice: ");
-            choice = scanner.nextLine();
+            choice = Input.getString();
             System.out.println();
 
             switch (choice) {
@@ -62,7 +60,7 @@ public class Manager extends Staff {
             System.out.println("5: Go back");
             System.out.println();
             System.out.print("Choice: ");
-            choice = scanner.nextLine();
+            choice = Input.getString();
             System.out.println();
 
             switch (choice) {
@@ -99,7 +97,7 @@ public class Manager extends Staff {
             System.out.println("5: Go back");
             System.out.println();
             System.out.print("Choice: ");
-            choice = scanner.nextLine();
+            choice = Input.getString();
             System.out.println();
 
             switch (choice) {
@@ -134,7 +132,7 @@ public class Manager extends Staff {
             System.out.println("4: Go back");
             System.out.println();
             System.out.print("Choice: ");
-            choice = scanner.nextLine();
+            choice = Input.getString();
             System.out.println();
 
             switch (choice) {
@@ -163,14 +161,14 @@ public class Manager extends Staff {
 
     private void changePhoneNumber() {
         System.out.print("Enter the new phone number: ");
-        String number = scanner.nextLine();
+        String number = Input.getString();
         restaurant.setPhoneNumber(number);
         UI.success("Phone number changed");
     }
 
     private void changeAddress() {
         System.out.print("Enter the new address: ");
-        String address = scanner.nextLine();
+        String address = Input.getString();
         restaurant.setAddress(address);
         UI.success("Address changed");
     }
@@ -178,12 +176,12 @@ public class Manager extends Staff {
 
     private void addItemToMenu() {
         System.out.print("Enter item name: ");
-        String name = scanner.nextLine();
+        String name = Input.getString();
 
         System.out.print("Enter calories: ");
         int calories;
         try {
-            calories = Integer.parseInt(scanner.nextLine());
+            calories = Input.getInt();
             if (calories < 0) {
                 UI.error("Calories cannot be negative.");
                 return;
@@ -196,7 +194,7 @@ public class Manager extends Staff {
         System.out.print("Enter price: ");
         double price;
         try {
-            price = Double.parseDouble(scanner.nextLine());
+            price = Input.getDouble();
             if (price <= 0) {
                 UI.error("Price must be greater than 0.");
                 return;
@@ -213,18 +211,18 @@ public class Manager extends Staff {
 
     private void removeItemFromMenu() {
         System.out.print("Enter item name to remove: ");
-        String name = scanner.nextLine();
+        String name = Input.getString();
         restaurant.removeItem(name);
     }
 
     private void changeItemPrice() {
         System.out.print("Enter item name: ");
-        String name = scanner.nextLine();
+        String name = Input.getString();
 
         System.out.print("Enter new price: ");
         double newPrice;
         try {
-            newPrice = Double.parseDouble(scanner.nextLine());
+            newPrice = Input.getDouble();
             if (newPrice <= 0) {
                 UI.error("Price must be greater than 0.");
                 return;
@@ -245,15 +243,15 @@ public class Manager extends Staff {
 
     private void hireEmployee() {
         System.out.print("Enter employee name: ");
-        String empName = scanner.nextLine();
+        String empName = Input.getString();
 
         System.out.print("Enter role (KitchenStaff/Manager): ");
-        String empRole = scanner.nextLine();
+        String empRole = Input.getString();
 
         System.out.print("Enter salary: ");
         double empSalary;
         try {
-            empSalary = Double.parseDouble(scanner.nextLine());
+            empSalary = Input.getDouble();
             if (empSalary <= 0) {
                 UI.error("Salary must be greater than 0.");
                 return;
@@ -264,7 +262,7 @@ public class Manager extends Staff {
         }
 
         System.out.print("Enter staff ID: ");
-        String empID = scanner.nextLine();
+        String empID = Input.getString();
 
         // Check if ID already exists
         if (restaurant.findStaff(empID) != null) {
@@ -275,7 +273,7 @@ public class Manager extends Staff {
         Staff newEmployee;
         if (empRole.equalsIgnoreCase("Manager")) {
             newEmployee = new Manager(empName, empRole, empSalary, restaurant, empID);
-        } else {
+        } else {//add another case later
             newEmployee = new KitchenStaff(empName, empRole, empSalary, restaurant, empID);
         }
 
@@ -285,7 +283,7 @@ public class Manager extends Staff {
 
     private void fireStaff() {
         System.out.print("What is the Staff ID: ");
-        String ID = scanner.nextLine();
+        String ID = Input.getString();
         Staff fired = restaurant.findStaff(ID); //add exception here if staff doesnt exist
         if (fired.getRole().equals("Manager")) {
             UI.error("You can not fire another manager");
@@ -297,16 +295,21 @@ public class Manager extends Staff {
 
     private void increaseSalary() {
         System.out.print("What is the Staff ID: ");
-        String ID = scanner.nextLine();
+        String ID = Input.getString();
         Staff raise = restaurant.findStaff(ID); //add exception here if staff no exist
         if (raise.getRole().equals("Manager")) {
             UI.error("You can not raise another manager's salary");
         } else {
             System.out.print("What is the new salary for the staff: ");
-            double newSalary = scanner.nextDouble();
-            scanner.nextLine();
-            raise.setSalary(newSalary);
-            UI.success("Gave raised to " + raise.getName());
+            try{
+                double newSalary = Input.getDouble();
+                raise.setSalary(newSalary);
+                UI.success("Gave raised to " + raise.getName());
+            } catch (NumberFormatException e){
+                UI.error("Invalid salary type");
+            }
+            
+            
         }
     }
 

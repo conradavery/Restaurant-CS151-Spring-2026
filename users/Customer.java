@@ -2,13 +2,13 @@ package users;
 
 import restaurant.*;
 
-import java.util.Scanner;
-
 import java.util.Iterator;
 
 import menuAndFoodItems.FoodItem;
 import order.Order;
 import java.util.ArrayList;
+
+import utilities.Input;
 import utilities.UI;
 import ratings.Rating;
 
@@ -20,7 +20,6 @@ public class Customer {
     private Order currentOrder;
     private String phoneNumber;
     private Restaurant restaurant;
-    private static Scanner scanner = new Scanner(System.in);
     private Rating rating;
 
     public Customer(String name, String phoneNumber, Restaurant restaurant) {
@@ -50,7 +49,7 @@ public class Customer {
             System.out.println("3) Leave rating");
             System.out.println("4) Go back to main menu");
             System.out.print("Choice: ");
-            selection = scanner.nextLine();
+            selection = Input.getString();
 
             switch (selection) {
                 case "1":
@@ -82,17 +81,21 @@ public class Customer {
     private void leaveNewRating() {
         UI.printSection("WRITING RATING");
         System.out.print("What is your rating out of 5: ");
-        int stars = scanner.nextInt();
-        scanner.nextLine();
-        if (stars > 5 || stars < 0) {
-            UI.error("Rating must be between 0 and 5");
-            return;
+        try {
+            int stars = Input.getInt();
+            if (stars > 5 || stars < 0) {
+                UI.error("Rating must be between 0 and 5");
+                return;
+            }
+            System.out.print("Message (Optional): ");
+            String message = Input.getString();
+            this.rating = new Rating(this.name, stars, message);
+            restaurant.addRating(rating);
+            UI.success("Left rating!");
+        } catch (NumberFormatException e) {
+            UI.error("Rating must be an integer.");
         }
-        System.out.print("Message (Optional): ");
-        String message = scanner.nextLine();
-        this.rating = new Rating(this.name, stars, message);
-        restaurant.addRating(rating);
-        UI.success("Left rating!");
+
     }
 
     private void changeRating() {
@@ -101,7 +104,7 @@ public class Customer {
         System.out.println("1) Change rating.");
         System.out.println("2) Return");
         System.out.print("Choice: ");
-        String choice = scanner.nextLine();
+        String choice = Input.getString();
         switch (choice) {
             case "1":
                 restaurant.removeRating(rating);
@@ -156,8 +159,8 @@ public class Customer {
             System.out.println("2) Remove an item");
             System.out.println("0) Finish your order");
             System.out.print("Choice: ");
-            choice = scanner.nextLine();
-            switch (choice){
+            choice = Input.getString();
+            switch (choice) {
                 case "1":
                     addItemToOrder();
                     break;
@@ -173,31 +176,37 @@ public class Customer {
             UI.printHeader("CURRENT ORDER");
             currentOrder.printOrder();
         }
-        if(currentOrder.getOrderLength() == 0){
+        if (currentOrder.getOrderLength() == 0) {
             UI.info("Your order is empty");
             return;
-        }
-        else{
-             payForOrder();
+        } else {
+            payForOrder();
         }
 
     }
 
     private void addItemToOrder() {
-        System.out.print("Enter menu item to add: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
-        System.out.println();
-        currentOrder.addItemToOrder(item);
+        System.out.print("Enter menu item number to add: ");
+        try {
+            int choice = Input.getInt();
+            //try here
+            FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
+            System.out.println();
+            currentOrder.addItemToOrder(item);
+            //catch menu item not found exception??
+        } catch (NumberFormatException e) {
+            UI.error("Enter the menu item number as an integer.");
+        }
+
     }
-    private void removeItemFromOrder(){
-        if(currentOrder.getOrderLength() == 0){
+
+    private void removeItemFromOrder() {
+        if (currentOrder.getOrderLength() == 0) {
             UI.info("No items in order");
             return;
         }
         System.out.print("Enter name of item to remove: ");
-        String remove = scanner.nextLine();
+        String remove = Input.getString();
         currentOrder.removeItemByName(remove);
     }
 
@@ -208,7 +217,7 @@ public class Customer {
         System.out.println("2) Cash");
         System.out.println("3) Cancel Order");
         System.out.print("Choice: ");
-        String choice = scanner.nextLine();
+        String choice = Input.getString();
         switch (choice) {
             case "1":
                 payWithCard();
@@ -238,7 +247,7 @@ public class Customer {
         finishCurrentOrder();
     }
 
-    private void finishCurrentOrder() { 
+    private void finishCurrentOrder() {
         restaurant.processOrder(currentOrder);
         currentOrders.add(currentOrder);
         this.currentOrder = null;
