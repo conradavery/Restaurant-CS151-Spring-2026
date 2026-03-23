@@ -1,12 +1,12 @@
 package utilities;
 
 public class UI {
-    
+
     public static void printHeader(String title) {
-            System.out.println();
-            System.out.println("========================================");
-            System.out.println(centerText(title, 40));
-            System.out.println("========================================");
+        System.out.println();
+        System.out.println("========================================");
+        System.out.println(centerText(title, 40));
+        System.out.println("========================================");
     }
 
     public static void printSection(String title) {
@@ -32,7 +32,8 @@ public class UI {
     }
 
     private static String centerText(String text, int width) {
-        if (text.length() >= width) return text;
+        if (text.length() >= width)
+            return text;
         int padding = (width - text.length()) / 2;
         return " ".repeat(padding) + text;
     }
