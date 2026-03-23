@@ -1,55 +1,45 @@
 package order;
 
-import users.Customer;
-import users.Staff;
 import java.util.ArrayList;
 import menuAndFoodItems.FoodItem;
 import utilities.UI;
-
-public class Order {
-
-import payment.Payment;
 import utilities.SystemLimits;
 
 public class Order {
 
     private static int instanceCounter = 0;
 
-    private String orderId;
-    private Customer customer;
-    private List<MenuItem> items;
+    private ArrayList<FoodItem> items;
     private double totalPrice;
-    private String orderType;
     private String status;
-    private Payment payment;
     private int orderNumber;
     // private Staff staffMember;
 
 
     public Order() {
         items = new ArrayList<>();
-        orderCount++;
-        this.orderNumber = orderCount;
+        instanceCounter++;
+        this.orderNumber = instanceCounter;
     }
 
     public void addItemToOrder(FoodItem item) {
         items.add(item);
         calculateTotal();
     }
-    public void removeItem(String itemId) {
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getMenuItemId().equals(itemId)) {
-                items.remove(i);
-                break; // remove only the first match
-            }
-        }
-        calculateTotal();
-    }
+    // public void removeItem(String itemId) {
+    //     for (int i = 0; i < items.size(); i++) {
+    //         if (items.get(i).getMenuItemId().equals(itemId)) {
+    //             items.remove(i);
+    //             break; // remove only the first match
+    //         }
+    //     }
+    //     calculateTotal();
+    // }
 
     public double calculateTotal() {
         double totalPrice = 0.0;
-        for (MenuItem item : items) {
-            totalPrice += item.getPrice() * item.getQuantity();
+        for (FoodItem item : items) {
+            totalPrice += item.getPrice();
         }
         this.totalPrice = totalPrice;
         return this.totalPrice;
@@ -58,7 +48,15 @@ public class Order {
     public void submitOrder() {
         this.status = "Submitted";
     }
-
+    public int getOrderNumber(){
+        return this.orderNumber;
+    }
+    public void setStatus(String status){
+        this.status = status;
+    }
+    public String getStatus(){
+        return this.status;
+    }
     public void cancelOrder() {
         this.status = "Cancelled";
     }
