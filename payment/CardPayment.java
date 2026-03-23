@@ -34,6 +34,20 @@ public class CardPayment implements Payable {
         return cvv;
     }
 
+    // setters
+    public void setCardNumber(String newCardNumber){
+        cardNumber = newCardNumber;
+    }
+    public void setCardHolder(String newCardHolder){
+        cardHolder = newCardHolder;
+    }
+    public void setExpiryDate(String newExpiryDate){
+        expiryDate = newExpiryDate;
+    }
+    public void setCVV(String newCVV){
+        cvv = newCVV;
+    }
+
     @Override
     public void processPayment(Order order) {
         UI.printHeader("CARD PAYMENT");
