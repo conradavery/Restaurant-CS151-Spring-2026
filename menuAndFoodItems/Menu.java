@@ -1,13 +1,21 @@
 package menuAndFoodItems;
 
 import java.util.ArrayList;
+
+import utilities.SystemLimits;
 import utilities.UI;
+import utilities.exceptions.MaxInstancesException;
 
 public class Menu {
     private ArrayList<FoodItem> items;
+    private static int menuCount = 0;
 
-    public Menu() {
+    public Menu() throws MaxInstancesException {
         this.items = new ArrayList<>();
+        if(menuCount >= SystemLimits.MAXIMUM_INSTANCES){
+            throw new MaxInstancesException("More than 100 menus have been created");
+        }
+        menuCount++;
     }
 
     public void addItem(FoodItem foodItem) {

@@ -1,9 +1,10 @@
 package payment;
 
-import java.util.Scanner;
-
 import order.Order;
+import utilities.Input;
+import utilities.SystemLimits;
 import utilities.UI;
+import utilities.exceptions.MaxInstancesException;
 
 public class CardPayment implements Payable {
 
@@ -11,7 +12,14 @@ public class CardPayment implements Payable {
     private String cardHolder;
     private String expiryDate;
     private String cvv;
-    private static Scanner scanner = new Scanner(System.in);
+    private static int cardPaymentCount = 0;
+
+    public CardPayment() throws MaxInstancesException{
+        if(cardPaymentCount >= SystemLimits.MAXIMUM_INSTANCES){
+            throw new MaxInstancesException("More than 100 card payments have been created");
+        }
+        cardPaymentCount ++;
+    }
 
     @Override
     public void processPayment(Order order) {
@@ -27,16 +35,16 @@ public class CardPayment implements Payable {
     public boolean validatePayment(Order order) {
         System.out.println();
         System.out.print("Enter card number: ");
-        this.cardNumber = scanner.nextLine();
+        this.cardNumber = Input.getString();
 
         System.out.print("Enter card holder name: ");
-        this.cardHolder = scanner.nextLine();
+        this.cardHolder = Input.getString();
 
         System.out.print("Enter expiry date (MM/YY): ");
-        this.expiryDate = scanner.nextLine();
+        this.expiryDate = Input.getString();
 
         System.out.print("Enter CVV: ");
-        this.cvv = scanner.nextLine();
+        this.cvv = Input.getString();
 
         System.out.println();
         UI.info("Processing card payment...");

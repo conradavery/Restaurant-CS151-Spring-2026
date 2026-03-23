@@ -6,12 +6,18 @@ import menuAndFoodItems.FoodItem;
 import java.util.ArrayList;
 
 import utilities.Input;
+import utilities.SystemLimits;
+import utilities.exceptions.*;
 
 public class Manager extends Staff {
-
+    private static int managerCount = 0;
     public Manager(String name, String role, double salary, Restaurant restaurant,
-            String staffID) {
+            String staffID) throws MaxInstancesException {
         super(name, role, salary, restaurant, staffID);
+        if(managerCount >= SystemLimits.MAXIMUM_INSTANCES){
+            throw new MaxInstancesException("More than 100 managers have been created");
+        }
+        managerCount ++;
     }
 
     @Override
@@ -105,7 +111,11 @@ public class Manager extends Staff {
                     viewAllStaff();
                     break;
                 case "2":
-                    hireEmployee();
+                    try {
+                        hireEmployee();
+                    } catch (MaxInstancesException e) {
+                        UI.error(e.getMessage());
+                    }
                     break;
                 case "3":
                     fireStaff();
@@ -204,8 +214,13 @@ public class Manager extends Staff {
             return;
         }
 
-        FoodItem newItem = new FoodItem(name, calories, price);
-        restaurant.addItemToMenu(newItem);
+        FoodItem newItem;
+        try {
+            newItem = new FoodItem(name, calories, price);
+            restaurant.addItemToMenu(newItem);
+        } catch (MaxInstancesException e) {
+            UI.error(e.getMessage());
+        }
         UI.success(name + " added to menu successfully!");
     }
 
@@ -241,7 +256,7 @@ public class Manager extends Staff {
 
     // ========== STAFF MANAGEMENT METHODS (PLACEHOLDERS) ==========
 
-    private void hireEmployee() {
+    private void hireEmployee() throws MaxInstancesException {
         System.out.print("Enter employee name: ");
         String empName = Input.getString();
 

@@ -1,15 +1,23 @@
 package menuAndFoodItems;
 
+import utilities.SystemLimits;
+import utilities.exceptions.MaxInstancesException;
+
 public class FoodItem {
 
     private String name;
     private int calories;
     private double price;
+    private static int FoodItemCount = 0;
 
-    public FoodItem(String name, int calories, double price) {
+    public FoodItem(String name, int calories, double price) throws MaxInstancesException {
         this.name = name;
         this.calories = calories;
         this.price = price;
+        if(FoodItemCount >= SystemLimits.MAXIMUM_INSTANCES){
+            throw new MaxInstancesException("More than 100 Food Items have been created");
+        }
+        FoodItemCount++;
     }
 
     public String getName() {

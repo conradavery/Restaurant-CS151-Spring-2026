@@ -9,7 +9,9 @@ import order.Order;
 import java.util.ArrayList;
 
 import utilities.Input;
+import utilities.SystemLimits;
 import utilities.UI;
+import utilities.exceptions.MaxInstancesException;
 import ratings.Rating;
 
 public class Customer {
@@ -21,8 +23,9 @@ public class Customer {
     private String phoneNumber;
     private Restaurant restaurant;
     private Rating rating;
+    private static int customerCount = 0;
 
-    public Customer(String name, String phoneNumber, Restaurant restaurant) {
+    public Customer(String name, String phoneNumber, Restaurant restaurant) throws MaxInstancesException {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.restaurant = restaurant;
@@ -30,6 +33,10 @@ public class Customer {
         pastOrders = new ArrayList<>();
         currentOrders = new ArrayList<>();
         this.rating = null;
+        if (customerCount >= SystemLimits.MAXIMUM_INSTANCES) {
+            throw new MaxInstancesException("More than 100 customers have been created");
+        }
+        customerCount++;
     }
 
     public void customerDuties() {
@@ -71,14 +78,18 @@ public class Customer {
     }
 
     private void checkRating() {
-        if (this.rating == null) {
-            leaveNewRating();
-        } else {
-            changeRating();
+        try {
+            if (this.rating == null) {
+                leaveNewRating();
+            } else {
+                changeRating();
+            }
+        } catch (MaxInstancesException e) {
+            UI.error(e.getMessage());
         }
     }
 
-    private void leaveNewRating() {
+    private void leaveNewRating() throws MaxInstancesException {
         UI.printSection("WRITING RATING");
         System.out.print("What is your rating out of 5: ");
         try {
@@ -98,7 +109,7 @@ public class Customer {
 
     }
 
-    private void changeRating() {
+    private void changeRating() throws MaxInstancesException {
         UI.printSection("CHANGING RATING");
         System.out.println("You have already left a rating.");
         System.out.println("1) Change rating.");
@@ -141,9 +152,13 @@ public class Customer {
 
     private void createNewOrder() {
         System.out.println();
+        try{
         currentOrder = new Order();
         currentOrder.setStatusInProgress();
         buildOrder();
+        }catch (MaxInstancesException e){
+            UI.error(e.getMessage());
+        }
     }
 
     private void recieveOrder() {
@@ -189,11 +204,11 @@ public class Customer {
         System.out.print("Enter menu item number to add: ");
         try {
             int choice = Input.getInt();
-            //try here
+            // try here
             FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
             System.out.println();
             currentOrder.addItemToOrder(item);
-            //catch menu item not found exception??
+            // catch menu item not found exception??
         } catch (NumberFormatException e) {
             UI.error("Enter the menu item number as an integer.");
         }
