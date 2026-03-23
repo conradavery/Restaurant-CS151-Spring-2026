@@ -1,23 +1,23 @@
 package users;
 
 import restaurant.Restaurant;
+import utilities.Input;
 import utilities.UI;
 
-import java.util.Scanner;
 import order.Order;
 
-public class KitchenStaff extends Staff{
+public class KitchenStaff extends Staff {
 
-    private Scanner scanner = new Scanner(System.in);
+
     public KitchenStaff(String name, String role, double salary, Restaurant restaurant, String staffID) {
         super(name, role, salary, restaurant, staffID);
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override
     public void performDuties() {
         String choice = "";
-        while (!choice.equals("4")){
+        while (!choice.equals("4")) {
             UI.printHeader("KITCHEN STAFF MENU");
             System.out.println("1: View orders.");
             System.out.println("2: Mark an order as preparing.");
@@ -26,9 +26,9 @@ public class KitchenStaff extends Staff{
             System.out.println("Type the number of what task you want to perform");
             System.out.println();
             System.out.print("Choice: ");
-            choice = scanner.nextLine();
+            choice = Input.getString();
             System.out.println();
-            switch (choice){
+            switch (choice) {
                 case "1":
                     viewPendingOrders();
                     break;
@@ -47,38 +47,44 @@ public class KitchenStaff extends Staff{
         }
     }
 
-    private void viewPendingOrders(){
+    private void viewPendingOrders() {
         restaurant.viewOrders();
     }
 
-    private void markOrderAsPreparing(){
+    private void markOrderAsPreparing() {
         UI.printSection("PREPARING ORDER");
         System.out.print("Enter the order number: ");
-        int orderID = scanner.nextInt();
-        scanner.nextLine();
-        Order order = restaurant.findOrder(orderID);
-        if (order != null){
-            UI.success("Changing order to preparing");
-            order.setStatusPreparing();
-        }
-        else{
-            UI.error("No Order Found");
+        try {
+            int orderID = Input.getInt();
+            Order order = restaurant.findOrder(orderID);
+            if (order != null) {
+                UI.success("Changing order to preparing");
+                order.setStatusPreparing();
+            } else {
+                UI.error("No Order Found");
+            }
+        } catch (NumberFormatException e) {
+            UI.error("Incorrect order number format.");
         }
 
     }
-    private void markOrderAsComplete(){
+
+    private void markOrderAsComplete() {
         UI.printSection("COMPLETING ORDER");
         System.out.print("Enter the order number: ");
-        int orderID = scanner.nextInt();
-        scanner.nextLine();
-        Order order = restaurant.findOrder(orderID);
-        if (order != null){
-            UI.success("Changing order to complete");
-            order.setStatusComplete();
+        try {
+            int orderID = Input.getInt();
+            Order order = restaurant.findOrder(orderID);
+            if (order != null) {
+                UI.success("Changing order to complete");
+                order.setStatusComplete();
+            } else {
+                UI.error("No Order Found");
+            }
+        } catch (NumberFormatException e) {
+            UI.error("Incorrect order number format");
         }
-        else{
-            UI.error("No Order Found");
-        }
+
     }
-    
+
 }
