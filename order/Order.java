@@ -1,17 +1,30 @@
 package order;
 
+import users.Customer;
+import users.Staff;
 import java.util.ArrayList;
 import menuAndFoodItems.FoodItem;
 import utilities.UI;
 
 public class Order {
 
-    // private String orderID;
-    // private Customer customer;
-    private ArrayList<FoodItem> items;
+import payment.Payment;
+import utilities.SystemLimits;
+
+public class Order {
+
+    private static int instanceCounter = 0;
+
+    private String orderId;
+    private Customer customer;
+    private List<MenuItem> items;
+    private double totalPrice;
+    private String orderType;
     private String status;
-    private static int orderCount = 0;
+    private Payment payment;
     private int orderNumber;
+    // private Staff staffMember;
+
 
     public Order() {
         items = new ArrayList<>();
@@ -21,28 +34,48 @@ public class Order {
 
     public void addItemToOrder(FoodItem item) {
         items.add(item);
+        calculateTotal();
     }
-
-    public int getOrderNumber() {
-        return this.orderNumber;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getStatus() {
-        return this.status;
+    public void removeItem(String itemId) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getMenuItemId().equals(itemId)) {
+                items.remove(i);
+                break; // remove only the first match
+            }
+        }
+        calculateTotal();
     }
 
     public double calculateTotal() {
-        double total = 0.00;
-        for (FoodItem f : items) {
-            total += f.getPrice();
+        double totalPrice = 0.0;
+        for (MenuItem item : items) {
+            totalPrice += item.getPrice() * item.getQuantity();
         }
-        return total;
+        this.totalPrice = totalPrice;
+        return this.totalPrice;
     }
 
+    public void submitOrder() {
+        this.status = "Submitted";
+    }
+
+    public void cancelOrder() {
+        this.status = "Cancelled";
+    }
+
+    //    public void applyDiscount(double discountPercentage) {
+    //         calculateTotal();
+    //         double discountAmount = totalPrice * (discountPercentage / 100.0);
+    //         totalPrice -= discountAmount;
+    //     }
+
+    // public void assignStaff (Staff staffMember) {
+    //     this.staffMember = staffMember;
+    // }
+
+    public void updateStatus(String status) {
+        this.status = status;
+    }
     public void printOrder() {
         System.out.println("ORDER NUMBER: " + getOrderNumber());
         for (FoodItem f : items) {
@@ -53,4 +86,7 @@ public class Order {
         System.out.println("STATUS: " + this.status);
     }
 
+    // public void setStaffMember(Staff staffMember) {
+    //     this.staffMember = staffMember;
+    // }
 }
