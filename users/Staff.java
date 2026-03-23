@@ -23,6 +23,10 @@ public abstract class Staff {
         return this.staffID;
     }
 
+    public void setStaffID(String ID) {
+        this.staffID = ID;
+    }
+
     public String getName() {
         return name;
     }

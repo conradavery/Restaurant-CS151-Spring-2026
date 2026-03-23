@@ -18,7 +18,6 @@ public class Order {
     private Payable paymentMethod;
     // private Staff staffMember;
 
-
     public Order() {
         items = new ArrayList<>();
         instanceCounter++;
@@ -28,25 +27,37 @@ public class Order {
 
     public void addItemToOrder(FoodItem item) {
         items.add(item);
-        calculateTotal();
+        UI.success("Added "+ item.getName() + " to order.");
     }
-    // public void removeItem(String itemId) {
-    //     for (int i = 0; i < items.size(); i++) {
-    //         if (items.get(i).getMenuItemId().equals(itemId)) {
-    //             items.remove(i);
-    //             break; // remove only the first match
-    //         }
-    //     }
-    //     calculateTotal();
-    // }
-    public void payWithCash(){
+
+    public void removeItemByName(String name) {
+        boolean removed = false;
+
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equalsIgnoreCase(name)) {
+                items.remove(i);
+                removed = true;
+                break;
+            }
+        }
+
+        if (removed) {
+            UI.success("Item removed from order.");
+        } else {
+            UI.error("Item not found in order.");
+        }
+    }
+
+    public void payWithCash() {
         this.paymentMethod = new CashPayment();
         paymentMethod.processPayment(this);
     }
-    public void payWithCard(){
+
+    public void payWithCard() {
         this.paymentMethod = new CardPayment();
         paymentMethod.processPayment(this);
     }
+
     public double calculateTotal() {
         double totalPrice = 0.0;
         for (FoodItem item : items) {
@@ -59,32 +70,26 @@ public class Order {
     public void submitOrder() {
         this.status = "Submitted";
     }
-    public int getOrderNumber(){
+
+    public int getOrderNumber() {
         return this.orderNumber;
     }
-    public void setStatus(String status){
+
+    public void setStatus(String status) {
         this.status = status;
     }
-    public String getStatus(){
+
+    public String getStatus() {
         return this.status;
     }
+
     public void cancelOrder() {
         this.status = "Cancelled";
     }
-
-    //    public void applyDiscount(double discountPercentage) {
-    //         calculateTotal();
-    //         double discountAmount = totalPrice * (discountPercentage / 100.0);
-    //         totalPrice -= discountAmount;
-    //     }
-
-    // public void assignStaff (Staff staffMember) {
-    //     this.staffMember = staffMember;
-    // }
-
-    public void updateStatus(String status) {
-        this.status = status;
+    public int getOrderLength(){
+        return items.size();
     }
+
     public void printOrder() {
         System.out.println("ORDER NUMBER: " + getOrderNumber());
         for (FoodItem f : items) {
@@ -95,7 +100,4 @@ public class Order {
         System.out.println("STATUS: " + this.status);
     }
 
-    // public void setStaffMember(Staff staffMember) {
-    //     this.staffMember = staffMember;
-    // }
 }
