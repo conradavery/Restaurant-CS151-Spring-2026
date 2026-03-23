@@ -6,6 +6,7 @@ import payment.CardPayment;
 import payment.CashPayment;
 import payment.Payable;
 import utilities.*;
+import utilities.exceptions.MaxInstancesException;
 
 public class Order {
 
@@ -18,11 +19,15 @@ public class Order {
     private Payable paymentMethod;
     // private Staff staffMember;
 
-    public Order() {
+    public Order() throws MaxInstancesException {
         items = new ArrayList<>();
         instanceCounter++;
         this.orderNumber = instanceCounter;
         this.paymentMethod = null;
+        if(instanceCounter >= SystemLimits.MAXIMUM_INSTANCES){
+            throw new MaxInstancesException("More than 100 orders have been created");
+        }
+        instanceCounter ++;
     }
 
     public void addItemToOrder(FoodItem item) {
@@ -52,13 +57,21 @@ public class Order {
     }
 
     public void payWithCash() {
-        this.paymentMethod = new CashPayment();
-        paymentMethod.processPayment(this);
+        try{
+            this.paymentMethod = new CashPayment();
+            paymentMethod.processPayment(this);
+        } catch (MaxInstancesException e){
+            UI.error(e.getMessage());
+        }
     }
 
     public void payWithCard() {
-        this.paymentMethod = new CardPayment();
-        paymentMethod.processPayment(this);
+        try {
+            this.paymentMethod = new CardPayment();
+            paymentMethod.processPayment(this);
+        } catch (MaxInstancesException e) {
+            UI.error(e.getMessage());
+        }
     }
 
     public double calculateTotal() {

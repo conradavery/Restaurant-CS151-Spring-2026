@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import menuAndFoodItems.*;
 import users.*;
 import order.Order;
+import utilities.SystemLimits;
 import utilities.UI;
+import utilities.exceptions.MaxInstancesException;
 import ratings.Rating;
 
 public class Restaurant {
@@ -17,9 +19,9 @@ public class Restaurant {
     private ArrayList<Order> orders;
     private double revenue;
     private ArrayList<Rating> ratings;
-    // private static int restaurantCount = 0;
+    private static int restaurantCount = 0;
 
-    public Restaurant(String name, String address, String phoneNumber) {
+    public Restaurant(String name, String address, String phoneNumber) throws MaxInstancesException {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -30,6 +32,10 @@ public class Restaurant {
         this.revenue = 0.00;
         this.ratings = new ArrayList<>();
         // restaurantCount ++;
+        if(restaurantCount >= SystemLimits.MAXIMUM_INSTANCES){
+            throw new MaxInstancesException("More than 100 restaurants have been created");
+        }
+        restaurantCount ++;
     }
 
     @Override
@@ -41,8 +47,15 @@ public class Restaurant {
     }
     // Menu section
     public void createMenu() {
-        Menu menu = new Menu();
-        this.menu = menu;
+        Menu menu;
+        try {
+            menu = new Menu();
+            this.menu = menu;
+        } catch (MaxInstancesException e) {
+            // TODO Auto-generated catch block
+            System.out.println(e.getMessage());
+        }
+        
     }
 
     // public Menu getMenu() {

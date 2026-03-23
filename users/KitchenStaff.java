@@ -2,16 +2,21 @@ package users;
 
 import restaurant.Restaurant;
 import utilities.Input;
+import utilities.SystemLimits;
 import utilities.UI;
-
+import utilities.exceptions.MaxInstancesException;
 import order.Order;
 
 public class KitchenStaff extends Staff {
 
+    private static int KitchenStaffCount = 0;
 
-    public KitchenStaff(String name, String role, double salary, Restaurant restaurant, String staffID) {
+    public KitchenStaff(String name, String role, double salary, Restaurant restaurant, String staffID) throws MaxInstancesException {
         super(name, role, salary, restaurant, staffID);
-        // TODO Auto-generated constructor stub
+        if(KitchenStaffCount >= SystemLimits.MAXIMUM_INSTANCES){
+            throw new MaxInstancesException("More than 100 Kitchen Staff have been created");
+        }
+        KitchenStaffCount ++;
     }
 
     @Override
