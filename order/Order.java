@@ -110,7 +110,7 @@ public class Order {
         for (FoodItem f : items) {
             System.out.printf("%-25s %10s%n", f.getName(), UI.money(f.getPrice()));
         }
-        System.out.println("----------------------------------------");
+        System.out.println("-----------------------------------------------");
         System.out.printf("%-25s %10s%n", "Total cost:", UI.money(getTotalPrice()));
         System.out.println("STATUS: " + this.status);
     }

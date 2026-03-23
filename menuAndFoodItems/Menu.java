@@ -41,7 +41,7 @@ public class Menu {
             System.out.printf("%-3s %-20s %10s   %s%n", (i + 1) + ")", item.getName(), UI.money(item.getPrice()),
                     "(" + item.getCalories() + " cal)");
         }
-        System.out.println("----------------------------------------");
+        System.out.println("-----------------------------------------------");
     }
 
 }
