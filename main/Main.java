@@ -3,7 +3,6 @@ package main;
 import restaurant.Restaurant;
 import java.util.Scanner;
 import utilities.UI;
-// import java.util.ArrayList;
 import users.*;
 import menuAndFoodItems.*;
 import ratings.Rating;
@@ -22,8 +21,7 @@ public class Main {
             UI.printSection("MAIN MENU");
             System.out.println("1) Customer");
             System.out.println("2) Employee Login");
-            System.out.println("3) View Ratings");// change this to view ratings eventually, by eventually i mean like
-                                                  // tonight
+            System.out.println("3) View Ratings");
             System.out.println("4) Quit");
             System.out.print("Selection: ");
             selection = scanner.nextLine();

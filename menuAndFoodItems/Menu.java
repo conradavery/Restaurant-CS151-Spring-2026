@@ -1,11 +1,9 @@
 package menuAndFoodItems;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import utilities.UI;
 
 public class Menu {
-    Scanner scanner = new Scanner(System.in);
     private ArrayList<FoodItem> items;
 
     public Menu() {
@@ -16,7 +14,7 @@ public class Menu {
         items.add(foodItem);
     }
 
-    public FoodItem getItem(int index) {
+    public FoodItem getItem(int index) { //needs exception handling in here or in add order prob add order tbh
         return items.get(index - 1);
     }
 
@@ -26,7 +24,7 @@ public class Menu {
 
     public FoodItem findItemByName(String name) {
         for (FoodItem f : items) {
-            if (f.getName().equals(name)) {
+            if (f.getName().equalsIgnoreCase(name)) {
                 return f;
             }
         }
@@ -43,7 +41,7 @@ public class Menu {
             System.out.printf("%-3s %-20s %10s   %s%n", (i + 1) + ")", item.getName(), UI.money(item.getPrice()),
                     "(" + item.getCalories() + " cal)");
         }
-        System.out.println("----------------------------------------");
+        System.out.println("-----------------------------------------------");
     }
 
 }

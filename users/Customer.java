@@ -14,12 +14,10 @@ import ratings.Rating;
 
 public class Customer {
 
-    // private Object order ;
     private ArrayList<Order> pastOrders;
     private String name;
     private ArrayList<Order> currentOrders;
     private Order currentOrder;
-    // private Object payment;
     private String phoneNumber;
     private Restaurant restaurant;
     private static Scanner scanner = new Scanner(System.in);
@@ -125,6 +123,7 @@ public class Customer {
             if (o.getStatus().equals("COMPLETE")) {
                 UI.success("Order number " + o.getOrderNumber() + " is ready for pickup!");
                 pastOrders.add(o);
+                recieveOrder();
                 iterator.remove(); // safe removal
             } else {
                 UI.info("Order number " + o.getOrderNumber() + " is " + o.getStatus());
@@ -137,38 +136,69 @@ public class Customer {
         return this.currentOrder;
     }
 
-    public void createNewOrder() {
+    private void createNewOrder() {
         System.out.println();
         currentOrder = new Order();
-        currentOrder.setStatus("IN PROGRESS");
+        currentOrder.setStatusInProgress();
         buildOrder();
     }
 
-    public void recieveOrder() {
+    private void recieveOrder() {
         this.currentOrder = null;
     }
 
-    public void buildOrder() {
+    private void buildOrder() {
         restaurant.showMenu();
-        int choice = -1;
-        while (choice != 0) {
+        String choice = "";
+        while (!choice.equals("0")) {
             UI.printSection("BUILD YOUR ORDER");
-            System.out.println("Enter an item number to add it");
-            System.out.println("Enter 0 to finish your order");
+            System.out.println("1) Add an item");
+            System.out.println("2) Remove an item");
+            System.out.println("0) Finish your order");
             System.out.print("Choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
-            if (choice != 0) {
-                FoodItem item = restaurant.getMenu().getItem(choice);
-                System.out.println();
-                UI.success(item.getName() + " added to your order.");
-                currentOrder.addItemToOrder(item);
+            choice = scanner.nextLine();
+            switch (choice){
+                case "1":
+                    addItemToOrder();
+                    break;
+                case "2":
+                    removeItemFromOrder();
+                    break;
+                case "0":
+                    break;
+                default:
+                    UI.error("Please input a correct choice");
+                    break;
             }
             UI.printHeader("CURRENT ORDER");
             currentOrder.printOrder();
         }
-        payForOrder();
+        if(currentOrder.getOrderLength() == 0){
+            UI.info("Your order is empty");
+            return;
+        }
+        else{
+             payForOrder();
+        }
 
+    }
+
+    private void addItemToOrder() {
+        System.out.print("Enter menu item to add: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
+        System.out.println();
+        currentOrder.addItemToOrder(item);
+    }
+    private void removeItemFromOrder(){
+        if(currentOrder.getOrderLength() == 0){
+            UI.info("No items in order");
+            return;
+        }
+        System.out.print("Enter name of item to remove: ");
+        String remove = scanner.nextLine();
+        currentOrder.removeItemByName(remove);
     }
 
     private void payForOrder() {
@@ -189,6 +219,10 @@ public class Customer {
             case "3":
                 cancelOrder();
                 break;
+            default:
+                UI.error("Invalid input");
+                payForOrder();
+                break;
         }
 
     }
@@ -204,9 +238,8 @@ public class Customer {
         finishCurrentOrder();
     }
 
-    private void finishCurrentOrder() { // add a gerenetate receipt as part of a payable class??
-        restaurant.addToRevenue(currentOrder.calculateTotal());
-        restaurant.addOrder(currentOrder);
+    private void finishCurrentOrder() { 
+        restaurant.processOrder(currentOrder);
         currentOrders.add(currentOrder);
         this.currentOrder = null;
     }
@@ -219,7 +252,7 @@ public class Customer {
         return this.restaurant;
     }
 
-    public void viewPastOrders() {
+    private void viewPastOrders() {
         UI.printSection("PAST ORDERS");
         if (pastOrders.size() == 0) {
             UI.info("No past orders found.");
@@ -231,7 +264,8 @@ public class Customer {
         }
     }
 
-    public void cancelOrder() {
+    private void cancelOrder() {
+        currentOrder.setStatusCancelled();
         this.currentOrder = null;
         UI.success("Order cancelled");
     }
