@@ -69,6 +69,7 @@ public class CashPayment implements Payable {
     public void generateReceipt(Order order) {
         UI.printHeader("RECEIPT");
         order.printOrder();
+        System.out.println(this);
     }
 
     @Override

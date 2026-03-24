@@ -54,6 +54,7 @@ public class CardPayment implements Payable {
         UI.printHeader("CARD PAYMENT");
         UI.printSection("Order total");
         System.out.print("Your order total is: " + UI.money(order.calculateTotal()));
+        
         if (validatePayment(order)){
             generateReceipt(order);
         }
