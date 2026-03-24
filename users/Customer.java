@@ -302,4 +302,16 @@ public class Customer {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Customer object\n" +
+               "pastOrders : " + pastOrders + "\n" +
+               "name : " + name + "\n" +
+               "currentOrders : " + currentOrders + "\n" +
+               "currentOrder : " + currentOrder + "\n" +
+               "phoneNumber : " + phoneNumber + "\n" +
+               "restaurant : " + restaurant + "\n" +
+               "rating : " + rating;
+    }
+
 }

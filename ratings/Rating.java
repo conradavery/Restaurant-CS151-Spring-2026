@@ -21,8 +21,7 @@ public class Rating {
     }
 
     public void printRating() {
-        System.out.println(this.name + " - " + this.stars + "/5");
-        System.out.println(message);
+        System.out.println(this);
     }
 
     public void changeRating(int stars) {
@@ -31,5 +30,10 @@ public class Rating {
 
     public void changeMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return this.name + " - " + this.stars + "/5" + "\n" + message + "\n";
     }
 }
