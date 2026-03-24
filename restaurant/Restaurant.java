@@ -7,6 +7,7 @@ import order.Order;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.OrderNotFoundException;
 import ratings.Rating;
 
 public class Restaurant {
@@ -106,13 +107,14 @@ public class Restaurant {
         }
     }
 
-    public Order findOrder(int orderID) {
+    public Order findOrder(int orderID) throws OrderNotFoundException {
         for (Order o : orders) {
             if (o.getOrderNumber() == orderID) {
                 return o;
             }
         }
-        return null;
+        throw new OrderNotFoundException("Order with ID " + orderID + " not found.");
+        // return null;
     }
     public void processOrder(Order order){
         addToRevenue(order.calculateTotal());

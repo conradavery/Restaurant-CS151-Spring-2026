@@ -5,6 +5,7 @@ import utilities.Input;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.OrderNotFoundException;
 import order.Order;
 
 public class KitchenStaff extends Staff {
@@ -62,12 +63,16 @@ public class KitchenStaff extends Staff {
         try {
             int orderID = Input.getInt();
             Order order = restaurant.findOrder(orderID);
-            if (order != null) {
-                UI.success("Changing order to preparing");
-                order.setStatusPreparing();
-            } else {
-                UI.error("No Order Found");
-            }
+            // if (order != null) {
+            //     UI.success("Changing order to preparing");
+            //     order.setStatusPreparing();
+            // } else {
+            //     UI.error("No Order Found");
+            // }
+            UI.success("Changing order to preparing");
+            order.setStatusPreparing();
+        } catch (OrderNotFoundException e) {
+            UI.error("Order number not found.");
         } catch (NumberFormatException e) {
             UI.error("Incorrect order number format.");
         }
@@ -80,12 +85,16 @@ public class KitchenStaff extends Staff {
         try {
             int orderID = Input.getInt();
             Order order = restaurant.findOrder(orderID);
-            if (order != null) {
-                UI.success("Changing order to complete");
-                order.setStatusComplete();
-            } else {
-                UI.error("No Order Found");
-            }
+            // if (order != null) {
+            //     UI.success("Changing order to complete");
+            //     order.setStatusComplete();
+            // } else {
+            //     UI.error("No Order Found");
+            // }
+            UI.success("Changing order to complete");
+            order.setStatusComplete();
+        } catch (OrderNotFoundException e) {
+            UI.error("Order number not found.");    
         } catch (NumberFormatException e) {
             UI.error("Incorrect order number format");
         }
