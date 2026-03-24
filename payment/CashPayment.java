@@ -20,6 +20,17 @@ public class CashPayment implements Payable {
         cashPaymentCount ++;
     }
 
+
+    public double getBillTotal(){
+        return billTotal;
+    }
+    public double getCashPaid(){
+        return cashPaid;
+    }
+    public double getChange(){
+        return change;
+    }
+
     @Override
     public boolean validatePayment(Order order) {
         this.billTotal = order.calculateTotal();
