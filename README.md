@@ -57,3 +57,48 @@
   1. Open the project folder in your IDE
   2. Set the source root to the project directory
   3. Run main.Main class
+
+ ## Usage
+
+  ### Main Menu
+  When you run the application, you'll see:
+
+  OUT AND IN Address: 1357 Newhall Drive Phone number: (123) - 456 - 789
+
+  --- MAIN MENU ---
+
+  1. Customer
+  2. Employee Login
+  3. View Ratings
+  4. Quit Selection:
+
+
+  ### For Customers
+  1. Select `1` for Customer
+  2. Enter your phone number (new customers will create an account)
+  3. From the Customer Menu, you can:
+     - **1) Create new order** - Browse menu, add/remove items, pay with card or cash
+     - **2) View previous orders** - See your order history
+     - **3) Leave rating** - Rate the restaurant (1-5 stars) with an optional message
+     - **4) Go back to main menu**
+
+  ### For Employees
+  Select `2` for Employee Login, then enter your staff ID.
+
+  **Manager** (try staff ID: `333`)
+  - **Manage Menu**: Add items, remove items, change prices, view menu
+  - **Manage Staff**: View staff, hire new staff, fire staff, increase salaries
+  - **Manage Restaurant**: Change phone number, address, view revenue
+
+  **KitchenStaff** (try staff ID: `111`)
+  - View pending orders
+  - Mark orders as "preparing"
+  - Mark orders as "complete"
+
+  ### Sample Test Data
+  The application comes pre-loaded with:
+  - **Menu Items**: Hamburger ($3.50), Cheese Burger ($5.50), Fries ($3.00), Soda ($1
+  .00), Milkshake ($2.00)
+  - **Manager**: Bob (Staff ID: `333`)
+  - **KitchenStaff**: Steve (Staff ID: `111`)
+  - **Sample Rating**: From "Conrad" with 5 stars
