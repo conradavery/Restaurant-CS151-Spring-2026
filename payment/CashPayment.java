@@ -69,9 +69,6 @@ public class CashPayment implements Payable {
     public void generateReceipt(Order order) {
         UI.printHeader("RECEIPT");
         order.printOrder();
-        System.out.println("Payment method: CASH");
-        System.out.println("Paid with: " + UI.money(cashPaid));
-        System.out.println("Change: " + UI.money(change));
     }
 
     @Override
@@ -82,5 +79,13 @@ public class CashPayment implements Payable {
         if (validatePayment(order)) {
             generateReceipt(order);
         }
+    }
+
+    @Override
+    public String toString() {
+        String r = "Payment method: CASH" + "\n";
+        r += "Paid with: " + UI.money(cashPaid) + "\n";
+        r += "Change: " + UI.money(change) + "\n";
+        return r;
     }
 }

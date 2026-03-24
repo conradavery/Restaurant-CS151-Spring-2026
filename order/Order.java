@@ -131,8 +131,6 @@ public class Order {
         r+= "-----------------------------------------------\n";
         r += String.format("%-25s %10s%n", "Total cost:", UI.money(getTotalPrice()));
         r += "STATUS: " + this.status;
-        if (paymentMethod != null)
-            r += "\n" + "PAYMENT METHOD: " + this.paymentMethod;
 
         return r;
     }
