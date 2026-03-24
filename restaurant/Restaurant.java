@@ -33,7 +33,7 @@ public class Restaurant {
         this.revenue = 0.00;
         this.ratings = new ArrayList<>();
         // restaurantCount ++;
-        if(restaurantCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(restaurantCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 restaurants have been created");
         }
         restaurantCount ++;

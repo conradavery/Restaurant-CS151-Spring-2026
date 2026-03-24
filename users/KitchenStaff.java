@@ -14,7 +14,7 @@ public class KitchenStaff extends Staff {
 
     public KitchenStaff(String name, String role, double salary, Restaurant restaurant, String staffID) throws MaxInstancesException {
         super(name, role, salary, restaurant, staffID);
-        if(KitchenStaffCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(KitchenStaffCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 Kitchen Staff have been created");
         }
         KitchenStaffCount ++;

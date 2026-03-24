@@ -12,7 +12,7 @@ public class Menu {
 
     public Menu() throws MaxInstancesException {
         this.items = new ArrayList<>();
-        if(menuCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(menuCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 menus have been created");
         }
         menuCount++;
