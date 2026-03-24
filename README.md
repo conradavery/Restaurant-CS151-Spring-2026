@@ -32,3 +32,28 @@
   control access
   - **Single Responsibility**: Each class has a focused purpose (e.g., `PaymentManager` 
   only handles transactions)
+
+   ## Installation Instructions
+
+  ### Prerequisites
+  - Java JDK 17 or higher
+  - Git (for cloning the repository)
+
+  ### Steps
+
+  1. **Clone the repository**
+     ```bash
+     git clone <project url>
+     cd Restaurant-CS151-Spring-2026
+
+  2. Compile the project
+     javac main/Main.java
+    
+  3. Run the application
+     java main.Main
+
+  Using an IDE (IntelliJ, Eclipse, VS Code)
+
+  1. Open the project folder in your IDE
+  2. Set the source root to the project directory
+  3. Run main.Main class
