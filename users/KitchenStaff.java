@@ -54,7 +54,11 @@ public class KitchenStaff extends Staff {
     }
 
     private void viewPendingOrders() {
-        restaurant.viewOrders();
+        try {
+            restaurant.viewOrders();
+        } catch (OrderNotFoundException e) {
+            UI.info(e.getMessage());
+        }
     }
 
     private void markOrderAsPreparing() {
@@ -72,7 +76,7 @@ public class KitchenStaff extends Staff {
             UI.success("Changing order to preparing");
             order.setStatusPreparing();
         } catch (OrderNotFoundException e) {
-            UI.error("Order number not found.");
+            UI.error(e.getMessage());
         } catch (NumberFormatException e) {
             UI.error("Incorrect order number format.");
         }
@@ -94,7 +98,7 @@ public class KitchenStaff extends Staff {
             UI.success("Changing order to complete");
             order.setStatusComplete();
         } catch (OrderNotFoundException e) {
-            UI.error("Order number not found.");    
+            UI.error(e.getMessage());
         } catch (NumberFormatException e) {
             UI.error("Incorrect order number format");
         }

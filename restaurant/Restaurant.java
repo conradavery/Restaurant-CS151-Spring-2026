@@ -100,7 +100,11 @@ public class Restaurant {
         orders.add(order);
     }
 
-    public void viewOrders() {
+    public void viewOrders() throws OrderNotFoundException {
+        if (orders.isEmpty()) {
+            throw new OrderNotFoundException("No orders found.");
+        }
+        
         for (Order o : orders) {
             o.printOrder();
             System.out.println();
