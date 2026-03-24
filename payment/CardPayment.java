@@ -54,6 +54,7 @@ public class CardPayment implements Payable {
         UI.printHeader("CARD PAYMENT");
         UI.printSection("Order total");
         System.out.print("Your order total is: " + UI.money(order.calculateTotal()));
+        
         if (validatePayment(order)){
             generateReceipt(order);
         }
@@ -115,10 +116,15 @@ public class CardPayment implements Payable {
     public void generateReceipt(Order order) {
         UI.printHeader("RECEIPT");
         order.printOrder();
-        System.out.println("Payment method: CARD");
-        System.out.println("Card Holder: "+ getCardHolder());
-        System.out.println("First 4 digits: " + getCardNumber().substring(0, 4));
+        System.out.println(this);
     }
-    
+
+    @Override
+    public String toString() {
+        String r = "Payment method: CARD" + "\n";
+        r += "Card Holder: "+ getCardHolder() + "\n";
+        r += "First 4 digits: " + getCardNumber().substring(0, 4) + "\n";
+        return r;
+    }
 
 }

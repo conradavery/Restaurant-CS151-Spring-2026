@@ -1,6 +1,7 @@
 package menuAndFoodItems;
 
 import utilities.SystemLimits;
+import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
 
 public class FoodItem {
@@ -46,5 +47,10 @@ public class FoodItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%-20s %10s   %s%n", getName(), UI.money(getPrice()), "(" + getCalories() + " cal)");
     }
 }

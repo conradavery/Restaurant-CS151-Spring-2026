@@ -119,13 +119,20 @@ public class Order {
     }
 
     public void printOrder() {
-        System.out.println("ORDER NUMBER: " + getOrderNumber());
+        System.out.println(this);
+    }
+
+    @Override
+    public String toString() {
+        String r = "ORDER NUMBER: " + getOrderNumber() + "\n";
         for (FoodItem f : items) {
-            System.out.printf("%-25s %10s%n", f.getName(), UI.money(f.getPrice()));
+            r += f;
         }
-        System.out.println("-----------------------------------------------");
-        System.out.printf("%-25s %10s%n", "Total cost:", UI.money(getTotalPrice()));
-        System.out.println("STATUS: " + this.status);
+        r+= "-----------------------------------------------\n";
+        r += String.format("%-25s %10s%n", "Total cost:", UI.money(getTotalPrice()));
+        r += "STATUS: " + this.status;
+
+        return r;
     }
 
 }

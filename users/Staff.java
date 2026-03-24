@@ -60,4 +60,14 @@ public abstract class Staff {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
+
+    @Override
+    public String toString() {
+        return "Staff object\n" +
+               "name : " + name + "\n" +
+               "role : " + role + "\n" +
+               "salary : " + salary + "\n" +
+               "restaurant : " + restaurant + "\n" +
+               "staffID : " + staffID;
+    }
 }

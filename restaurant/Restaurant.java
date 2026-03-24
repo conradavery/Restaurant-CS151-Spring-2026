@@ -40,7 +40,29 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return this.name + " Address: " + this.address + " Phone Number: " + this.phoneNumber;
+        String r  = "Restaurant " + name + "\n";
+        r += " Address: " + address + "\nPhone number: " +phoneNumber + "\n";
+        r += "Ratings: " + "\n";
+        if (ratings.size() == 0) {
+            r += "No ratings have been left yet." + "\n";
+        } else {
+            for (Rating rating : ratings) {
+                r += rating;
+            }
+        }
+        r += "-----------------------------------------------\n";
+        
+        r += getName() + " revenue: " + UI.money(revenue) + "\n";
+        
+        r += "-----------------------------------------------\n";
+        
+        r += menu;
+        
+        r += "-----------------------------------------------\n";
+
+        r += customerList + "\n";
+        r += staffList + "\n";
+        return r;
     }
     public void printInfo(){
         System.out.println("Address: " + address + "\nPhone number: " +phoneNumber);
@@ -92,7 +114,8 @@ public class Restaurant {
 
     public void showMenu() {
         UI.printHeader(getName() + " Menu");
-        menu.printMenu();
+        System.out.println(menu);
+        System.out.println("-----------------------------------------------");
     }
     // Order section
     public void addOrder(Order order) {
