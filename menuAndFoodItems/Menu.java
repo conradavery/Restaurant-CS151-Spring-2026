@@ -3,7 +3,6 @@ package menuAndFoodItems;
 import java.util.ArrayList;
 
 import utilities.SystemLimits;
-import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
 
 public class Menu {
@@ -43,13 +42,14 @@ public class Menu {
         item.changePrice(price);
     }
 
-    public void printMenu() {
+    @Override
+    public String toString() {
+        String r = "";
         for (int i = 0; i < items.size(); i++) {
             FoodItem item = items.get(i);
-            System.out.printf("%-3s %-20s %10s   %s%n", (i + 1) + ")", item.getName(), UI.money(item.getPrice()),
-                    "(" + item.getCalories() + " cal)");
+            r += ""+(i+1) + ") " + item;
         }
-        System.out.println("-----------------------------------------------");
+        return r;
     }
 
 }
