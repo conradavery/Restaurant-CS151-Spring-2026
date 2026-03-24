@@ -5,6 +5,7 @@ import utilities.Input;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.InvalidCreditInfoException;
 
 public class CardPayment implements Payable {
 
@@ -21,6 +22,33 @@ public class CardPayment implements Payable {
         cardPaymentCount ++;
     }
 
+    public String getCardNumber(){
+        return cardNumber;
+    }
+    public String getCardHolder(){
+        return cardHolder;
+    }
+    public String getExpiryDate(){
+        return expiryDate;
+    }
+    public String getCVV(){
+        return cvv;
+    }
+
+    // setters
+    public void setCardNumber(String newCardNumber){
+        cardNumber = newCardNumber;
+    }
+    public void setCardHolder(String newCardHolder){
+        cardHolder = newCardHolder;
+    }
+    public void setExpiryDate(String newExpiryDate){
+        expiryDate = newExpiryDate;
+    }
+    public void setCVV(String newCVV){
+        cvv = newCVV;
+    }
+
     @Override
     public void processPayment(Order order) {
         UI.printHeader("CARD PAYMENT");
@@ -35,24 +63,26 @@ public class CardPayment implements Payable {
     public boolean validatePayment(Order order) {
         System.out.println();
         System.out.print("Enter card number: ");
-        this.cardNumber = Input.getString();
+        setCardNumber(Input.getString());
 
         System.out.print("Enter card holder name: ");
-        this.cardHolder = Input.getString();
+        setCardHolder(Input.getString());
 
         System.out.print("Enter expiry date (MM/YY): ");
-        this.expiryDate = Input.getString();
+        setExpiryDate(Input.getString());
 
         System.out.print("Enter CVV: ");
-        this.cvv = Input.getString();
+        setCVV(Input.getString());
 
         System.out.println();
         UI.info("Processing card payment...");
-        if(processCreditInfo()){
+
+        try{
+            processCreditInfo();
             UI.success("Payment successful!");
             order.setStatusPaid();
             return true;
-        } else{
+        } catch (InvalidCreditInfoException e){
             UI.error("Payment unsuccessful");
             order.setStatusPaymentDenied();
             return false;
@@ -60,13 +90,25 @@ public class CardPayment implements Payable {
         
     }
 
-    private boolean processCreditInfo(){
-        // Hypothetical method for this assignement but could be a real method that checks if a credit card is valid
-        if (cardNumber.equals(cardNumber) && cardHolder.equals(cardHolder) && expiryDate.equals(expiryDate) && cvv.equals(cvv)){
-            return true;
-        } else{
-            return false;
-        }
+    private void processCreditInfo() throws InvalidCreditInfoException{
+        // null
+        if (cardNumber == null)
+            throw new InvalidCreditInfoException("Empty cardNumber");
+        if (expiryDate == null)
+            throw new InvalidCreditInfoException("Empty expiryDate");
+        if (cardHolder == null)
+            throw new InvalidCreditInfoException("Empty cardHolder");
+        if (cvv == null)
+            throw new InvalidCreditInfoException("Empty cvv");
+
+        // general formatting errors
+        String matchString = "^(0?[1-9]|1[0-2])/\\d{2}$";
+        if (cardNumber.length() != 16)
+            throw new InvalidCreditInfoException("Invalid cardNumber, not long enough");
+        if (cvv.length() != 3)
+            throw new InvalidCreditInfoException("Invalid CVV");
+        if (!expiryDate.matches(matchString))
+            throw new InvalidCreditInfoException("Invalid expiry date");
     }
 
     @Override
@@ -74,8 +116,8 @@ public class CardPayment implements Payable {
         UI.printHeader("RECEIPT");
         order.printOrder();
         System.out.println("Payment method: CARD");
-        System.out.println("Card Holder: "+ cardHolder);
-        System.out.println("First 4 digits: " + cardNumber.substring(0, 4));
+        System.out.println("Card Holder: "+ getCardHolder());
+        System.out.println("First 4 digits: " + getCardNumber().substring(0, 4));
     }
     
 
