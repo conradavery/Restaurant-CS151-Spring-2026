@@ -31,6 +31,16 @@ public class CashPayment implements Payable {
         return change;
     }
 
+    public void setBillTotal(double newBillTotal){
+        billTotal = newBillTotal;
+    }
+    public void setCashPaid(double newCashPaid){
+        cashPaid = newCashPaid;
+    }
+    public void setChange(double newChange){
+        change = newChange;
+    }
+
     @Override
     public boolean validatePayment(Order order) {
         this.billTotal = order.calculateTotal();
