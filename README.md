@@ -102,3 +102,38 @@
   - **Manager**: Bob (Staff ID: `333`)
   - **KitchenStaff**: Steve (Staff ID: `111`)
   - **Sample Rating**: From "Conrad" with 5 stars
+
+## Contributions
+
+  **Conrad**
+  - Initial project setup and repository structure
+  - `Restaurant`, `Menu`, `FoodItem` classes
+  - `Main` class and application startup logic
+  - `UI` helper class for formatted console output
+  - `Input` class with EXIT handling
+  - Customer order flow and payment integration
+  - `Rating` class and rating functionality
+  - `MaxInstancesException` and system limits integration
+  - Code review and merge management
+
+  **Don**
+  - `Customer` class with order creation and history
+  - `Staff` abstract base class
+  - `Manager` class with menu and staff management
+  - `KitchenStaff` class with order status updates
+  - README documentation (Overview, Design, Installation, Usage, Contributions)
+
+  **Trung**
+  - `Order` and `OrderItems` classes
+  - `SystemLimits` class for max instance enforcement
+  - `Payable` interface design
+  - `CardPayment` and `CashPayment` classes
+  - `Wallet` and `PaymentManager` classes
+  - UML diagram creation and maintenance
+  - Updated classes to match UML specifications
+
+  **Gerard**
+  - `Payment` base class implementation
+  - `CardPayment` getters/setters and receipt generation
+  - Initial payment processing logic
+  - Unit tests for payment and restaurant classes
