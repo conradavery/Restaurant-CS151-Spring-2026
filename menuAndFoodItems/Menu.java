@@ -8,7 +8,7 @@ import utilities.exceptions.MenuItemNotFoundException;;
 
 public class Menu {
     private ArrayList<FoodItem> items;
-    private static int menuCount = 0;
+    public static int menuCount = 0;
 
     public Menu() throws MaxInstancesException {
         this.items = new ArrayList<>();
