@@ -27,7 +27,6 @@ public class Order {
         if(instanceCounter > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 orders have been created");
         }
-        instanceCounter ++;
     }
 
     public void addItemToOrder(FoodItem item) {

@@ -64,7 +64,7 @@ public class CashPayment implements Payable {
 
         this.change = cashPaid - billTotal;
         UI.info("Payment successful!");
-        UI.info("Change: " + change);
+        UI.info("Change: " + UI.money(change));
         order.setStatusPaid();
         return true;
     }
