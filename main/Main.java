@@ -139,11 +139,6 @@ public class Main {
         
         try{
             Staff staff = restaurant.findStaff(staffID);
-            if (staff == null) {
-                throw new StaffNotFoundException("Staff ID not found. Please try again.");
-                // UI.error("Invalid staff ID.");
-                // return;
-            }
             UI.success("Login successful. Welcome, " + staff.getName() + ".");
             staff.performDuties();
         } catch (StaffNotFoundException e) {
