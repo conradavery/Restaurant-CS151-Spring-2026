@@ -15,7 +15,7 @@ public class Manager extends Staff {
     public Manager(String name, String role, double salary, Restaurant restaurant,
             String staffID) throws MaxInstancesException {
         super(name, role, salary, restaurant, staffID);
-        if (managerCount > SystemLimits.MAXIMUM_INSTANCES) {
+        if (managerCount >= SystemLimits.MAXIMUM_INSTANCES) {
             throw new MaxInstancesException("More than 100 managers have been created");
         }
         managerCount++;
