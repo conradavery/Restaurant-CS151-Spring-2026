@@ -9,6 +9,7 @@ import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
 import utilities.exceptions.MenuItemNotFoundException;
 import utilities.exceptions.OrderNotFoundException;
+import utilities.exceptions.StaffNotFoundException;
 import ratings.Rating;
 
 public class Restaurant {
@@ -49,7 +50,7 @@ public class Restaurant {
             r += "No ratings have been left yet." + "\n";
         } else {
             for (Rating rating : ratings) {
-                r += rating;
+                r += rating.toString();
             }
         }
         r += "-----------------------------------------------\n";
@@ -58,12 +59,12 @@ public class Restaurant {
         
         r += "-----------------------------------------------\n";
         
-        r += menu;
+        r += menu.toString();
         
         r += "-----------------------------------------------\n";
 
-        r += customerList + "\n";
-        r += staffList + "\n";
+        r += customerList.toString() + "\n";
+        r += staffList.toString() + "\n";
         return r;
     }
     public void printInfo(){
@@ -182,13 +183,22 @@ public class Restaurant {
         staffList.add(staff);
     }
 
-    public Staff findStaff(String staffID) {
+    public Staff findStaff(String staffID) throws StaffNotFoundException{
         for (Staff s : staffList) {
             if (s.getStaffID().equals(staffID)) {
                 return s;
             }
         }
-        return null;
+        throw new StaffNotFoundException("Staff with ID: " + staffID + " does not exist.");
+    }
+    public boolean checkStaff(String staffID){
+        for (Staff s : staffList) {
+            if (s.getStaffID().equals(staffID)) {
+                return true;
+            }
+        }
+        return false;
+        
     }
 
     public ArrayList<Staff> getStaffList() {
@@ -198,6 +208,7 @@ public class Restaurant {
     public void fireStaff(Staff staff) {
         staffList.remove(staff);
     }
+    
     // Customer section
     public Customer findCustomer(String phoneNumber) {
         for (Customer c : customerList) {

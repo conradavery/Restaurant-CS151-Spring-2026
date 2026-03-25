@@ -11,13 +11,14 @@ import utilities.exceptions.*;
 
 public class Manager extends Staff {
     private static int managerCount = 0;
+
     public Manager(String name, String role, double salary, Restaurant restaurant,
             String staffID) throws MaxInstancesException {
         super(name, role, salary, restaurant, staffID);
-        if(managerCount > SystemLimits.MAXIMUM_INSTANCES){
+        if (managerCount > SystemLimits.MAXIMUM_INSTANCES) {
             throw new MaxInstancesException("More than 100 managers have been created");
         }
-        managerCount ++;
+        managerCount++;
     }
 
     @Override
@@ -280,7 +281,8 @@ public class Manager extends Staff {
         String empID = Input.getString();
 
         // Check if ID already exists
-        if (restaurant.findStaff(empID) != null) {
+
+        if (restaurant.checkStaff(empID)) {
             UI.error("Staff ID already exists!");
             return;
         }
@@ -288,43 +290,51 @@ public class Manager extends Staff {
         Staff newEmployee;
         if (empRole.equalsIgnoreCase("Manager")) {
             newEmployee = new Manager(empName, empRole, empSalary, restaurant, empID);
-        } else {//add another case later
+        } else {// add another case later
             newEmployee = new KitchenStaff(empName, empRole, empSalary, restaurant, empID);
         }
 
         restaurant.hireEmployee(newEmployee);
         UI.success(empName + " hired successfully as " + empRole + "!");
+
     }
 
     private void fireStaff() {
-        System.out.print("What is the Staff ID: ");
-        String ID = Input.getString();
-        Staff fired = restaurant.findStaff(ID); //add exception here if staff doesnt exist
-        if (fired.getRole().equals("Manager")) {
-            UI.error("You can not fire another manager");
-        } else {
-            restaurant.fireStaff(fired);
-            UI.success("Fired " + fired.getName());
+        try {
+            System.out.print("What is the Staff ID: ");
+            String ID = Input.getString();
+            Staff fired = restaurant.findStaff(ID); // add exception here if staff doesnt exist
+            if (fired.getRole().equals("Manager")) {
+                UI.error("You can not fire another manager");
+            } else {
+                restaurant.fireStaff(fired);
+                UI.success("Fired " + fired.getName());
+            }
+        } catch (StaffNotFoundException e) {
+            UI.error(e.getMessage());
         }
     }
 
     private void increaseSalary() {
-        System.out.print("What is the Staff ID: ");
-        String ID = Input.getString();
-        Staff raise = restaurant.findStaff(ID); //add exception here if staff no exist
-        if (raise.getRole().equals("Manager")) {
-            UI.error("You can not raise another manager's salary");
-        } else {
-            System.out.print("What is the new salary for the staff: ");
-            try{
-                double newSalary = Input.getDouble();
-                raise.setSalary(newSalary);
-                UI.success("Gave raised to " + raise.getName());
-            } catch (NumberFormatException e){
-                UI.error("Invalid salary type");
+        try {
+            System.out.print("What is the Staff ID: ");
+            String ID = Input.getString();
+            Staff raise = restaurant.findStaff(ID); // add exception here if staff no exist
+            if (raise.getRole().equals("Manager")) {
+                UI.error("You can not raise another manager's salary");
+            } else {
+                System.out.print("What is the new salary for the staff: ");
+                try {
+                    double newSalary = Input.getDouble();
+                    raise.setSalary(newSalary);
+                    UI.success("Gave raised to " + raise.getName());
+                } catch (NumberFormatException e) {
+                    UI.error("Invalid salary type");
+                }
+
             }
-            
-            
+        } catch (StaffNotFoundException e) {
+            UI.error(e.getMessage());
         }
     }
 
