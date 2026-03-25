@@ -254,12 +254,21 @@ public class Customer {
     private void payWithCard() { // eventually make this call the payment package
 
         currentOrder.payWithCard();
-        finishCurrentOrder();
+        if (currentOrder.getStatus().equals("PAYMENT DENIED")){
+            payForOrder();
+        }else{
+            finishCurrentOrder();
+        }
+        
     }
 
     private void payWithCash() {
         currentOrder.payWithCash();
-        finishCurrentOrder();
+        if (currentOrder.getStatus().equals("PAYMENT DENIED")){
+            payForOrder();
+        } else{
+            finishCurrentOrder();
+        }
     }
 
     private void finishCurrentOrder() {
@@ -291,7 +300,7 @@ public class Customer {
     private void cancelOrder() {
         currentOrder.setStatusCancelled();
         this.currentOrder = null;
-        UI.success("Order cancelled");
+        UI.info("Order cancelled");
     }
 
     public String getName() {
