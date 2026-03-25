@@ -27,7 +27,7 @@ class TestMenu {
     @Test
     @DisplayName("Constructor throws MaxInstancesException when limit exceeded")
     void testConstructor_ExceedsMaxInstances() {
-        assertThrows(MaxInstancesException.class, this::exceedMaxInstances);
+        assertThrows(MaxInstancesException.class, () -> exceedMaxInstances());
     }
     
     private void exceedMaxInstances() throws MaxInstancesException {

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import utilities.exceptions.MaxInstancesException;
 import utilities.exceptions.InvalidCreditInfoException;
 
+
 @DisplayName("CardPayment Tests")
 class TestCardPayment {
     private CardPayment cardPayment;
@@ -17,11 +18,10 @@ class TestCardPayment {
         CardPayment.cardPaymentCount = 0;
         cardPayment = new CardPayment();
     }
-    
     @Test
     @DisplayName("Constructor throws MaxInstancesException when limit exceeded")
     void testConstructor_ExceedsMaxInstances() {
-        assertThrows(MaxInstancesException.class, this::exceedMaxInstances);
+        assertThrows(MaxInstancesException.class, () -> exceedMaxInstances());
     }
     
     private void exceedMaxInstances() throws MaxInstancesException {
