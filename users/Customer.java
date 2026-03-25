@@ -171,9 +171,9 @@ public class Customer {
         String choice = "";
         while (!choice.equals("0")) {
             UI.printSection("BUILD YOUR ORDER");
+            System.out.println("0) Finish your order");
             System.out.println("1) Add an item");
             System.out.println("2) Remove an item");
-            System.out.println("0) Finish your order");
             System.out.print("Choice: ");
             choice = Input.getString();
             switch (choice) {

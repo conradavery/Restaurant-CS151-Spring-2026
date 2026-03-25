@@ -27,10 +27,10 @@ public class Manager extends Staff {
         String choice = "";
         while (!choice.equals("4")) {
             UI.printHeader("MANAGER MENU");
-            System.out.println("1: Manage Menu");
-            System.out.println("2: Manage Staff");
-            System.out.println("3: Manage Restaurant");
-            System.out.println("4: Go back");
+            System.out.println("1) Manage Menu");
+            System.out.println("2) Manage Staff");
+            System.out.println("3) Manage Restaurant");
+            System.out.println("4) Go back");
             System.out.println();
             System.out.print("Choice: ");
             choice = Input.getString();
@@ -60,11 +60,11 @@ public class Manager extends Staff {
         String choice = "";
         while (!choice.equals("5")) {
             UI.printHeader("MENU MANAGEMENT");
-            System.out.println("1: Add item to menu");
-            System.out.println("2: Remove item from menu");
-            System.out.println("3: Change item price");
-            System.out.println("4: View menu");
-            System.out.println("5: Go back");
+            System.out.println("1) Add item to menu");
+            System.out.println("2) Remove item from menu");
+            System.out.println("3) Change item price");
+            System.out.println("4) View menu");
+            System.out.println("5) Go back");
             System.out.println();
             System.out.print("Choice: ");
             choice = Input.getString();
@@ -97,11 +97,11 @@ public class Manager extends Staff {
         String choice = "";
         while (!choice.equals("5")) {
             UI.printHeader("STAFF MANAGEMENT");
-            System.out.println("1: View all staff");
-            System.out.println("2: Hire new staff");
-            System.out.println("3: Fire staff");
-            System.out.println("4: Increase staff salary");
-            System.out.println("5: Go back");
+            System.out.println("1) View all staff");
+            System.out.println("2) Hire new staff");
+            System.out.println("3) Fire staff");
+            System.out.println("4) Increase staff salary");
+            System.out.println("5) Go back");
             System.out.println();
             System.out.print("Choice: ");
             choice = Input.getString();
@@ -137,10 +137,10 @@ public class Manager extends Staff {
         String choice = "";
         while (!choice.equals("4")) {
             UI.printHeader("RESTAURANT MANAGEMENT");
-            System.out.println("1: Change phone number");
-            System.out.println("2: Change address");
-            System.out.println("3: View revenue");
-            System.out.println("4: Go back");
+            System.out.println("1) Change phone number");
+            System.out.println("2) Change address");
+            System.out.println("3) View revenue");
+            System.out.println("4) Go back");
             System.out.println();
             System.out.print("Choice: ");
             choice = Input.getString();
