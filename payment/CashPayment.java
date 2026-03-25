@@ -46,10 +46,14 @@ public class CashPayment implements Payable {
         this.billTotal = order.calculateTotal();
         this.cashPaid = 0;
         while (cashPaid < billTotal) {
-            System.out.print("\nEnter cash amount: ");
+            System.out.print("\nEnter cash amount (or enter 0 to change payment/cancel order): ");
             try {
                 cashPaid = Input.getDouble();
 
+                if(cashPaid == 0){
+                    order.setStatusPaymentDenied();
+                    return false;
+                }
                 if (cashPaid < billTotal) {
                     UI.error("Not enough cash. Please pay at least " + billTotal);
                 }

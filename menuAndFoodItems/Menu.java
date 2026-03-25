@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import utilities.SystemLimits;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.MenuItemNotFoundException;;
 
 public class Menu {
     private ArrayList<FoodItem> items;
@@ -21,21 +22,25 @@ public class Menu {
         items.add(foodItem);
     }
 
-    public FoodItem getItem(int index) { //needs exception handling in here or in add order prob add order tbh
-        return items.get(index - 1);
+    public FoodItem getItem(int index) throws MenuItemNotFoundException { //needs exception handling in here or in add order prob add order tbh
+        try{
+            return items.get(index - 1);
+        } catch (IndexOutOfBoundsException e){
+            throw new MenuItemNotFoundException("No menu item located at that index");
+        }
     }
 
     public void removeItem(FoodItem item) {
         items.remove(item);
     }
 
-    public FoodItem findItemByName(String name) {
+    public FoodItem findItemByName(String name) throws MenuItemNotFoundException{
         for (FoodItem f : items) {
             if (f.getName().equalsIgnoreCase(name)) {
                 return f;
             }
         }
-        return null;
+        throw new MenuItemNotFoundException("Menu item not found");
     }
 
     public void changeItemPrice(FoodItem item, Double price) {

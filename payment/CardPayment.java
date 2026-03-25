@@ -123,7 +123,7 @@ public class CardPayment implements Payable {
     public String toString() {
         String r = "Payment method: CARD" + "\n";
         r += "Card Holder: "+ getCardHolder() + "\n";
-        r += "First 4 digits: " + getCardNumber().substring(0, 4) + "\n";
+        r += "Last 4 digits: " + getCardNumber().substring(12, 16) + "\n";
         return r;
     }
 
