@@ -14,10 +14,10 @@ public class Rating {
         this.name = name;
         this.stars = stars;
         this.message = message;
-        if(ratingCount > SystemLimits.MAXIMUM_INSTANCES){
+        if (ratingCount > SystemLimits.MAXIMUM_INSTANCES) {
             throw new MaxInstancesException("More than 100 ratings have been created");
         }
-        ratingCount ++;
+        ratingCount++;
     }
 
     public void printRating() {
@@ -35,5 +35,29 @@ public class Rating {
     @Override
     public String toString() {
         return this.name + " - " + this.stars + "/5" + "\n" + message + "\n";
+    }
+
+    public int getStars() {
+        return this.stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

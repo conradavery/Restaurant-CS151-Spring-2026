@@ -101,7 +101,7 @@ public class Customer {
             }
             System.out.print("Message (Optional): ");
             String message = Input.getString();
-            this.rating = new Rating(this.name, stars, message);
+            setRating(new Rating(this.name, stars, message));
             restaurant.addRating(rating);
             UI.success("Left rating!");
         } catch (NumberFormatException e) {
@@ -153,11 +153,11 @@ public class Customer {
 
     private void createNewOrder() {
         System.out.println();
-        try{
-        currentOrder = new Order();
-        currentOrder.setStatusInProgress();
-        buildOrder();
-        }catch (MaxInstancesException e){
+        try {
+            currentOrder = new Order();
+            currentOrder.setStatusInProgress();
+            buildOrder();
+        } catch (MaxInstancesException e) {
             UI.error(e.getMessage());
         }
     }
@@ -205,11 +205,11 @@ public class Customer {
         System.out.print("Enter menu item number to add: ");
         try {
             int choice = Input.getInt();
-            try{
-            FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
-            System.out.println();
-            currentOrder.addItemToOrder(item);
-            }catch (MenuItemNotFoundException e){
+            try {
+                FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
+                System.out.println();
+                currentOrder.addItemToOrder(item);
+            } catch (MenuItemNotFoundException e) {
                 UI.error(e.getMessage());
             }
             // catch menu item not found exception??
@@ -258,19 +258,19 @@ public class Customer {
     private void payWithCard() { // eventually make this call the payment package
 
         currentOrder.payWithCard();
-        if (currentOrder.getStatus().equals("PAYMENT DENIED")){
+        if (currentOrder.getStatus().equals("PAYMENT DENIED")) {
             payForOrder();
-        }else{
+        } else {
             finishCurrentOrder();
         }
-        
+
     }
 
     private void payWithCash() {
         currentOrder.payWithCash();
-        if (currentOrder.getStatus().equals("PAYMENT DENIED")){
+        if (currentOrder.getStatus().equals("PAYMENT DENIED")) {
             payForOrder();
-        } else{
+        } else {
             finishCurrentOrder();
         }
     }
@@ -318,13 +318,37 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer object\n" +
-               "pastOrders : " + pastOrders + "\n" +
-               "name : " + name + "\n" +
-               "currentOrders : " + currentOrders + "\n" +
-               "currentOrder : " + currentOrder + "\n" +
-               "phoneNumber : " + phoneNumber + "\n" +
-               "restaurant : " + restaurant + "\n" +
-               "rating : " + rating;
+                "pastOrders : " + pastOrders + "\n" +
+                "name : " + name + "\n" +
+                "currentOrders : " + currentOrders + "\n" +
+                "currentOrder : " + currentOrder + "\n" +
+                "phoneNumber : " + phoneNumber + "\n" +
+                "restaurant : " + restaurant.getName() + "\n" +
+                "rating : " + rating;
+    }
+
+    public ArrayList<Order> getPastOrders() {
+        return new ArrayList<>(pastOrders);
+    }
+
+    public void setPastOrders(ArrayList<Order> pastOrders) {
+        this.pastOrders = new ArrayList<>(pastOrders);
+    }
+
+    public ArrayList<Order> getCurrentOrders() {
+        return new ArrayList<>(currentOrders);
+    }
+
+    public void setCurrentOrders(ArrayList<Order> currentOrders) {
+        this.currentOrders = new ArrayList<>(currentOrders);
+    }
+
+    public Rating getRating() {
+        return this.rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
 }

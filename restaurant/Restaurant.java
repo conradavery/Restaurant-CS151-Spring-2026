@@ -36,16 +36,16 @@ public class Restaurant {
         this.revenue = 0.00;
         this.ratings = new ArrayList<>();
         // restaurantCount ++;
-        if(restaurantCount > SystemLimits.MAXIMUM_INSTANCES){
+        if (restaurantCount > SystemLimits.MAXIMUM_INSTANCES) {
             throw new MaxInstancesException("More than 100 restaurants have been created");
         }
-        restaurantCount ++;
+        restaurantCount++;
     }
 
     @Override
     public String toString() {
-        String r  = "Restaurant " + name + "\n";
-        r += " Address: " + address + "\nPhone number: " +phoneNumber + "\n";
+        String r = "Restaurant " + name + "\n";
+        r += " Address: " + address + "\nPhone number: " + phoneNumber + "\n";
         r += "Ratings: " + "\n";
         if (ratings.size() == 0) {
             r += "No ratings have been left yet." + "\n";
@@ -55,13 +55,13 @@ public class Restaurant {
             }
         }
         r += "-----------------------------------------------\n";
-        
+
         r += getName() + " revenue: " + UI.money(revenue) + "\n";
-        
+
         r += "-----------------------------------------------\n";
-        
+
         r += menu.toString();
-        
+
         r += "-----------------------------------------------\n";
 
         r += customerList.toString() + "\n";
@@ -69,7 +69,7 @@ public class Restaurant {
         return r;
     }
 
-    public void startup(){
+    public void startup() {
         String selection = "";
         while (!selection.equals("4")) {
             UI.printHeader(getName().toUpperCase());
@@ -129,8 +129,8 @@ public class Restaurant {
         UI.printSection("EMPLOYEE LOGIN");
         System.out.print("Enter your staff ID: ");
         String staffID = Input.getString().trim();
-        
-        try{
+
+        try {
             Staff staff = findStaff(staffID);
             UI.success("Login successful. Welcome, " + staff.getName() + ".");
             staff.performDuties();
@@ -139,28 +139,27 @@ public class Restaurant {
         }
     }
 
-
-
-    public void printInfo(){
-        System.out.println("Address: " + address + "\nPhone number: " +phoneNumber);
+    public void printInfo() {
+        System.out.println("Address: " + address + "\nPhone number: " + phoneNumber);
     }
+
     // Menu section
     public void createMenu() {
         Menu menu;
         try {
             menu = new Menu();
-            this.menu = menu;
+            setMenu(menu);
         } catch (MaxInstancesException e) {
             // TODO Auto-generated catch block
             System.out.println(e.getMessage());
         }
-        
+
     }
 
     // public Menu getMenu() {
-    //     return this.menu; // maybe not safe? return a copy?
+    // return this.menu; // maybe not safe? return a copy?
     // }
-    public FoodItem getMenuItem(int choice) throws MenuItemNotFoundException{
+    public FoodItem getMenuItem(int choice) throws MenuItemNotFoundException {
         return menu.getItem(choice);
     }
 
@@ -169,25 +168,25 @@ public class Restaurant {
     }
 
     public void removeItem(String name) {
-        try{
-        FoodItem change = menu.findItemByName(name);
-        menu.removeItem(change);
+        try {
+            FoodItem change = menu.findItemByName(name);
+            menu.removeItem(change);
             UI.success("Removed " + change.getName() + " from the menu.");
-        } catch (MenuItemNotFoundException e){
+        } catch (MenuItemNotFoundException e) {
             UI.error(e.getMessage());
         }
 
     }
 
     public void changePrice(String name, double price) {
-        try{
-        FoodItem change = menu.findItemByName(name);
-         menu.changeItemPrice(change, price);
+        try {
+            FoodItem change = menu.findItemByName(name);
+            menu.changeItemPrice(change, price);
             UI.success("Changed " + change.getName() + "'price to " + UI.money(change.getPrice()));
-        } catch (MenuItemNotFoundException e){
+        } catch (MenuItemNotFoundException e) {
             UI.error(e.getMessage());
         }
-        
+
     }
 
     public void showMenu() {
@@ -195,6 +194,7 @@ public class Restaurant {
         System.out.println(menu);
         System.out.println("-----------------------------------------------");
     }
+
     // Order section
     public void addOrder(Order order) {
         orders.add(order);
@@ -204,7 +204,7 @@ public class Restaurant {
         if (orders.isEmpty()) {
             throw new OrderNotFoundException("No orders found.");
         }
-        
+
         for (Order o : orders) {
             o.printOrder();
             System.out.println();
@@ -220,10 +220,12 @@ public class Restaurant {
         throw new OrderNotFoundException("Order with ID " + orderID + " not found.");
         // return null;
     }
-    public void processOrder(Order order){
+
+    public void processOrder(Order order) {
         addToRevenue(order.calculateTotal());
         addOrder(order);
     }
+
     // Rating section
     public void addRating(Rating rating) {
         ratings.add(rating);
@@ -244,6 +246,7 @@ public class Restaurant {
             }
         }
     }
+
     // Revenue section
     public void addToRevenue(double amount) {
         this.revenue += amount;
@@ -252,12 +255,13 @@ public class Restaurant {
     public void printRevenue() {
         System.out.println(getName() + " revenue: " + UI.money(revenue));
     }
+
     // Employee section
     public void hireEmployee(Staff staff) {
         staffList.add(staff);
     }
 
-    public Staff findStaff(String staffID) throws StaffNotFoundException{
+    public Staff findStaff(String staffID) throws StaffNotFoundException {
         for (Staff s : staffList) {
             if (s.getStaffID().equals(staffID)) {
                 return s;
@@ -265,14 +269,15 @@ public class Restaurant {
         }
         throw new StaffNotFoundException("Staff with ID: " + staffID + " does not exist.");
     }
-    public boolean checkStaff(String staffID){
+
+    public boolean checkStaff(String staffID) {
         for (Staff s : staffList) {
             if (s.getStaffID().equals(staffID)) {
                 return true;
             }
         }
         return false;
-        
+
     }
 
     public ArrayList<Staff> getStaffList() {
@@ -282,7 +287,7 @@ public class Restaurant {
     public void fireStaff(Staff staff) {
         staffList.remove(staff);
     }
-    
+
     // Customer section
     public Customer findCustomer(String phoneNumber) {
         for (Customer c : customerList) {
@@ -296,25 +301,72 @@ public class Restaurant {
     public void addCustomer(Customer customer) {
         customerList.add(customer);
     }
+
     // Rest of getters and setters
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getAddress(){
+
+    public String getAddress() {
         return this.address;
     }
 
     public void setPhoneNumber(String number) {
         this.phoneNumber = number;
     }
-    
-    public String getPhoneNumber(){
+
+    public String getPhoneNumber() {
         return this.phoneNumber;
     }
+
     public String getName() {
         return this.name;
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public Menu getMenu() {
+        return this.menu;
+    }
+
+    public ArrayList<Customer> getCustomerList() {
+        return new ArrayList<>(customerList);
+    }
+
+    public void setCustomerList(ArrayList<Customer> customerList) {
+        this.customerList = new ArrayList<>(customerList);
+    }
+
+    // Orders
+    public ArrayList<Order> getOrders() {
+        return new ArrayList<>(orders);
+    }
+
+    public void setOrders(ArrayList<Order> orders) {
+        this.orders = new ArrayList<>(orders);
+    }
+
+    // Revenue
+    public double getRevenue() {
+        return this.revenue;
+    }
+
+    public void setRevenue(double revenue) {
+        this.revenue = revenue;
+    }
+
+    // Ratings
+    public ArrayList<Rating> getRatings() {
+        return new ArrayList<>(ratings);
+    }
+
+    public void setRatings(ArrayList<Rating> ratings) {
+        this.ratings = new ArrayList<>(ratings);
     }
 }
