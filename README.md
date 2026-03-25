@@ -9,7 +9,7 @@
   - **Payment Processing**: Secure payments using wallet-based transactions
   - **User Roles**: Different access levels for Customers, Staff, Managers, and KitchenStaff
 
-  The project demonstrates object-oriented design principles including inheritance, encapsulation, and composition.
+  The project demonstrates object-oriented design principles, including inheritance, encapsulation, and composition.
 
    ## Design
 
@@ -26,7 +26,7 @@
   ### Design Patterns & Principles
   - **Inheritance**: `Staff` is a base class for `Manager` and `KitchenStaff`; shared
   attributes and methods are defined in the parent class
-  - **Composition**: `Order` contains `OrderItems`, `Restaurant` contains `Menu` and
+  - **Composition**: `Order` contains `OrderItems`, `Restaurant` contains `Menu`, and
   manages orders
   - **Encapsulation**: All classes use private fields with public getters/setters to
   control access
@@ -124,11 +124,11 @@
   - README documentation (Overview, Design, Installation, Usage, Contributions)
 
   **Trung**
-  - `Order` and `OrderItems` classes
-  - `SystemLimits` class for max instance enforcement
+  - `Order` class
+  - `SystemLimits` class for maximum instance handling
   - `Payable` interface design
   - `CardPayment` and `CashPayment` classes
-  - `Wallet` and `PaymentManager` classes
+  - `OrderNotFoundException` and `StaffNotFoundException` implementation
   - UML diagram creation and maintenance
   - Updated classes to match UML specifications
 
@@ -137,3 +137,6 @@
   - `CardPayment` getters/setters and receipt generation
   - Initial payment processing logic
   - Unit tests for payment and restaurant classes
+
+## UML Diagram
+<img width="1000" height="847" alt="image" src="https://github.com/user-attachments/assets/6eb04047-481e-465c-b83a-fb010c89dac2" />
