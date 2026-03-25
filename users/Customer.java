@@ -12,6 +12,7 @@ import utilities.Input;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.MenuItemNotFoundException;
 import ratings.Rating;
 
 public class Customer {
@@ -204,10 +205,13 @@ public class Customer {
         System.out.print("Enter menu item number to add: ");
         try {
             int choice = Input.getInt();
-            // try here
+            try{
             FoodItem item = restaurant.getMenuItem(choice); // this needs exception handling later
             System.out.println();
             currentOrder.addItemToOrder(item);
+            }catch (MenuItemNotFoundException e){
+                UI.error(e.getMessage());
+            }
             // catch menu item not found exception??
         } catch (NumberFormatException e) {
             UI.error("Enter the menu item number as an integer.");

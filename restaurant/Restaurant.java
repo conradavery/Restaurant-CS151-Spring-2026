@@ -7,6 +7,7 @@ import order.Order;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.MenuItemNotFoundException;
 import utilities.exceptions.OrderNotFoundException;
 import ratings.Rating;
 
@@ -84,7 +85,7 @@ public class Restaurant {
     // public Menu getMenu() {
     //     return this.menu; // maybe not safe? return a copy?
     // }
-    public FoodItem getMenuItem(int choice){
+    public FoodItem getMenuItem(int choice) throws MenuItemNotFoundException{
         return menu.getItem(choice);
     }
 
@@ -93,24 +94,25 @@ public class Restaurant {
     }
 
     public void removeItem(String name) {
+        try{
         FoodItem change = menu.findItemByName(name);
-        if (change == null) {
-            UI.error("Menu item does not exist");
-        } else {
-            menu.removeItem(change);
+        menu.removeItem(change);
             UI.success("Removed " + change.getName() + " from the menu.");
+        } catch (MenuItemNotFoundException e){
+            UI.error(e.getMessage());
         }
 
     }
 
     public void changePrice(String name, double price) {
+        try{
         FoodItem change = menu.findItemByName(name);
-        if (change == null) {
-            UI.error("Menu item does not exist");
-        } else {
-            menu.changeItemPrice(change, price);
+         menu.changeItemPrice(change, price);
             UI.success("Changed " + change.getName() + "'price to " + UI.money(change.getPrice()));
+        } catch (MenuItemNotFoundException e){
+            UI.error(e.getMessage());
         }
+        
     }
 
     public void showMenu() {
