@@ -14,13 +14,9 @@ import utils.TestUtils;
 class TestMenu {
     private Menu menu;
     
-    @BeforeAll
-    static void resetCounters() {
-        Menu.menuCount = 0;
-    }
-    
     @BeforeEach
     void setUp() throws MaxInstancesException {
+        Menu.menuCount = 0;
         menu = new Menu();
     }
     

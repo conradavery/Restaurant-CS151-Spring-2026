@@ -13,13 +13,9 @@ import utils.TestUtils;
 class TestFoodItem {
     private FoodItem foodItem;
     
-    @BeforeAll
-    static void resetCounters() {
-        FoodItem.FoodItemCount = 0;
-    }
-    
     @BeforeEach
     void setUp() throws MaxInstancesException {
+        FoodItem.FoodItemCount = 0;
         foodItem = new FoodItem("Burger", 500, 10.99);
     }
     

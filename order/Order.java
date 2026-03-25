@@ -10,7 +10,7 @@ import utilities.exceptions.MaxInstancesException;
 
 public class Order {
 
-    private static int instanceCounter = 0;
+    public static int instanceCounter = 0;
 
     private ArrayList<FoodItem> items;
     private double totalPrice;
