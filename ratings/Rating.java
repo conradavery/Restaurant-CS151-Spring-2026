@@ -14,7 +14,7 @@ public class Rating {
         this.name = name;
         this.stars = stars;
         this.message = message;
-        if(ratingCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(ratingCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 ratings have been created");
         }
         ratingCount ++;

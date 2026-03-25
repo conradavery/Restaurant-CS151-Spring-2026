@@ -15,7 +15,7 @@ public class FoodItem {
         this.name = name;
         this.calories = calories;
         this.price = price;
-        if(FoodItemCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(FoodItemCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 Food Items have been created");
         }
         FoodItemCount++;

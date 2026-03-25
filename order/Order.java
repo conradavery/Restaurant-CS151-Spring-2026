@@ -24,7 +24,7 @@ public class Order {
         instanceCounter++;
         this.orderNumber = instanceCounter;
         this.paymentMethod = null;
-        if(instanceCounter >= SystemLimits.MAXIMUM_INSTANCES){
+        if(instanceCounter > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 orders have been created");
         }
         instanceCounter ++;

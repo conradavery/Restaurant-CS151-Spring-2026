@@ -14,7 +14,7 @@ public class CashPayment implements Payable {
     private static int cashPaymentCount = 0;
 
     public CashPayment() throws MaxInstancesException{
-        if(cashPaymentCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(cashPaymentCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 cash payments have been created");
         }
         cashPaymentCount ++;

@@ -5,6 +5,7 @@ import restaurant.Restaurant;
 import utilities.Input;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.StaffNotFoundException;
 import users.*;
 import menuAndFoodItems.*;
 // import order.Order;
@@ -135,13 +136,19 @@ public class Main {
         UI.printSection("EMPLOYEE LOGIN");
         System.out.print("Enter your staff ID: ");
         String staffID = Input.getString().trim();
-        Staff staff = restaurant.findStaff(staffID);
-        if (staff == null) {
-            UI.error("Invalid staff ID.");
-            return;
+        
+        try{
+            Staff staff = restaurant.findStaff(staffID);
+            if (staff == null) {
+                throw new StaffNotFoundException("Staff ID not found. Please try again.");
+                // UI.error("Invalid staff ID.");
+                // return;
+            }
+            UI.success("Login successful. Welcome, " + staff.getName() + ".");
+            staff.performDuties();
+        } catch (StaffNotFoundException e) {
+            UI.error(e.getMessage());
         }
-        UI.success("Login successful. Welcome, " + staff.getName() + ".");
-        staff.performDuties();
     }
 
 }

@@ -33,7 +33,7 @@ public class Customer {
         pastOrders = new ArrayList<>();
         currentOrders = new ArrayList<>();
         this.rating = null;
-        if (customerCount >= SystemLimits.MAXIMUM_INSTANCES) {
+        if (customerCount > SystemLimits.MAXIMUM_INSTANCES) {
             throw new MaxInstancesException("More than 100 customers have been created");
         }
         customerCount++;

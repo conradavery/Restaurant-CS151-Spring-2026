@@ -5,6 +5,7 @@ import utilities.Input;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.OrderNotFoundException;
 import order.Order;
 
 public class KitchenStaff extends Staff {
@@ -13,7 +14,7 @@ public class KitchenStaff extends Staff {
 
     public KitchenStaff(String name, String role, double salary, Restaurant restaurant, String staffID) throws MaxInstancesException {
         super(name, role, salary, restaurant, staffID);
-        if(KitchenStaffCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(KitchenStaffCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 Kitchen Staff have been created");
         }
         KitchenStaffCount ++;
@@ -53,7 +54,11 @@ public class KitchenStaff extends Staff {
     }
 
     private void viewPendingOrders() {
-        restaurant.viewOrders();
+        try {
+            restaurant.viewOrders();
+        } catch (OrderNotFoundException e) {
+            UI.info(e.getMessage());
+        }
     }
 
     private void markOrderAsPreparing() {
@@ -62,12 +67,16 @@ public class KitchenStaff extends Staff {
         try {
             int orderID = Input.getInt();
             Order order = restaurant.findOrder(orderID);
-            if (order != null) {
-                UI.success("Changing order to preparing");
-                order.setStatusPreparing();
-            } else {
-                UI.error("No Order Found");
-            }
+            // if (order != null) {
+            //     UI.success("Changing order to preparing");
+            //     order.setStatusPreparing();
+            // } else {
+            //     UI.error("No Order Found");
+            // }
+            UI.success("Changing order to preparing");
+            order.setStatusPreparing();
+        } catch (OrderNotFoundException e) {
+            UI.error(e.getMessage());
         } catch (NumberFormatException e) {
             UI.error("Incorrect order number format.");
         }
@@ -80,12 +89,16 @@ public class KitchenStaff extends Staff {
         try {
             int orderID = Input.getInt();
             Order order = restaurant.findOrder(orderID);
-            if (order != null) {
-                UI.success("Changing order to complete");
-                order.setStatusComplete();
-            } else {
-                UI.error("No Order Found");
-            }
+            // if (order != null) {
+            //     UI.success("Changing order to complete");
+            //     order.setStatusComplete();
+            // } else {
+            //     UI.error("No Order Found");
+            // }
+            UI.success("Changing order to complete");
+            order.setStatusComplete();
+        } catch (OrderNotFoundException e) {
+            UI.error(e.getMessage());
         } catch (NumberFormatException e) {
             UI.error("Incorrect order number format");
         }

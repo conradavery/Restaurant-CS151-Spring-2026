@@ -7,6 +7,7 @@ import order.Order;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
+import utilities.exceptions.OrderNotFoundException;
 import ratings.Rating;
 
 public class Restaurant {
@@ -32,7 +33,7 @@ public class Restaurant {
         this.revenue = 0.00;
         this.ratings = new ArrayList<>();
         // restaurantCount ++;
-        if(restaurantCount >= SystemLimits.MAXIMUM_INSTANCES){
+        if(restaurantCount > SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 restaurants have been created");
         }
         restaurantCount ++;
@@ -122,20 +123,25 @@ public class Restaurant {
         orders.add(order);
     }
 
-    public void viewOrders() {
+    public void viewOrders() throws OrderNotFoundException {
+        if (orders.isEmpty()) {
+            throw new OrderNotFoundException("No orders found.");
+        }
+        
         for (Order o : orders) {
             o.printOrder();
             System.out.println();
         }
     }
 
-    public Order findOrder(int orderID) {
+    public Order findOrder(int orderID) throws OrderNotFoundException {
         for (Order o : orders) {
             if (o.getOrderNumber() == orderID) {
                 return o;
             }
         }
-        return null;
+        throw new OrderNotFoundException("Order with ID " + orderID + " not found.");
+        // return null;
     }
     public void processOrder(Order order){
         addToRevenue(order.calculateTotal());
