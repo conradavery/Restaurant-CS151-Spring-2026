@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import menuAndFoodItems.*;
 import users.*;
 import order.Order;
+import utilities.Input;
 import utilities.SystemLimits;
 import utilities.UI;
 import utilities.exceptions.MaxInstancesException;
@@ -67,6 +68,79 @@ public class Restaurant {
         r += staffList.toString() + "\n";
         return r;
     }
+
+    public void startup(){
+        String selection = "";
+        while (!selection.equals("4")) {
+            UI.printHeader(getName().toUpperCase());
+            printInfo();
+            UI.printSection("MAIN MENU");
+            System.out.println("1) Customer");
+            System.out.println("2) Employee Login");
+            System.out.println("3) View Ratings");
+            System.out.println("4) Quit");
+            System.out.print("Selection: ");
+            selection = Input.getString();
+            System.out.println();
+
+            switch (selection.toLowerCase()) {
+                case "1":
+                    customerPortal();
+                    break;
+                case "2":
+                    employeePortal();
+                    break;
+                case "3":
+                    printRatings();
+                    break;
+                case "4":
+                    break;
+                default:
+                    UI.error("Invalid Choice");
+                    break;
+            }
+        }
+    }
+
+    private void customerPortal() {
+        UI.printSection("CUSTOMER LOGIN");
+        System.out.print("Enter your phone number: ");
+        String phoneNumber = Input.getString().trim();
+        Customer customer = findCustomer(phoneNumber);
+        try {
+            if (customer == null) {
+                UI.info("Phone number not found. Creating a new account.");
+                System.out.print("Enter name: ");
+                String name = Input.getString().trim();
+                customer = new Customer(name, phoneNumber, this);
+                addCustomer(customer);
+                UI.success("Account created successfully.");
+            } else {
+                UI.success("Welcome back, " + customer.getName() + ".");
+            }
+            customer.customerDuties();
+        } catch (MaxInstancesException e) {
+            UI.error(e.getMessage());
+        }
+
+    }
+
+    private void employeePortal() {
+        UI.printSection("EMPLOYEE LOGIN");
+        System.out.print("Enter your staff ID: ");
+        String staffID = Input.getString().trim();
+        
+        try{
+            Staff staff = findStaff(staffID);
+            UI.success("Login successful. Welcome, " + staff.getName() + ".");
+            staff.performDuties();
+        } catch (StaffNotFoundException e) {
+            UI.error(e.getMessage());
+        }
+    }
+
+
+
     public void printInfo(){
         System.out.println("Address: " + address + "\nPhone number: " +phoneNumber);
     }
