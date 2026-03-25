@@ -8,7 +8,7 @@ public class Rating {
     private int stars;
     private String message;
     private String name;
-    private static int ratingCount = 0;
+    public static int ratingCount = 0;
 
     public Rating(String name, int stars, String message) throws MaxInstancesException {
         this.name = name;

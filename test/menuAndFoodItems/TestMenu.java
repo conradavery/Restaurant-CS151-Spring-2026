@@ -1,6 +1,5 @@
 package menuAndFoodItems;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -8,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import utilities.exceptions.MaxInstancesException;
 import utilities.exceptions.MenuItemNotFoundException;
-import utils.TestUtils;
-
 @DisplayName("Menu Tests")
 class TestMenu {
     private Menu menu;

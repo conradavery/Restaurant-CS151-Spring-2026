@@ -1,13 +1,11 @@
 package menuAndFoodItems;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
 
 import utilities.exceptions.MaxInstancesException;
-import utils.TestUtils;
 
 @DisplayName("FoodItem Tests")
 class TestFoodItem {
