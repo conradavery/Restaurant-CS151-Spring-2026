@@ -137,6 +137,3 @@
   - `CardPayment` getters/setters and receipt generation
   - Initial payment processing logic
   - Unit tests for payment and restaurant classes
-
-## UML Diagram
-<img width="1000" height="847" alt="image" src="https://github.com/user-attachments/assets/6eb04047-481e-465c-b83a-fb010c89dac2" />
