@@ -16,7 +16,7 @@ public class CardPayment implements Payable {
     private static int cardPaymentCount = 0;
 
     public CardPayment() throws MaxInstancesException{
-        if(cardPaymentCount > SystemLimits.MAXIMUM_INSTANCES){
+        if(cardPaymentCount >= SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 card payments have been created");
         }
         cardPaymentCount ++;
