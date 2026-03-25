@@ -24,14 +24,14 @@ public class Order {
         instanceCounter++;
         this.orderNumber = instanceCounter;
         this.paymentMethod = null;
-        if(instanceCounter > SystemLimits.MAXIMUM_INSTANCES){
+        if (instanceCounter > SystemLimits.MAXIMUM_INSTANCES) {
             throw new MaxInstancesException("More than 100 orders have been created");
         }
     }
 
     public void addItemToOrder(FoodItem item) {
         items.add(item);
-        UI.success("Added "+ item.getName() + " to order.");
+        UI.success("Added " + item.getName() + " to order.");
         calculateTotal();
     }
 
@@ -52,14 +52,14 @@ public class Order {
         } else {
             UI.error("Item not found in order.");
         }
-        
+
     }
 
     public void payWithCash() {
-        try{
+        try {
             this.paymentMethod = new CashPayment();
             paymentMethod.processPayment(this);
-        } catch (MaxInstancesException e){
+        } catch (MaxInstancesException e) {
             UI.error(e.getMessage());
         }
     }
@@ -81,28 +81,36 @@ public class Order {
         this.totalPrice = totalPrice;
         return this.totalPrice;
     }
-    public double getTotalPrice(){
+
+    public double getTotalPrice() {
         return this.totalPrice;
     }
+
     public int getOrderNumber() {
         return this.orderNumber;
     }
-    public void setOrderNumber(int orderNumber){
+
+    public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
-    public void setStatusPreparing(){
+
+    public void setStatusPreparing() {
         this.status = "PREPARING";
     }
-    public void setStatusComplete(){
+
+    public void setStatusComplete() {
         this.status = "COMPLETE";
     }
-    public void setStatusPaid(){
+
+    public void setStatusPaid() {
         this.status = "PAID";
     }
-    public void setStatusPaymentDenied(){
+
+    public void setStatusPaymentDenied() {
         this.status = "PAYMENT DENIED";
     }
-    public void setStatusInProgress(){
+
+    public void setStatusInProgress() {
         this.status = "IN PROGRESS";
     }
 
@@ -113,7 +121,8 @@ public class Order {
     public void setStatusCancelled() {
         this.status = "CANCELLED";
     }
-    public int getOrderLength(){
+
+    public int getOrderLength() {
         return items.size();
     }
 
@@ -127,11 +136,31 @@ public class Order {
         for (FoodItem f : items) {
             r += f;
         }
-        r+= "-----------------------------------------------\n";
+        r += "-----------------------------------------------\n";
         r += String.format("%-25s %10s%n", "Total cost:", UI.money(getTotalPrice()));
         r += "STATUS: " + this.status;
 
         return r;
+    }
+
+    public ArrayList<FoodItem> getItems() {
+        return new ArrayList<>(items);
+    }
+
+    public void setItems(ArrayList<FoodItem> items) {
+        this.items = new ArrayList<>(items);
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Payable getPaymentMethod() {
+        return this.paymentMethod;
+    }
+
+    public void setPaymentMethod(Payable paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
 }

@@ -67,7 +67,7 @@ public abstract class Staff {
                "name : " + name + "\n" +
                "role : " + role + "\n" +
                "salary : " + salary + "\n" +
-               "restaurant : " + restaurant + "\n" +
+               "restaurant : " + restaurant.getName() + "\n" +
                "staffID : " + staffID;
     }
 }
