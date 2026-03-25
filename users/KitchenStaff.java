@@ -23,12 +23,13 @@ public class KitchenStaff extends Staff {
     @Override
     public void performDuties() {
         String choice = "";
-        while (!choice.equals("4")) {
+        while (!choice.equals("5")) {
             UI.printHeader("KITCHEN STAFF MENU");
-            System.out.println("1: View orders.");
-            System.out.println("2: Mark an order as preparing.");
-            System.out.println("3: Mark an order as complete");
-            System.out.println("4: To go back");
+            System.out.println("1) View all orders");
+            System.out.println("2) View a specific order's details");
+            System.out.println("3) Mark an order as preparing");
+            System.out.println("4) Mark an order as complete");
+            System.out.println("5) To go back");
             System.out.println("Type the number of what task you want to perform");
             System.out.println();
             System.out.print("Choice: ");
@@ -39,12 +40,14 @@ public class KitchenStaff extends Staff {
                     viewPendingOrders();
                     break;
                 case "2":
-                    markOrderAsPreparing();
+                    viewOrderDetails();
                     break;
                 case "3":
-                    markOrderAsComplete();
+                    markOrderAsPreparing();
                     break;
                 case "4":
+                    markOrderAsComplete();
+                case "5":
                     break;
                 default:
                     UI.error("Invalid Choice");
@@ -60,6 +63,19 @@ public class KitchenStaff extends Staff {
             UI.info(e.getMessage());
         }
     }
+    private void viewOrderDetails(){
+        System.out.print("Enter the order number: ");
+        try {
+            int orderID = Input.getInt();
+            Order order = restaurant.findOrder(orderID);
+            UI.info("Order #" + orderID + " Details");
+            System.out.println(order);
+        } catch (OrderNotFoundException e) {
+            UI.error(e.getMessage());
+        } catch (NumberFormatException e) {
+            UI.error("Incorrect order number format.");
+        }
+    }
 
     private void markOrderAsPreparing() {
         UI.printSection("PREPARING ORDER");
@@ -67,12 +83,6 @@ public class KitchenStaff extends Staff {
         try {
             int orderID = Input.getInt();
             Order order = restaurant.findOrder(orderID);
-            // if (order != null) {
-            //     UI.success("Changing order to preparing");
-            //     order.setStatusPreparing();
-            // } else {
-            //     UI.error("No Order Found");
-            // }
             UI.success("Changing order to preparing");
             order.setStatusPreparing();
         } catch (OrderNotFoundException e) {
@@ -89,12 +99,6 @@ public class KitchenStaff extends Staff {
         try {
             int orderID = Input.getInt();
             Order order = restaurant.findOrder(orderID);
-            // if (order != null) {
-            //     UI.success("Changing order to complete");
-            //     order.setStatusComplete();
-            // } else {
-            //     UI.error("No Order Found");
-            // }
             UI.success("Changing order to complete");
             order.setStatusComplete();
         } catch (OrderNotFoundException e) {
