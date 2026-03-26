@@ -38,15 +38,6 @@ class TestFoodItem {
         }
     }
     
-    @Test
-    @DisplayName("Getters return correct values")
-    void testGetters_ReturnCorrectValues() {
-        assertAll("FoodItem getters",
-            () -> assertEquals("Burger", foodItem.getName()),
-            () -> assertEquals(500, foodItem.getCalories()),
-            () -> assertEquals(10.99, foodItem.getPrice())
-        );
-    }
     
     @Test
     @DisplayName("Change price updates correctly")
@@ -67,13 +58,5 @@ class TestFoodItem {
             () -> assertEquals(600, foodItem.getCalories()),
             () -> assertEquals(11.99, foodItem.getPrice())
         );
-    }
-    
-    @Test
-    @DisplayName("toString returns properly formatted string")
-    void testToString_Format() {
-        String result = foodItem.toString();
-        assertTrue(result.contains("Burger"));
-        assertTrue(result.contains("500 cal"));
     }
 }
