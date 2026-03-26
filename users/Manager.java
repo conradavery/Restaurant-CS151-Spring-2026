@@ -10,7 +10,7 @@ import utilities.SystemLimits;
 import utilities.exceptions.*;
 
 public class Manager extends Staff {
-    private static int managerCount = 0;
+    public static int managerCount = 0;
 
     public Manager(String name, String role, double salary, Restaurant restaurant,
             String staffID) throws MaxInstancesException {

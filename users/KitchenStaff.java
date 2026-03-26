@@ -10,7 +10,7 @@ import order.Order;
 
 public class KitchenStaff extends Staff {
 
-    private static int kitchenStaffCount = 0;
+    public static int kitchenStaffCount = 0;
 
     public KitchenStaff(String name, String role, double salary, Restaurant restaurant, String staffID) throws MaxInstancesException {
         super(name, role, salary, restaurant, staffID);
