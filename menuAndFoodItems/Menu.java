@@ -22,8 +22,7 @@ public class Menu {
         items.add(foodItem);
     }
 
-    public FoodItem getItem(int index) throws MenuItemNotFoundException { // needs exception handling in here or in add
-                                                                          // order prob add order tbh
+    public FoodItem getItem(int index) throws MenuItemNotFoundException {
         try {
             return items.get(index - 1);
         } catch (IndexOutOfBoundsException e) {
