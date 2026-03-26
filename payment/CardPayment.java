@@ -13,7 +13,7 @@ public class CardPayment implements Payable {
     private String cardHolder;
     private String expiryDate;
     private String cvv;
-    private static int cardPaymentCount = 0;
+    public static int cardPaymentCount = 0;
 
     public CardPayment() throws MaxInstancesException{
         if(cardPaymentCount >= SystemLimits.MAXIMUM_INSTANCES){
@@ -91,7 +91,7 @@ public class CardPayment implements Payable {
         
     }
 
-    private void processCreditInfo() throws InvalidCreditInfoException{
+    public void processCreditInfo() throws InvalidCreditInfoException{
         // null
         if (cardNumber == null)
             throw new InvalidCreditInfoException("Empty cardNumber");

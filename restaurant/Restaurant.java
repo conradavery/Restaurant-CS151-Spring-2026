@@ -23,7 +23,7 @@ public class Restaurant {
     private ArrayList<Order> orders;
     private double revenue;
     private ArrayList<Rating> ratings;
-    private static int restaurantCount = 0;
+    public static int restaurantCount = 0;
 
     public Restaurant(String name, String address, String phoneNumber) throws MaxInstancesException {
         this.name = name;

@@ -9,7 +9,7 @@ public class FoodItem {
     private String name;
     private int calories;
     private double price;
-    private static int FoodItemCount = 0;
+    public static int FoodItemCount = 0;
 
     public FoodItem(String name, int calories, double price) throws MaxInstancesException {
         this.name = name;

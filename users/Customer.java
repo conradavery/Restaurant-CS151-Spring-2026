@@ -24,7 +24,7 @@ public class Customer {
     private String phoneNumber;
     private Restaurant restaurant;
     private Rating rating;
-    private static int customerCount = 0;
+    public static int customerCount = 0;
 
     public Customer(String name, String phoneNumber, Restaurant restaurant) throws MaxInstancesException {
         this.name = name;

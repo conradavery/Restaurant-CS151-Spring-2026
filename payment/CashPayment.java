@@ -11,13 +11,14 @@ public class CashPayment implements Payable {
     private double billTotal;
     private double cashPaid;
     private double change;
-    private static int cashPaymentCount = 0;
+    public static int cashPaymentCount = 0;
 
     public CashPayment() throws MaxInstancesException{
         if(cashPaymentCount >= SystemLimits.MAXIMUM_INSTANCES){
             throw new MaxInstancesException("More than 100 cash payments have been created");
         }
         cashPaymentCount ++;
+        
     }
 
 
@@ -62,11 +63,16 @@ public class CashPayment implements Payable {
             }
         }
 
-        this.change = cashPaid - billTotal;
+        calculateChange();
         UI.info("Payment successful!");
         UI.info("Change: " + UI.money(change));
         order.setStatusPaid();
         return true;
+    }
+
+    public void calculateChange(){
+        if (this.cashPaid < this.billTotal) return;
+        setChange(this.cashPaid - this.billTotal);
     }
 
     @Override
