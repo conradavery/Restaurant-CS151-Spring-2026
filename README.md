@@ -1,108 +1,132 @@
-# Restaurant-CS151-Spring-2026
+# Restaurant Management System CS151 Spring 2026
 
 ## Overview
-  This project is a Restaurant Management System built for CS151 Spring 2026. The system allows customers to browse a menu, place orders, and make payments using a digital wallet. It also provides staff roles (Manager and KitchenStaff) to manage restaurant operations.
 
-  Key features include:
-  - **Menu Management**: Browse food items organized by category
-  - **Order System**: Create and track customer orders with order items
-  - **Payment Processing**: Secure payments using wallet-based transactions
-  - **User Roles**: Different access levels for Customers, Staff, Managers, and KitchenStaff
+A terminal based Restaurant Management System built for CS151 Spring 2026. The system supports two portals: a customer portal for browsing the menu, placing orders, and leaving ratings, and an employee portal with role-based access for Managers and Kitchen Staff.
 
-  The project demonstrates object-oriented design principles, including inheritance, encapsulation, and composition.
+Key features:
+- **Menu Management**: Add, remove, and reprice food items
+- **Order System**: Create, track, and update customer orders in real time
+- **Payment Processing**: Support for both card and cash payments
+- **User Roles**: Separate workflows for Customers, Kitchen Staff, and Managers
+- **Ratings**: Customers can leave, view, and update star ratings with optional messages
 
-   ## Design
+---
 
-  ### Class Structure
-  | Package | Classes | Description |
-  |---------|---------|-------------|
-  | `main` | Main | Entry point of the application |
-  | `restaurant` | Restaurant | Central class managing restaurant state |
-  | `users` | Customer, Staff, Manager, KitchenStaff | User hierarchy with inheritance |
-  | `menuAndFoodItems` | Menu, FoodItem | Menu management and food items |
-  | `order` | Order, OrderItems | Order processing logic |
-  | `payment` | Payment, PaymentManager, Wallet | Payment handling |
+## Design
 
-  ### Design Patterns & Principles
-  - **Inheritance**: `Staff` is a base class for `Manager` and `KitchenStaff`; shared
-  attributes and methods are defined in the parent class
-  - **Composition**: `Order` contains `OrderItems`, `Restaurant` contains `Menu`, and
-  manages orders
-  - **Encapsulation**: All classes use private fields with public getters/setters to
-  control access
-  - **Single Responsibility**: Each class has a focused purpose (e.g., `PaymentManager` 
-  only handles transactions)
+### Package Structure
 
-   ## Installation Instructions
+| Package | Classes | Description |
+|---------|---------|-------------|
+| `main` | `Main` | Entry point of the application |
+| `restaurant` | `Restaurant` | Central class managing all restaurant state |
+| `users` | `Customer`, `Staff`, `Manager`, `KitchenStaff` | User hierarchy built with inheritance |
+| `menuAndFoodItems` | `Menu`, `FoodItem` | Menu and item management |
+| `order` | `Order` | Order creation and status tracking |
+| `payment` | `CardPayment`, `CashPayment`, `Payable` | Payment processing via strategy pattern |
+| `ratings` | `Rating` | Customer rating logic |
+| `test` | `Test packages` | Testing for the entire project |
+| `utilities` | `Input`, `UI`, `SystemLimits` | Shared helpers and constants |
+| `utilities.exceptions` | Various | Custom exception classes |
 
-  ### Prerequisites
-  - Java JDK 17 or higher
-  - Git (for cloning the repository)
+### Design Patterns & Principles
 
-  ### Steps
+- **Inheritance**: `Staff` is the abstract base class for `Manager` and `KitchenStaff`, defining shared fields and enforcing `performDuties()` via abstraction
+- **Polymorphism**: `Payable` interface allows `CardPayment` and `CashPayment` to be used interchangeably and Staff's abstract performDuties() method produces different behavior at runtime depending on the subclass.
+- **Composition**: `Restaurant` owns a `Menu` and manages lists of `Order`, `Staff`, `Customer`, and `Rating` objects
+- **Encapsulation**: All fields are private with controlled access through getters/setters
+- **Single Responsibility**: Each class has a focused purpose — `KitchenStaff` manages order status, `Manager` handles restaurant operations, etc.
 
-  1. **Clone the repository**
-     ```bash
-     git clone <project url>
-     cd Restaurant-CS151-Spring-2026
+---
 
-  2. Compile the project
-     javac main/Main.java
-    
-  3. Run the application
-     java main.Main
+## Installation Instructions
 
-  Using an IDE (IntelliJ, Eclipse, VS Code)
+### Prerequisites
+- Java JDK 17 or higher
+- Git
 
-  1. Open the project folder in your IDE
-  2. Set the source root to the project directory
-  3. Run main.Main class
+### Command Line
 
- ## Usage
+```bash
+# 1. Open Terminal and make a folder for the project
+mkdir RestaurantProjectCS151
+cd RestaurantProjectCS151
 
-  ### Main Menu
-  When you run the application, you'll see:
+#2. Clone the repo
+git clone https://github.com/conradavery/Restaurant-CS151-Spring-2026
+cd Restaurant-CS151-Spring-2026
 
-  OUT AND IN Address: 1357 Newhall Drive Phone number: (123) - 456 - 789
+# 3. Compile
+javac main/Main.java
 
-  --- MAIN MENU ---
+# 4. Run
+java main.Main
+```
 
-  1. Customer
-  2. Employee Login
-  3. View Ratings
-  4. Quit Selection:
+---
 
+## Usage
 
-  ### For Customers
-  1. Select `1` for Customer
-  2. Enter your phone number (new customers will create an account)
-  3. From the Customer Menu, you can:
-     - **1) Create new order** - Browse menu, add/remove items, pay with card or cash
-     - **2) View previous orders** - See your order history
-     - **3) Leave rating** - Rate the restaurant (1-5 stars) with an optional message
-     - **4) Go back to main menu**
+### Main Menu
 
-  ### For Employees
-  Select `2` for Employee Login, then enter your staff ID.
+```
+OUT AND IN
+Address: 1357 Newhall Drive  |  Phone: (123)-456-789
 
-  **Manager** (try staff ID: `333`)
-  - **Manage Menu**: Add items, remove items, change prices, view menu
-  - **Manage Staff**: View staff, hire new staff, fire staff, increase salaries
-  - **Manage Restaurant**: Change phone number, address, view revenue
+----------- MAIN MENU -----------
+1) Customer
+2) Employee Login
+3) View Ratings
+4) Quit
+Selection:
+```
 
-  **KitchenStaff** (try staff ID: `111`)
-  - View pending orders
-  - Mark orders as "preparing"
-  - Mark orders as "complete"
+### Customer Portal
 
-  ### Sample Test Data
-  The application comes pre-loaded with:
-  - **Menu Items**: Hamburger ($3.50), Cheese Burger ($5.50), Fries ($3.00), Soda ($1
-  .00), Milkshake ($2.00)
-  - **Manager**: Bob (Staff ID: `333`)
-  - **KitchenStaff**: Steve (Staff ID: `111`)
-  - **Sample Rating**: From "Conrad" with 5 stars
+1. Select `1` from the main menu
+2. Enter your phone number — new users will be prompted to create an account
+3. From the Customer Menu:
+   - **Create new order** — browse the menu, add/remove items, pay with card or cash
+   - **View previous orders** — see your full order history
+   - **Leave a rating** — rate the restaurant 1–5 stars with an optional message
+   - **Go back** — return to the main menu
 
+### Employee Portal
+
+Select `2` from the main menu and enter your Staff ID.
+
+**Manager** (default Staff ID: `333`)
+
+| Section | Actions |
+|---------|---------|
+| Manage Menu | Add items, remove items, change prices, view menu |
+| Manage Staff | View all staff, hire, fire, increase salaries |
+| Manage Restaurant | Update phone number, address, view revenue |
+
+**Kitchen Staff** (default Staff ID: `111`)
+
+| Action | Description |
+|--------|-------------|
+| View all orders | See every order placed |
+| View order details | Inspect a specific order by ID |
+| Mark as preparing | Update order status to `PREPARING` |
+| Mark as complete | Update order status to `COMPLETE` |
+
+---
+
+## Sample Test Data
+
+The application launches pre-loaded with the following data:
+
+| Type | Details |
+|------|---------|
+| **Menu** | Hamburger ($3.50), Cheese Burger ($5.50), Fries ($3.00), Soda ($1.00), Milkshake ($2.00) |
+| **Manager** | Bob — Staff ID: `333` |
+| **Kitchen Staff** | Steve — Staff ID: `111` |
+| **Sample Rating** | Conrad — 5 stars |
+
+### Type 'EXIT' at any input option to exit the system
 ## Contributions
 
   **Conrad**
