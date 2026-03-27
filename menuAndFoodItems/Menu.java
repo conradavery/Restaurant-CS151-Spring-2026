@@ -44,7 +44,7 @@ public class Menu {
     }
 
     public void changeItemPrice(FoodItem item, Double price) {
-        item.changePrice(price);
+        item.setPrice(price);
     }
 
     @Override
