@@ -119,8 +119,17 @@ public class Customer {
         String choice = Input.getString();
         switch (choice) {
             case "1":
-                restaurant.removeRating(rating);
-                leaveNewRating();
+                try{
+                    System.out.print("What is your need rating out of 5: ");
+                    int newStars = Input.getInt();
+                    System.out.print("What is your new message (optional): ");
+                    String newMessage = Input.getString();
+                    rating.changeRating(newStars);
+                    rating.changeMessage(newMessage);
+                    UI.success("Changed Rating!");
+                } catch (NumberFormatException e){
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "2":
                 break;
