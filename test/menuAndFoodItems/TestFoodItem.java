@@ -42,7 +42,7 @@ class TestFoodItem {
     @Test
     @DisplayName("Change price updates correctly")
     void testChangePrice() {
-        foodItem.changePrice(12.99);
+        foodItem.setPrice(12.99);
         assertEquals(12.99, foodItem.getPrice());
     }
     

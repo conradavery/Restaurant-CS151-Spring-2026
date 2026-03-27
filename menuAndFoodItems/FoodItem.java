@@ -33,10 +33,6 @@ public class FoodItem {
         return this.price;
     }
 
-    public void changePrice(double price) {
-        this.price = price;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
