@@ -68,6 +68,7 @@ java main.Main
 
 ## Usage
 
+Video Link: https://youtu.be/2mwXi1lFdBE
 ### Main Menu
 
 ```
