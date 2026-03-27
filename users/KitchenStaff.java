@@ -47,6 +47,7 @@ public class KitchenStaff extends Staff {
                     break;
                 case "4":
                     markOrderAsComplete();
+                    break;
                 case "5":
                     break;
                 default:

@@ -120,7 +120,7 @@ public class Customer {
         switch (choice) {
             case "1":
                 try{
-                    System.out.print("What is your need rating out of 5: ");
+                    System.out.print("What is your new rating out of 5: ");
                     int newStars = Input.getInt();
                     System.out.print("What is your new message (optional): ");
                     String newMessage = Input.getString();
