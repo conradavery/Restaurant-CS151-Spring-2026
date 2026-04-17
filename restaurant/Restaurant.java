@@ -1,6 +1,11 @@
 package restaurant;
 
 import java.util.ArrayList;
+// added imports
+import java.util.PriorityQueue;
+import java.util.Comparator;
+
+
 import menuAndFoodItems.*;
 import users.*;
 import order.Order;
@@ -21,6 +26,7 @@ public class Restaurant {
     private ArrayList<Staff> staffList;
     private ArrayList<Customer> customerList;
     private ArrayList<Order> orders;
+    private PriorityQueue<Order> pendingOrders;
     private double revenue;
     private ArrayList<Rating> ratings;
     public static int restaurantCount = 0;
@@ -36,6 +42,25 @@ public class Restaurant {
         this.revenue = 0.00;
         this.ratings = new ArrayList<>();
         // restaurantCount ++;
+
+
+        /*
+         * Initialize the queue with custom priority logic.
+         * Smaller orders are treated as higher priority.
+         * If order sizes match, lower order number is earlier.
+         */
+        pendingOrders = new PriorityQueue<>(new Comparator<Order>() {
+
+            @Override
+            public int compare(Order o1, Order o2) {
+                if (o1.getOrderLength() != o2.getOrderLength()) {
+                    return Integer.compare(o1.getOrderLength(), o2.getOrderLength());
+                }
+                return Integer.compare(o1.getOrderNumber(), o2.getOrderNumber());
+            }
+        });
+
+
         if (restaurantCount >= SystemLimits.MAXIMUM_INSTANCES) {
             throw new MaxInstancesException("More than 100 restaurants have been created");
         }
@@ -196,8 +221,11 @@ public class Restaurant {
     }
 
     // Order section
+
+    // add to both orer history and pending priority queue
     public void addOrder(Order order) {
         orders.add(order);
+        pendingOrders.offer(order);
     }
 
     public void viewOrders() throws OrderNotFoundException {
@@ -209,6 +237,58 @@ public class Restaurant {
             o.printOrder();
             System.out.println();
         }
+    }
+
+    /*
+     shows pending orders in priority queue (use temp copy)
+     */
+    public void viewPendingOrders() throws OrderNotFoundException {
+        if (pendingOrders.isEmpty()) {
+            throw new OrderNotFoundException("No pending orders found.");
+        }
+
+        PriorityQueue<Order> tempQueue = new PriorityQueue<>(pendingOrders);
+
+        UI.printHeader("PENDING ORDERS (PRIORITY ORDER)");
+        while (!tempQueue.isEmpty()) {
+            Order current = tempQueue.poll();
+            current.printOrder();
+            System.out.println();
+        }
+    }
+
+    /*
+     returns next order to be processed (preview next priority)
+     */
+    public Order viewNextOrder() throws OrderNotFoundException {
+        if (pendingOrders.isEmpty()) {
+            throw new OrderNotFoundException("No pending orders available.");
+        }
+        return pendingOrders.peek(); // examine top element
+    }
+
+    /*
+     remove and return next highest priority order
+     */
+    public Order getNextOrder() throws OrderNotFoundException {
+        if (pendingOrders.isEmpty()) {
+            throw new OrderNotFoundException("No pending orders available.");
+        }
+        return pendingOrders.poll(); // remove and retrieve head of queue
+    }
+
+    /*
+     check if pending order still exists
+     */
+    public boolean hasPendingOrders() {
+        return !pendingOrders.isEmpty();
+    }
+
+    /*
+     returns how many orders are in active queue
+     */
+    public int getPendingOrderCount() {
+        return pendingOrders.size();
     }
 
     public Order findOrder(int orderID) throws OrderNotFoundException {
@@ -223,7 +303,22 @@ public class Restaurant {
 
     public void processOrder(Order order) {
         addToRevenue(order.calculateTotal());
-        addOrder(order);
+
+        // update to prevent duplicate ordering
+        if (!orders.contains(order)) {
+            addOrder(order);
+        } else if (!pendingOrders.contains(order)) {
+            pendingOrders.offer(order);
+        }
+    }
+
+    // remove a finished order from the pending queu
+    public void completeOrder(Order order) throws OrderNotFoundException {
+        if (order == null || !orders.contains(order)) {
+            throw new OrderNotFoundException("Order could not be completed because it does not exist.");
+        }
+
+        pendingOrders.remove(order);
     }
 
     // Rating section
@@ -350,6 +445,15 @@ public class Restaurant {
 
     public void setOrders(ArrayList<Order> orders) {
         this.orders = new ArrayList<>(orders);
+
+         // Rebuild the pending queue whenever orders are replaced (synchronized).
+        pendingOrders.clear();
+        pendingOrders.addAll(this.orders);
+
+    }
+
+    public PriorityQueue<Order> getPendingOrders() {
+        return new PriorityQueue<>(pendingOrders);
     }
 
     // Revenue
